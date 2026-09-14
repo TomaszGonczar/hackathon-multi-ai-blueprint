@@ -1,0 +1,161 @@
+%% 06_ARCHITECTURE.mmd — Hackathon multi-AI workflow: architecture diagram (SSOT for node IDs
+%% per shared contract §4).
+%% %%
+%% WHAT THIS DIAGRAM SHOWS
+%%   Two machines, three roles. S1 (research) decomposes an unknown topic into a frozen, versioned
+%%   Mission Package and runs two concurrent modes: research (on demand) and observe (continuous,
+%%   read-only, tier-2 degradable). S2 is the development fleet: five humans, five machines, one
+%%   writer per workspace/branch/worktree, building against the frozen package through
+%%   task-selected capability bundles. GitHub + CI is the single source of truth; human authority
+%%   (package approval, merge, escalation) is never held by AI. Failure and degradation paths are
+%%   drawn dashed red; read-only observation dashed grey; capability selection dotted purple;
+%%   normal artifact handoff solid blue. Every arrow label is an artifact name or a named concrete
+%%   event. The coordination/runtime boundary is existing tooling (Git + supervised agents) — no
+%%   custom scheduler, no message bus. All examples in this package are synthetic.
+%% %%
+%% RENDER COMMAND (from repo root)
+%%   npx -y @mermaid-js/mermaid-cli -i 06_ARCHITECTURE.mmd -o render/06_ARCHITECTURE.svg -w 2400
+%%   npx -y @mermaid-js/mermaid-cli -i 06_ARCHITECTURE.mmd -o render/06_ARCHITECTURE.png -w 2400
+%%   (renders committed at -w 2400; at -w 1600 the 16px type sits at the floor of legibility)
+%% %%
+%% VERSIONS ACTUALLY USED
+%%   @mermaid-js/mermaid-cli 11.17.0 (npx -y @mermaid-js/mermaid-cli --version)
+%%   mermaid 11.17.2 (bundled by mermaid-cli 11.17.0)
+%% %%
+%% FALLBACKS APPLIED
+%%   1. AG edge collapse (contract §4, E19–E23): ten edges out of MP + AG into five lanes rendered
+%%      as a hairball at 1600 px. Collapsed AG to ONE dotted edge into L1 labelled
+%%      "per-task bundle — every lane, selected per task". Semantics unchanged: the bundle serves
+%%      every lane, selected per task.
+%%   2. E29 reroute (contract §4, collision clause): E29 (REPO --> L1) collided with E27 near the
+%%      lane stack; rerouted to REPO --> L5 per the contract's named option, keeping the
+%%      "(any lane)" wording. Semantics unchanged.
+%%   No other fallbacks: RUNTIME nesting kept (renders cleanly), node IDs and edge semantics as
+%%   specified in the contract inventory.
+%% %%
+%% KNOWN COSMETIC ARTIFACT
+%%   ELK orders the five lane nodes visually as 2,5,3,4,1 (left to right). Lane identity is
+%%   self-describing in each node label (human N, machine N, workstream-N), so the ordering
+%%   carries no semantics and is not corrected by fighting the layout engine.
+%% %%
+%% LAYOUT ADJUSTMENTS (syntax/layout only, semantics untouched)
+%%   - ELK direction DOWN (contract init block says RIGHT): at 1600 px raster width the LR layout
+%%     scaled 14 px type to ~5.5 px and was illegible; the TD orientation keeps the aspect near
+%%     square so 16 px type renders at ~8.6 px at 1600 px width.
+%%   - Long node and edge labels wrapped with <br/> at word boundaries; label text is verbatim
+%%     from the contract inventory.
+%%   - One invisible layout link (CI ~~~ LEG1) places the legend below the diagram body instead
+%%     of beside it.
+%%   - The contract's elk.spacing.* keys are kept in the init block but verified inert in
+%%     mermaid 11.17.2: three spacing configurations (32/60/12/8, 40/64/16/10, 24/48/8/6)
+%%     produced byte-identical viewBox geometry, so ELK layout here runs on its defaults.
+
+%%{init: {
+  "layout": "elk",
+  "flowchart": { "htmlLabels": true, "padding": 16,
+                 "subGraphTitleMargin": { "top": 10, "bottom": 10 } },
+  "elk": { "preset": "default", "direction": "DOWN",
+           "spacing.nodeNode": "48", "spacing.nodeNodeBetweenLayers": "80",
+           "spacing.edgeNode": "24", "spacing.edgeEdge": "16" },
+  "theme": "base",
+  "themeVariables": { "fontSize": "16px", "lineColor": "#444444",
+                      "primaryColor": "#ffffff", "primaryBorderColor": "#374151" }
+}}%%
+flowchart TD
+
+subgraph RUNTIME ["Coordination / runtime boundary — existing tooling (Git + supervised agents); no custom scheduler, no message bus"]
+
+    subgraph S1 ["S1 — Research machine (one machine · two concurrent roles)"]
+        RM["Research mode — topic<br/>decomposition · provenance"]
+        MP[("Mission Package vN — frozen · versioned")]
+        OB["Observer mode — read-only ·<br/>DEGRADABLE (tier 2)"]:::degradable
+        DR["Deviation report — observation<br/>fields only, no assessment field"]
+    end
+
+    subgraph S2 ["S2 — Development fleet (5 humans · 5 machines · one writer per workspace)"]
+        AG["Task-selected capability bundles —<br/>agents + models chosen per task,<br/>not per human"]
+        L1["Lane 1 — human 1 · machine 1 ·<br/>worktree/branch `workstream-1`"]
+        L2["Lane 2 — human 2 · machine 2 ·<br/>worktree/branch `workstream-2`"]
+        L3["Lane 3 — human 3 · machine 3 ·<br/>worktree/branch `workstream-3`"]
+        L4["Lane 4 — human 4 · machine 4 ·<br/>worktree/branch `workstream-4`"]
+        L5["Lane 5 — human 5 · machine 5 ·<br/>worktree/branch `workstream-5`"]
+    end
+
+end
+
+subgraph GH ["GitHub + CI — single source of truth"]
+    REPO[("Git remote — repo · branches")]
+    PR["Pull requests —<br/>exact candidate diffs"]
+    CI["CI checks — reproducible<br/>commands, not narration"]
+end
+
+subgraph HA ["Human authority — no AI merge, ever"]
+    APPR{"Package approval gate"}
+    MERGE{"Merge owner — one named human"}
+    ESC{"Escalation / decision point"}
+end
+
+subgraph LEG ["Legend"]
+    direction TB
+    LEG1[" "] -->|"flow — normal<br/>artifact handoff"| LEG2[" "]
+    LEG3[" "] -->|"observe — read-only<br/>observation"| LEG4[" "]
+    LEG5[" "] -->|"fail — failure /<br/>escalation / degraded"| LEG6[" "]
+    LEGNOTE["select (dotted purple) — capability selection, not a failure<br/>observer is tier-2 degradable: switch off under time pressure,<br/>team loses monitoring, never the ability to build<br/>degradable node style (orange dashed border, pale fill — used by OB) —<br/>tier-2 component, switched off under time pressure<br/>lane left-right order in this render (2,5,3,4,1) is layout output;<br/>lane identity is the label, never the position<br/>all examples synthetic"]
+end
+
+%% ---- flow (solid blue — normal artifact handoff) ----
+RM e1@-->|"sourced findings + contradictions"| MP
+MP e2@-->|"package vN for approval"| APPR
+APPR e3@-->|"approval record"| MP
+MP e4@-->|"Mission Package vN — only<br/>artifact crossing the boundary"| L1
+MP e5@-->|"(same package vN)"| L2
+MP e6@-->|"(same package vN)"| L3
+MP e7@-->|"(same package vN)"| L4
+MP e8@-->|"(same package vN)"| L5
+L1 e9@-->|"branch push `workstream-1`"| REPO
+L2 e10@-->|"branch push `workstream-2`"| REPO
+L3 e11@-->|"branch push `workstream-3`"| REPO
+L4 e12@-->|"branch push `workstream-4`"| REPO
+L5 e13@-->|"branch push `workstream-5`"| REPO
+REPO e14@-->|"pull request"| PR
+PR e15@-->|"CI run"| CI
+CI e16@-->|"check result"| PR
+PR e17@-->|"exact candidate diff + evidence"| MERGE
+MERGE e18@-->|"human merge, integration order"| REPO
+
+%% ---- select (dotted purple — capability selection, not a failure) ----
+%% E19–E23 collapsed per contract fallback: one edge, "every lane" named in the label.
+AG e19@-.->|"per-task bundle — every lane,<br/>selected per task"| L1
+
+%% ---- observe (dashed grey — read-only observation) ----
+REPO e24@-.->|"repo/PR/CI events —<br/>read-only credential"| OB
+OB e25@-.->|"deviation vs package vN"| DR
+DR e26@-.->|"facts + risks, never assessment"| ESC
+
+%% ---- fail (dashed red — failure / escalation / degraded) ----
+L3 e27@-.->|"escalation: interface wrong ·<br/>acceptance test unsatisfiable ·<br/>same-surface claim (any lane)"| ESC
+ESC e28@-.->|"numbered amendment request"| MP
+%% E29 rerouted REPO --> L5 per contract collision clause; "(any lane)" wording kept.
+REPO e29@-.->|"degraded: adopt frozen package<br/>locally if S1 lost (any lane)"| L5
+OB e30@-.->|"observer outage is itself visible"| ESC
+%% invisible layout link: places the legend below the diagram body
+CI ~~~ LEG1
+
+class e1,e2,e3,e4,e5,e6,e7,e8,e9,e10,e11,e12,e13,e14,e15,e16,e17,e18 flow
+class e19 select
+class e24,e25,e26 observe
+class e27,e28,e29,e30 fail
+class LEG1,LEG2 flow
+class L_LEG1_LEG2_0 flow
+class L_LEG3_LEG4_0 observe
+class L_LEG5_LEG6_0 fail
+class LEG3,LEG4 observe
+class LEG5,LEG6 fail
+class LEGNOTE note
+
+classDef flow      stroke:#2d6cdf,stroke-width:2px,color:#2d6cdf
+classDef observe   stroke:#6b7280,stroke-width:1.5px,stroke-dasharray:6 4,color:#6b7280
+classDef fail      stroke:#c0392b,stroke-width:2px,stroke-dasharray:3 3,color:#c0392b
+classDef select    stroke:#7c3aed,stroke-width:1.5px,stroke-dasharray:2 3,color:#7c3aed
+classDef degradable fill:#fff7ed,stroke:#c2410c,stroke-width:1.5px,stroke-dasharray:4 3
+classDef note      fill:#f9fafb,stroke:#9ca3af,stroke-width:1px,color:#374151

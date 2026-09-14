@@ -1,10 +1,15 @@
 # Architecture Blueprint — Multi-AI Workflow for a Five-Person Cybersecurity Hackathon
 
-**Status:** draft v1, 2026-09-14
+**Status:** draft v2, 2026-09-14 — v2 adds the claim-label and validation-state legend, validation-state columns on every control table (§3.2, §3.4, §4.2, §4.5, §5.4, §7, §8.2), diagram node-ID cross-references to `06_ARCHITECTURE.mmd` (§3–§6), the explicit three-state control vocabulary (§5.4, §7), and contract-verbatim attribution/privacy/claim text with a does-not-prove list (§11); v1 is committed at `3ea098f`.
 **Author:** Tomasz Gonczar (architecture and workflow design)
 **Client:** five-person cybersecurity hackathon team, October 2026 event
 **Scope:** architecture, discovery translation, and implementation-ready planning only
 **Not in scope:** building the team's hackathon solution; operating the systems during the event
+
+**Claim labels.** `[FACT]` — executed or read directly. `[INFERENCE]` — reasoned from evidence. `[UNPROVEN]` — designed, not tested. Every statement about runtime behaviour in this blueprint is `[UNPROVEN]` unless anchored to a read artifact.
+**Validation states.** Every mechanism and control carries exactly one state: `DESIGNED` — specified here, no check has ever exercised it. `DESIGNED+CHECKED` — specified, and a defined check exists that can exercise it (the check is named in the row). `ENFORCED` — a mechanism makes the violation impossible, and that mechanism has been observed to block it. **Nothing in this blueprint is `ENFORCED`**: no rehearsal has run and the event has not happened (§8.4). Every control row states its entry criterion to the next state.
+**Verification method.** Draft v1 read at commit `3ea098f`. Files inspected: this document (§0–§12); `04_DEVELOPMENT_PLAN.md` (§2, §4–§12 — named checks P3.x/P4.x/P5.x, rehearsal drills 6.1–6.8, failure and acceptance matrices); the shared deliverable contract (invariants §1, house style §2, attribution §3, diagram node inventory §4). No command was executed against a live system; this file produced no render.
+**Diagram cross-references.** Components in §3–§6 map to node IDs in `06_ARCHITECTURE.mmd` (inventory: contract §4). §3, §4, and §5 each carry a mapping line; §6 carries a full node-mapping table beneath its inline sketch.
 
 ---
 
@@ -87,6 +92,8 @@ Every architectural decision below carries an owner and a reversal condition (§
 
 **Purpose:** convert an unknown topic into a frozen, reviewable **Mission Package**.
 
+**Diagram nodes** (`06_ARCHITECTURE.mmd`, subgraph `S1`): research mode = `RM`; Mission Package = `MP`; observer mode = `OB`; deviation report = `DR`; package approval gate = `APPR` (human authority). Amendment requests reach the package via `ESC --> MP`.
+
 ### 3.1 Decomposition, not answers
 
 The research machine does not produce "the answer." It produces a **structured problem**: what is being asked, what is known, what is unknown, what is contradictory, and what would count as a solution.
@@ -105,6 +112,13 @@ The research machine does not produce "the answer." It produces a **structured p
 2. **Agreement is not truth.** Several sources or agents agreeing is recorded as agreement, never as verification. This rule exists because the sibling project `dSearch` measured exactly this and **falsified** it: 261 corroborated URLs, only 38 correct — precision 0.1456.
 3. **Contradictions are preserved, not merged.** A contradiction is information. Resolving it by averaging destroys the signal.
 4. **Topic-agnostic.** No domain-specific component, prompt, or assumption.
+
+| Rule | Validation state | Entry criterion to next state |
+|---|---|---|
+| 1 — Provenance mandatory | `DESIGNED+CHECKED` — check: P3.2, plan §6 | `ENFORCED` when P3.2 is observed: every sentence of a dry-run output carries a source or `[unverified]` |
+| 2 — Agreement is not truth | `DESIGNED+CHECKED` — check: P3.3, plan §6 | `ENFORCED` when P3.3 is observed: deliberately contradictory synthetic sources stay contradictory in output, never merged by vote |
+| 3 — Contradictions preserved | `DESIGNED+CHECKED` — check: P3.3, plan §6 | Same observation as rule 2 |
+| 4 — Topic-agnostic | `DESIGNED+CHECKED` — check: P3.1 synthetic-topic dry run, plan §6 | `ENFORCED` when the dry run is observed yielding ≥5 independently researchable sub-questions with no domain assumption anywhere in the flow |
 
 ### 3.3 The Mission Package — the contract
 
@@ -127,11 +141,11 @@ The research machine must **not** hand prose to five builders. It freezes a pack
 
 ### 3.4 Degraded modes
 
-| Condition | Behaviour |
-|---|---|
-| No internet | Serve the last frozen package; research paused and visibly marked |
-| Provider outage | Fall back to a second provider or manual browser research |
-| Machine loss | Package is in Git — a second machine can adopt the observer role |
+| Condition | Behaviour | Validation state | Entry criterion to next state |
+|---|---|---|---|
+| No internet | Serve the last frozen package; research paused and visibly marked | `DESIGNED+CHECKED` — check: P3.7 offline test, plan §6 | `ENFORCED` when P3.7 is observed: the last frozen package is still served offline |
+| Provider outage | Fall back to a second provider or manual browser research | `DESIGNED` | `DESIGNED+CHECKED` when a provider-failover drill is named in the rehearsal plan |
+| Machine loss | Package is in Git — a second machine can adopt the observer role | `DESIGNED+CHECKED` — check: rehearsal drill 6.4, plan §9 | `ENFORCED` when drill 6.4 is observed: a second machine adopts the package from Git and work continues |
 
 **Boundary:** the research machine is a single point of failure only for *new* research. The frozen package is replicated in Git, so its loss never blocks the fleet.
 
@@ -141,19 +155,21 @@ The research machine must **not** hand prose to five builders. It freezes a pack
 
 **Purpose:** five humans across five machines build the solution without colliding, against the frozen package.
 
+**Diagram nodes** (`06_ARCHITECTURE.mmd`): development lanes = `L1`–`L5` (subgraph `S2`; one human, one machine, one worktree/branch each); task-selected capability bundles = `AG` (§4.3); Git remote = `REPO`, pull requests = `PR`, CI checks = `CI` (subgraph `GH`); merge owner = `MERGE`, escalation/decision point = `ESC` (subgraph `HA`, human authority).
+
 ### 4.1 Why the fleet is not a swarm
 
 Five machines is an **operational constraint** (five people have five laptops), not a mandate to run five parallel workstreams. Parallelism is chosen per task from the dependency graph. A task with no independent interface to work against is **not** parallelised.
 
 ### 4.2 Ownership model
 
-| Rule | Enforcement |
-|---|---|
-| **One writer per workspace** | Each workstream gets its own branch/worktree; ownership is recorded in the package |
-| **Interfaces are the only meeting point** | Two workstreams may only meet through the interface frozen in the package |
-| **No direct work on the integration branch** | Integration happens only at a defined order point |
-| **Integration order is explicit** | Written in the package; deviations are amendments |
-| **Humans own merge** | No AI merges. Ever |
+| Rule | Enforcement | Validation state | Entry criterion to next state |
+|---|---|---|---|
+| **One writer per workspace** | Each workstream gets its own branch/worktree; ownership is recorded in the package | `DESIGNED+CHECKED` — check: P4.8 collision test, plan §7 | `ENFORCED` when P4.8 is observed: two machines attempt the same surface and the rule prevents it |
+| **Interfaces are the only meeting point** | Two workstreams may only meet through the interface frozen in the package | `DESIGNED+CHECKED` — check: P4.4 interface contract, plan §7 | `ENFORCED` when rehearsal drill 6.3 is observed: the collision drill holds at the frozen interface |
+| **No direct work on the integration branch** | Integration happens only at a defined order point | `DESIGNED+CHECKED` — check: P4.1 branch protection, plan §7 | `ENFORCED` when branch protection is observed rejecting a direct push to the integration branch |
+| **Integration order is explicit** | Written in the package; deviations are amendments | `DESIGNED+CHECKED` — check: P4.5, plan §7 | `ENFORCED` when P4.5 is observed: every workstream has a defined position and any deviation produces a numbered amendment |
+| **Humans own merge** | No AI merges. Ever | `DESIGNED+CHECKED` — check: P4.6 merge procedure, plan §7 | `ENFORCED` when P4.6 is observed: no AI merge path exists; merge requires the named human (`MERGE`) |
 
 ### 4.3 Model and capability selection
 
@@ -165,12 +181,12 @@ Work stops and summons a human when: an interface in the package is found wrong;
 
 ### 4.5 Failure recovery
 
-| Failure | Recovery |
-|---|---|
-| Machine disconnects | Its branch is already pushed; work is reassignable from Git state |
-| Machine lost permanently | Package + branches describe exactly what remains |
-| Conflicting writes | Ownership rule should have prevented it; the observer reports it if it happens |
-| Coordination unavailable | Package is local-readable; fleet continues in independent mode |
+| Failure | Recovery | Validation state | Entry criterion to next state |
+|---|---|---|---|
+| Machine disconnects | Its branch is already pushed; work is reassignable from Git state | `DESIGNED+CHECKED` — check: rehearsal drill 6.4, plan §9 | `ENFORCED` when drill 6.4 is observed: a machine killed mid-task, its work reassigned from Git state alone |
+| Machine lost permanently | Package + branches describe exactly what remains | `DESIGNED+CHECKED` — check: rehearsal drill 6.4, plan §9 | Same drill extended to permanent loss: remaining work fully described by `MP` plus pushed branches |
+| Conflicting writes | Ownership rule should have prevented it; the observer reports it if it happens | `DESIGNED+CHECKED` — check: rehearsal drill 6.3, plan §9 | `ENFORCED` when drill 6.3 is observed: the ownership rule holds, or the observer reports the violation via `DR --> ESC` |
+| Coordination unavailable | Package is local-readable; fleet continues in independent mode | `DESIGNED` | `DESIGNED+CHECKED` when a named drill kills S1 and verifies the fleet continues against the locally adopted frozen package (degraded path `REPO --> lane`) |
 
 ### 4.6 The honest limitation
 
@@ -181,6 +197,8 @@ Coordination overhead is **charged against the same clock** as building. Every m
 ## 5. System 3 — Observer (degradable)
 
 **Purpose:** compare **actual progress** against the **frozen plan**, and answer "where are we now?" on demand.
+
+**Diagram nodes** (`06_ARCHITECTURE.mmd`): observer mode = `OB` (subgraph `S1`, styled `degradable`, tier 2); deviation report = `DR`; observation sources = `REPO`, `PR`, `CI`; escalation destination = `ESC`. Observer outage is itself visible via `OB --> ESC`.
 
 ### 5.1 Why it is a role, not a system
 
@@ -205,14 +223,16 @@ Repository state, pull requests, CI runs, review state, merge conflicts, changes
 
 ### 5.4 Read-only, without exception
 
-| Permission | Granted |
-|---|---|
-| Read repository state, PRs, CI results | ✅ |
-| Post alerts to the team channel | ✅ |
-| Comment on PRs | ✅ (advisory only) |
-| Commit, push, merge, approve, or change protection | ❌ never |
+| Permission | Granted | Validation state | Entry criterion to next state |
+|---|---|---|---|
+| Read repository state, PRs, CI results | yes | `DESIGNED+CHECKED` — check: P5.2 watch set, plan §8 | `ENFORCED` when the scoped credential is observed reading the full watch set (`REPO`, `PR`, `CI` events) |
+| Post alerts to the team channel | yes | `DESIGNED` | `DESIGNED+CHECKED` when the P5.4 cadence bound is exercised in a rehearsal drill and alert noise stays within it |
+| Comment on PRs | yes (advisory only) | `DESIGNED` | `DESIGNED+CHECKED` when a check confirms PR comments carry observation fields only (P5.3 schema — no assessment field) |
+| Commit, push, merge, approve, or change protection | no — never | `DESIGNED+CHECKED` — check: P5.1, plan §8 | `ENFORCED` when P5.1 is observed: a write attempt through the observer token **fails**, blocked by credential scope |
 
 The observer **reports facts and risks**. It does not judge semantic correctness and does not merge. This rule must be enforced by credentials, not by instruction — see §7.
+
+**Control vocabulary, applied.** States per the header legend; the observer row above is `DESIGNED+CHECKED` with P5.1 as its named check. The full statement of the vocabulary, the pre-committed downgrade phrasing, and the single entry criterion to `ENFORCED` live in §7 — one statement, one place.
 
 ### 5.5 Reporting discipline
 
@@ -232,52 +252,41 @@ An observer that alerts constantly is switched off within an hour — the failur
 
 ## 6. Data flow
 
-```mermaid
-flowchart TB
-    subgraph S1["S1 — Research machine (one machine, two roles)"]
-        R["Research mode"] --> MP["Mission Package<br/>(frozen, versioned)"]
-        O["Observer mode"] --> DEV_REPORT["Deviation reports"]
-    end
+**Provenance of the v1 inline sketch (superseded).** The v1 sketch is not reproduced; `06_ARCHITECTURE.mmd` is the only diagram. The table below records how v1 sketch nodes translate to canonical node IDs.
 
-    subgraph S2["S2 — Development fleet (5 humans, 5 machines)"]
-        L1["Workstream 1"] --> INT["Integration point"]
-        L2["Workstream 2"] --> INT
-        L3["Workstream N"] --> INT
-    end
+| Inline sketch node | Canonical node ID | Meaning |
+|---|---|---|
+| `R` | `RM` | Research mode (subgraph `S1`) |
+| `MP` | `MP` | Mission Package vN — frozen, versioned |
+| `O` | `OB` | Observer mode — read-only, `degradable` (tier 2), on `S1` |
+| `DEV_REPORT` | `DR` | Deviation report — observation fields only, no assessment field |
+| `L1`, `L2`, `L3` | `L1`–`L5` | Development lanes — the canonical diagram shows all five, one human · one machine · one worktree/branch each |
+| `INT` | `PR` → `MERGE` | Integration is not a node: candidates meet as pull requests (`PR`) and are integrated only by the human merge owner (`MERGE`) |
+| `H` | `APPR`, `MERGE`, `ESC` | Human authority (subgraph `HA`): package approval gate, merge owner, escalation/decision point |
+| `GIT` | `REPO` | Git remote — repo and branches (subgraph `GH`, with `PR` and `CI`) |
 
-    H["Humans<br/>(approve, decide, merge)"]
-
-    MP -->|"the only artifact crossing the boundary"| L1
-    MP --> L2
-    MP --> L3
-    L1 -.->|"read-only observation"| O
-    L2 -.->|"read-only observation"| O
-    GIT["Git remote<br/>(single source of truth)"] -.-> O
-    INT --> H
-    DEV_REPORT --> H
-    H -->|"amendment, if needed"| MP
-```
-
-**Normal flow** solid; **observation and escalation** dotted.
+The canonical diagram additionally carries `AG` (task-selected capability bundles, §4.3), `CI` (CI checks), and the explicit failure/escalation edges the sketch omits: `ESC --> MP` (numbered amendment request), `REPO --> lane` (degraded: adopt the frozen package locally if S1 is lost), `OB --> ESC` (observer outage is itself visible), and lane `--> ESC` (escalation triggers, §4.4).
 
 ---
 
 ## 7. Authority and security boundaries
 
-| Subject | Owner | Boundary |
-|---|---|---|
-| Mission Package content | Research machine | Humans approve; AI does not authorise its own scope |
-| Scope changes | Humans | Only via numbered amendment |
-| Code authorship | Individual developer | One writer per workspace |
-| Merge | **Human** | No AI merge authority, ever |
-| Repository truth | Git remote | No second authoritative database |
-| Check evidence | Reproducible command | A green exit code that scanned nothing is not evidence |
-| Observer permissions | Read-only credentials | Enforced by token scope, not by instruction |
-| Credentials | Per person, least privilege | Never in the repository, never in prompts |
+| Subject | Owner | Boundary | Validation state | Entry criterion to next state |
+|---|---|---|---|---|
+| Mission Package content | Research machine | Humans approve; AI does not authorise its own scope | `DESIGNED+CHECKED` — check: P3.6 approval gate, plan §6 | `ENFORCED` when P3.6 is observed: a package cannot enter development without a recorded human approval (`APPR`) |
+| Scope changes | Humans | Only via numbered amendment | `DESIGNED+CHECKED` — check: P3.5 freeze/amendment protocol, plan §6 | `ENFORCED` when P3.5 is observed: an edit creates a numbered amendment and a silent edit is impossible |
+| Code authorship | Individual developer | One writer per workspace | `DESIGNED+CHECKED` — check: P4.8 collision test, plan §7 | `ENFORCED` when P4.8 is observed: two machines attempt one surface and the rule prevents it |
+| Merge | **Human** | No AI merge authority, ever | `DESIGNED+CHECKED` — check: P4.6 merge procedure, plan §7 | `ENFORCED` when P4.6 is observed: no AI merge path exists and `MERGE` requires the named human |
+| Repository truth | Git remote | No second authoritative database | `DESIGNED` | `DESIGNED+CHECKED` when the reuse-ledger gate (plan §4) is observed rejecting any component that mirrors `REPO` into a second store |
+| Check evidence | Reproducible command | A green exit code that scanned nothing is not evidence | `DESIGNED` | `DESIGNED+CHECKED` when one reproducible CI command (`CI`) is defined per merge candidate and its output is recorded at P8 |
+| Observer permissions | Read-only credentials | Enforced by token scope, not by instruction | `DESIGNED+CHECKED` — check: P5.1, plan §8 (write attempt fails by credential) | `ENFORCED` when P5.1 is observed blocking a real write attempt through the scoped token; "enforced by token scope" names the intended mechanism, not an observed one |
+| Credentials | Per person, least privilege | Never in the repository, never in prompts | `DESIGNED+CHECKED` — check: P2 credential placement, plan §5 | `ENFORCED` when the P2 inventory is observed: every secret's location verified, none in the repo or in a prompt |
 
 **The enforcement principle, learned from the sibling rehearsal:** an instruction in a prompt is not a control. In `27_ORCA_VERTICAL_SLICE_REHEARSAL`, a reviewer was *instructed* read-only and no mechanism made mutation impossible. The correction was to narrow the claim — not to pretend the instruction was enforcement.
 
 Applied here: the observer is read-only because its **credential cannot write**. If that cannot be configured, the claim is downgraded and stated as such.
+
+**Three-state control vocabulary.** Every control above carries exactly one state (header legend): `DESIGNED`, `DESIGNED+CHECKED`, `ENFORCED`. **No row is `ENFORCED`.** An instruction in a prompt is not a control, and a mechanism nobody has watched block anything is not enforcement yet — it is a design with a named check. The observer's read-only boundary is `DESIGNED+CHECKED` with **P5.1 — write attempt fails by credential** (`04_DEVELOPMENT_PLAN.md` §8) as the named check; observing P5.1 block a real write is the single entry criterion to `ENFORCED`. Where the Boundary column says "enforced by token scope," it names the intended mechanism, not an observed one (§8.4).
 
 ---
 
@@ -289,15 +298,15 @@ Applied here: the observer is read-only because its **credential cannot write**.
 
 ### 8.2 Cut order
 
-| Priority | Component | If cut, what is lost |
-|---|---|---|
-| **P0 — never cut** | Mission Package + frozen baseline | The fleet builds against nothing |
-| **P0 — never cut** | One-writer-per-workspace | Collisions consume the clock |
-| **P0 — never cut** | Human merge authority | Unrecoverable integration damage |
-| **P1 — cut under pressure** | Observer continuous mode | Loses monitoring; on-demand Git reads remain |
-| **P1 — cut under pressure** | Checklist items marked optional | Slower restart; nothing breaks |
-| **P2 — cut first** | Parallel workstreams | Slower, but sequential still ships |
-| **P2 — cut first** | Automated CI beyond one check | Manual verification, weaker evidence |
+| Priority | Component | If cut, what is lost | Validation state | Entry criterion to next state |
+|---|---|---|---|---|
+| **P0 — never cut** | Mission Package + frozen baseline (`MP`) | The fleet builds against nothing | `DESIGNED+CHECKED` — check: P3 synthetic dry run, plan §6 | `ENFORCED` when the dry run is observed producing an approved, frozen package |
+| **P0 — never cut** | One-writer-per-workspace (`L1`–`L5`) | Collisions consume the clock | `DESIGNED+CHECKED` — check: P4.8 collision test, plan §7 | `ENFORCED` when P4.8 is observed preventing same-surface writes |
+| **P0 — never cut** | Human merge authority (`MERGE`) | Unrecoverable integration damage | `DESIGNED+CHECKED` — check: P4.6, plan §7 | `ENFORCED` when P4.6 is observed: no AI merge path exists |
+| **P1 — cut under pressure** | Observer continuous mode (`OB`) | Loses monitoring; on-demand Git reads remain | `DESIGNED+CHECKED` — check: rehearsal drill 6.5, plan §9 | `ENFORCED` when drill 6.5 is observed: observer off, team still building, the loss visible |
+| **P1 — cut under pressure** | Checklist items marked optional | Slower restart; nothing breaks | `DESIGNED` | `DESIGNED+CHECKED` when `05_IMPLEMENTATION_CHECKLIST.md` names a check per optional item |
+| **P2 — cut first** | Parallel workstreams | Slower, but sequential still ships | `DESIGNED+CHECKED` — check: rehearsal drill 6.6 time-box, plan §9 | `ENFORCED` when drill 6.6 is observed: the parallel setup fits inside the preparation window |
+| **P2 — cut first** | Automated CI beyond one check (`CI`) | Manual verification, weaker evidence | `DESIGNED` | `DESIGNED+CHECKED` when one CI command is defined and observed runnable on a PR |
 
 ### 8.3 The cheerleader risk
 
@@ -332,6 +341,9 @@ No rehearsal has occurred, because the event has not happened. The blueprint the
 | Permanent five-agent-per-human ontology | Ages badly the moment task shapes change |
 | Custom distributed runtime | Massive cost, no evidence of need before rehearsal |
 | Dashboard for appearance | Cost with no operational consumer |
+| Internal goal-broker service | The frozen package plus numbered amendments already broker the goal; a service adds a failure domain and a second truth store |
+| Goal-transfer database | A versioned file in Git carries the same capability; a database adds skew and migration burden for one writer and five readers |
+| Message bus | Coordination events are Git events plus human cadence; a bus adds an unconsumed lifecycle plane (plan §13) |
 
 ---
 
@@ -354,19 +366,23 @@ These are **not** architectural gaps; they are facts only the team and organizer
 | 11 | Is the topic revealed before or at the event? | §3 research runway |
 | 12 | Which external services are permitted? | §3.4 degraded modes |
 | 13 | What may be captured for the portfolio? | §11 |
-| 14 | Who executes this plan after delivery? | Development plan §9 |
+| 14 | Who executes this plan after delivery? | Development plan §2 (owners column) and §3–§10 in full, including §9 rehearsal |
 
 ---
 
 ## 11. Portfolio and privacy boundary
 
-**The claim, stated exactly:**
+**The claim, stated exactly** (usable only once all artifacts exist and agree):
 
-> I ran client-style discovery with a five-person cybersecurity team facing an unknown topic, and designed an implementation-ready multi-AI workflow: a research machine that freezes an approved Mission Package, a five-machine development fleet under one-writer ownership, and a read-only, degradable observer that measures progress against the frozen plan. Deliverables: architecture blueprint, A–Z development plan, implementation checklist, and a version-controlled diagram.
+> The operator ran client-style discovery with a five-person cybersecurity team facing an unknown topic, and designed an implementation-ready multi-AI workflow: a research machine that freezes an approved Mission Package, a five-machine development fleet under one-writer ownership, and a read-only degradable observer. Deliverables: architecture blueprint, A–Z development plan, implementation checklist, and a version-controlled diagram.
 
-**Attribution, stated exactly:** I designed the architecture and the workflow. **I did not build, deploy, or test these systems, and I did not participate in the hackathon solution.** The team owns implementation.
+**Attribution, stated exactly:**
 
-**Privacy:** no participant names, no repository contents, no credentials, no sponsor or organizer material, and no topic-specific detail that could disadvantage the team's October event. Any example in the portfolio is synthetic.
+> The operator designed the architecture and workflow. The operator did not build, deploy, or test these systems, and did not participate in the hackathon solution. The five-person team owns implementation of the hackathon solution. No hackathon outcome or semantic correctness is claimed.
+
+**Privacy:** no participant names, no repository contents, no credentials, no sponsor or organizer material, no topic-specific detail that could disadvantage the team's October event. Any example in any artifact is synthetic and must be labelled synthetic.
+
+**What this does not prove:** no hackathon outcome; no semantic correctness of the team's solution; no proof that any mechanism held under real time pressure; no rehearsal evidence (none exists yet); no claim that monitoring improves delivery.
 
 **What this demonstrates:** translating an ambiguous, high-pressure external mission into explicit requirements, authority boundaries, failure modes, and a handoff another engineer can execute without a second architecture meeting.
 
