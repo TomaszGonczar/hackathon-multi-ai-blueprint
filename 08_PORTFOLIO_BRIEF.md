@@ -148,9 +148,12 @@ no claim that monitoring improves delivery.
 > read-only degradable observer. Deliverables: architecture blueprint, A–Z development plan,
 > implementation checklist, and a version-controlled diagram.
 
-This sentence becomes usable when all artifacts exist and agree — the agreement sweep is the final
-production step. As of 2026-09-14 the sweep has not run and no sweep record exists in the repository
-history (`07` §10); until it does, this sentence is stated, not claimed.
+This sentence is usable as of 2026-09-14: all artifacts exist, and the agreement sweep ran — a
+mechanical cross-artifact census (node/edge IDs, ten-field schema, cut order, D1–D8, ENFORCED-as-
+state, attribution, phase index) plus an independent adversarial review. Its findings (8 census
+violations, 23 review findings) were fixed and committed in `99fd9c4`; the census re-checks that
+followed (emoji, absolute paths, D4 text, item count) returned clean. The claim above is therefore
+stated as a claim; the does-not-prove list in §6 still bounds it.
 
 ---
 

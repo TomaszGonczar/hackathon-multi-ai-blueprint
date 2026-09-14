@@ -467,9 +467,13 @@ October event. Any example in any artifact is synthetic and must be labelled syn
 the team's solution; no proof that any mechanism held under real time pressure; no rehearsal
 evidence (none exists yet); no claim that monitoring improves delivery.
 
-The portfolio claim itself (contract §3) is **withheld from this document**: it is usable only once
-all artifacts exist and agree, and the agreement sweep (wave 4) had not run when this file was
-written.
+The portfolio claim (contract §3) was withheld from this document while the agreement sweep was
+outstanding. The sweep ran on 2026-09-14 — a mechanical cross-artifact census plus an independent
+adversarial review; its findings were fixed and committed in `99fd9c4`. The claim therefore appears
+where it belongs (`08_PORTFOLIO_BRIEF.md` §7 and `03_ARCHITECTURE_BLUEPRINT.md` §11; the README
+carries the attribution and does-not-prove statements, not the claim sentence), bounded by the
+does-not-prove list above. It remains a design claim: nothing here is `ENFORCED` until the
+follow-ups below run.
 
 **Numbered, verifiable follow-ups** — each is checkable by a third party against the named
 artifact:
