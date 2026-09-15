@@ -25,6 +25,8 @@ CORE           S2 Development fleet (5 humans, 5 machines) → solution
 DEGRADABLE     Observer (role on S1) → deviation reports vs. frozen plan → humans
 ```
 
+![Architecture diagram](render/06_ARCHITECTURE.png)
+
 ---
 
 ## 1. The client problem
