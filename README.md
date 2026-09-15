@@ -73,3 +73,7 @@ topic-specific detail appear here. All examples are synthetic and labelled synth
 **This package does not prove:** any hackathon outcome; semantic correctness of the team's
 solution; that any mechanism held under real time pressure; rehearsal evidence (none exists yet);
 that monitoring improves delivery.
+
+## License
+
+[MIT](LICENSE) © 2026 Tomasz Gonczar
