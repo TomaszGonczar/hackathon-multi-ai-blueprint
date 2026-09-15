@@ -1,4 +1,35 @@
-# macOS
+# OS artifacts
 .DS_Store
+Thumbs.db
 
+# Editor and shell scratch
+*~
+*.swp
+*.tmp
+*.bak
+
+# Python scratch and test caches
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+
+# Build and package artifacts
+build/
+dist/
+*.egg-info/
+node_modules/
+
+# Secrets and environment
+.env
+.env.*
+!.env.example
+credentials.json
+*.pem
+*.key
+
+# Presentation material note:
 # renders are committed deliberately (presentation material); nothing else ignored
