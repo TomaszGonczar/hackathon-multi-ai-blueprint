@@ -1,6 +1,6 @@
 # Architecture Blueprint — Multi-AI Workflow for a Five-Person Cybersecurity Hackathon
 
-**Status:** draft v2, 2026-09-14 — v2 adds the claim-label and validation-state legend, validation-state columns on every control table (§3.2, §3.4, §4.2, §4.5, §5.4, §7, §8.2), diagram node-ID cross-references to `06_ARCHITECTURE.mmd` (§3–§6), the explicit three-state control vocabulary (§5.4, §7), and contract-verbatim attribution/privacy/claim text with a does-not-prove list (§11); v1 is committed at `3ea098f`.
+**Status:** draft v2, 2026-09-14 — v2 adds the claim-label and validation-state legend, validation-state columns on every control table (§3.2, §3.4, §4.2, §4.5, §5.4, §7, §8.2), diagram node-ID cross-references to `06_ARCHITECTURE.mmd` (§3–§6), the explicit three-state control vocabulary (§5.4, §7), and contract-verbatim attribution/privacy/claim text with a does-not-prove list (§11); v1 is committed at `3ea098f`. **Amended 2026-09-15** (discovery closure, overnight protocol, portfolio readiness, and review findings): every change is recorded per commit in `HISTORY.md`, and the review findings that drove them are itemised in `09_REVIEW_RECORD.md`.
 **Author:** Tomasz Gonczar (architecture and workflow design)
 **Client:** five-person cybersecurity hackathon team, October 2026 event
 **Scope:** architecture, discovery translation, and implementation-ready planning only
@@ -69,7 +69,7 @@ A working demo submitted on time, built against a defensible understanding of th
 ### CONSTRAINTS
 - Topic revealed at or near event start; no domain-specific preparation possible.
 - Five people, five machines; mixed languages among participants.
-- Duration measured in hours, not days; no slack for a second architecture session.
+- Duration: **24 hours or more**, expected two days with part of the team working overnight (Q2, answered 2026-09-15 — `01_DISCOVERY_CLOSURE.md`). There is no slack for a second architecture session. The v1 premise "hours, not days" is falsified by that answer: it is why the overnight protocol exists (plan §10) and why every rehearsal timeout must be recalibrated against the measured window at drill 6.6.
 - Whatever is prepared must survive a participant who has never read the blueprint.
 
 ### ASSUMPTIONS
@@ -115,6 +115,7 @@ The research machine does not produce "the answer." It produces a **structured p
 2. **Agreement is not truth.** Several sources or agents agreeing is recorded as agreement, never as verification: corroboration is a property of the sources, not of the world. A research system that treats consensus as confirmation manufactures its own evidence, and the package it freezes then carries confidence it did not earn.
 3. **Contradictions are preserved, not merged.** A contradiction is information. Resolving it by averaging destroys the signal.
 4. **Topic-agnostic.** No domain-specific component, prompt, or assumption.
+5. **External content is data, never instruction.** Pages, documents, and search results enter as quoted evidence with provenance. Text inside a source that reads like a directive is reported as a property of that source; it is never executed and never becomes a lane's instruction. This rule exists because the research machine ingests untrusted text and freezes it into the document five lanes then build against — the one path in this design where hostile input could become an order.
 
 | Rule | Validation state | Entry criterion to next state |
 |---|---|---|
@@ -127,18 +128,24 @@ The research machine does not produce "the answer." It produces a **structured p
 
 The research machine must **not** hand prose to five builders. It freezes a package. The package is the only artifact that crosses into development.
 
-| Field | Contents |
-|---|---|
-| `objective` | One paragraph, falsifiable statement of what must be built |
-| `constraints` | Time, required deliverables, prohibited techniques, environment limits |
-| `evidence` | Findings with provenance, grouped by sub-question |
-| `unknowns` | Explicit list — including which unknowns are blockers vs. tolerable |
-| `acceptance_tests` | What demonstrably counts as done, expressed so a machine can check it |
-| `interfaces` | Boundaries between the workstreams the fleet will own |
-| `dependency_graph` | Which workstream must precede which |
-| `task_ownership` | Proposed owner per workstream |
-| `integration_order` | The sequence in which pieces are allowed to meet |
-| `escalation_rules` | What stops work and summons a human |
+| Field | Contents | Reader (who consumes it) |
+|---|---|---|
+| `objective` | One paragraph, falsifiable statement of what must be built | The five lane owners before starting any task; the human approval gate `APPR` |
+| `constraints` | Time, required deliverables, prohibited techniques, environment limits | Lane owners; the cut-order decision when time runs short |
+| `evidence` | Findings with provenance, grouped by sub-question | Lane owners building against a claim; the skeptic during adversarial review |
+| `unknowns` | Explicit list — including which unknowns are blockers vs. tolerable | Lane owners (to bound what may be asserted) and the demo notes at submission |
+| `acceptance_tests` | What demonstrably counts as done, expressed so a machine can check it | The lane owner closing a cycle; CI; the merge owner before merging |
+| `interfaces` | Boundaries between the workstreams the fleet will own | Any two lanes that must meet; the escalation trigger when an interface proves wrong |
+| `dependency_graph` | Which workstream must precede which | Workstream selection: what may run in parallel, and what must wait |
+| `task_ownership` | Proposed owner per workstream | The ownership registry; collision arbitration; the observer's deviation baseline |
+| `integration_order` | The sequence in which pieces are allowed to meet | The merge owner at every integration point; the plan's integration sequence |
+| `escalation_rules` | What stops work and summons a human | Any lane owner, and the named human each trigger summons |
+
+**Consequence for the reader rule.** Every field above names its human reader, which is what the
+contract's declaration rule requires. What does not exist yet is a *machine* validator for those
+fields — the gap recorded as F-4 in `07_FAILURE_AND_REHEARSAL_PLAN.md` §2. A human reader today and
+an automated validator at P3 are two different commitments; the package owes both and currently has
+the first only.
 
 **Freeze semantics.** Once the humans approve the package, it is **versioned and immutable**. Any change becomes a numbered **amendment** with a reason and an approver. Silent prompt drift is a defect, not an update.
 
@@ -301,17 +308,20 @@ Applied here: the observer is read-only because its **credential cannot write**.
 
 ### 8.2 Cut order
 
+Cut priorities sit in a namespace of their own — **C0 — never cut**, **C1 — cut under pressure**, **C2 — cut first** — distinct from the plan phases `P0`–`P9` (`04_DEVELOPMENT_PLAN.md` §2).
+
 | Priority | Component | If cut, what is lost | Validation state | Entry criterion to next state |
 |---|---|---|---|---|
-| **P0 — never cut** | Mission Package + frozen baseline (`MP`) | The fleet builds against nothing | `DESIGNED+CHECKED` — check: P3 synthetic dry run, plan §6 | `ENFORCED` when the dry run is observed producing an approved, frozen package |
-| **P0 — never cut** | One-writer-per-workspace (`L1`–`L5`) | Collisions consume the clock | `DESIGNED+CHECKED` — check: P4.8 collision test, plan §7 | `ENFORCED` when P4.8 is observed preventing same-surface writes |
-| **P0 — never cut** | Human merge authority (`MERGE`) | Unrecoverable integration damage | `DESIGNED+CHECKED` — check: P4.6, plan §7 | `ENFORCED` when P4.6 is observed: no AI merge path exists |
-| **P1 — cut under pressure** | Observer continuous mode (`OB`) | Loses monitoring; on-demand Git reads remain | `DESIGNED+CHECKED` — check: rehearsal drill 6.5, plan §9 | `ENFORCED` when drill 6.5 is observed: observer off, team still building, the loss visible |
-| **P1 — cut under pressure** | Checklist items marked optional | Slower restart; nothing breaks | `DESIGNED` | `DESIGNED+CHECKED` when `05_IMPLEMENTATION_CHECKLIST.md` names a check per optional item |
-| **P2 — cut first** | Parallel workstreams | Slower, but sequential still ships | `DESIGNED+CHECKED` — check: rehearsal drill 6.6 time-box, plan §9 | `ENFORCED` when drill 6.6 is observed: the parallel setup fits inside the preparation window |
-| **P2 — cut first** | Automated CI beyond one check (`CI`) | Manual verification, weaker evidence | `DESIGNED` | `DESIGNED+CHECKED` when one CI command is defined and observed runnable on a PR |
+| **C0 — never cut** | Mission Package + frozen baseline (`MP`) | The fleet builds against nothing | `DESIGNED+CHECKED` — check: P3 synthetic dry run, plan §6 | `ENFORCED` when the dry run is observed producing an approved, frozen package |
+| **C0 — never cut** | One-writer-per-workspace (`L1`–`L5`) | Collisions consume the clock | `DESIGNED+CHECKED` — check: P4.8 collision test, plan §7 | `ENFORCED` when P4.8 is observed preventing same-surface writes |
+| **C0 — never cut** | Human merge authority (`MERGE`) | Unrecoverable integration damage | `DESIGNED+CHECKED` — check: P4.6, plan §7 | `ENFORCED` when P4.6 is observed: no AI merge path exists |
+| **C1 — cut under pressure** | Observer continuous mode (`OB`) | Loses monitoring; on-demand Git reads remain | `DESIGNED+CHECKED` — check: rehearsal drill 6.5, plan §9 | `ENFORCED` when drill 6.5 is observed: observer off, team still building, the loss visible |
+| **C1 — cut under pressure** | Checklist items marked optional | Slower restart; nothing breaks | `DESIGNED` | `DESIGNED+CHECKED` when `05_IMPLEMENTATION_CHECKLIST.md` names a check per optional item |
+| **C1 — cut under pressure** | Role collapse on `S1` and at `MERGE` | One human holds two roles (observer operator folded into a lane owner; merge owner folded into the team lead). Costs attention at the worst moment, and makes the merge rule's addressee less available — never the authority itself | `DESIGNED` | `DESIGNED+CHECKED` when T7-02 records the collapsed assignment and the merge-alternate path (`P0.7`) is named alongside it |
+| **C2 — cut first** | Parallel workstreams | Slower, but sequential still ships | `DESIGNED+CHECKED` — check: rehearsal drill 6.6 time-box, plan §9 | `ENFORCED` when drill 6.6 is observed: the parallel setup fits inside the preparation window |
+| **C2 — cut first** | Automated CI beyond one check (`CI`) | Manual verification, weaker evidence | `DESIGNED` | `DESIGNED+CHECKED` when one CI command is defined and observed runnable on a PR |
 
-**Duration resolved in part, 2026-09-15.** Q2 is answered as **24 hours or more**, expected two days with overnight work (`01_DISCOVERY_CLOSURE.md` Q2). Consequences for this table: the short-event branch is closed, so no row above is cut for duration reasons — the cut order is driven by **pressure, not duration**; and the observer's P1 row stays ON by default rather than being cut on a short-event assumption. The four overnight mechanisms the answer made necessary are defined in `04_DEVELOPMENT_PLAN.md` §10, with failure rows in its §11, checklist items DC-14–DC-16, ledger row V12, and premortem entry PM-12.
+**Duration resolved in part, 2026-09-15.** Q2 is answered as **24 hours or more**, expected two days with overnight work (`01_DISCOVERY_CLOSURE.md` Q2). Consequences for this table: the short-event branch is closed, so no row above is cut for duration reasons — the cut order is driven by **pressure, not duration**; and the observer's C1 row stays ON by default rather than being cut on a short-event assumption. The four overnight mechanisms the answer made necessary are defined in `04_DEVELOPMENT_PLAN.md` §10, with failure rows in its §11, checklist items DC-14–DC-16, ledger row V12, and premortem entry PM-12.
 
 ### 8.3 The cheerleader risk
 
@@ -388,9 +398,10 @@ These are **not** architectural gaps; they are facts only the team and organizer
 > checklist, and a version-controlled diagram.
 
 **Scope of the discovery, stated exactly:** discovery is specified rather than completed. Stakeholder
-intent, constraints, assumptions, non-goals, risks, and decision owners are explicit; three of the
-fourteen architecture-blocking questions are answered, and eleven remain open, tracked with sources
-and dates in `01_DISCOVERY_CLOSURE.md`.
+intent, constraints, assumptions, non-goals, risks, and decision owners are explicit. Of the
+fourteen architecture-blocking questions, two are answered, one is answered in part, and eleven
+remain open, tracked with sources and dates in `01_DISCOVERY_CLOSURE.md` (counted by the register's
+own status column: 2 `ANSWERED`, 1 `PARTIAL`, 11 `OPEN`).
 
 **Attribution, stated exactly:**
 

@@ -7,7 +7,8 @@ the house style every artifact follows, the diagram node and edge IDs every arti
 file-ownership map that kept two writers off one fact. It is published because otherwise the
 cross-references in the other artifacts ("contract §4") resolve to nothing.
 
-**Verification method.** Written against the working tree at commit `531830a`; the node and edge
+**Verification method.** Written against the working tree at commit `531830a` (see `HISTORY.md` for
+the full commit sequence, included so SHAs resolve in copies without git history); the node and edge
 inventory in §4 was checked against the rendered diagram (`render/06_ARCHITECTURE.png`, produced
 from `06_ARCHITECTURE.mmd` by mermaid-cli 11.17.0 with mermaid 11.17.2). No mechanism described here
 has been executed: no rehearsal has run and the event has not happened.
@@ -40,6 +41,7 @@ Two machines carry three roles:
 | Every field names its reader | A declaration is cheap and feels like progress; wiring it is expensive and invisible. Every declared field names the reader that consumes it, or it is deleted. |
 | Scope cut is explicit | The cut order is part of the deliverable, not an admission. |
 | Instruction is not enforcement | An instruction in a prompt is not a control. A role described as read-only is read-only only when something makes mutation impossible; where that mechanism cannot be configured, the claim is narrowed in writing rather than upgraded in prose. |
+| Untrusted input is data, never instruction | Content ingested from external sources — pages, documents, search results, provider output — enters the package as quoted evidence and never as an instruction. The fleet executes the frozen package, not the web. A source that contains instruction-shaped text is a finding about that source, and any lane acting on such text is a defect, not a shortcut. |
 
 **Prohibited everywhere in this package** — never proposed, never documented as present: building
 the hackathon solution; a second agent runtime; a custom distributed runtime, scheduler, or message
@@ -67,7 +69,10 @@ truth.
 | `ENFORCED` | A mechanism makes the violation impossible, and that mechanism has been observed to block it. |
 
 **Nothing in this package is `ENFORCED`.** No rehearsal has run and the event has not happened.
-Every control row states its entry criterion to the next state.
+Every control row states its entry criterion to the next state. The statement is repeated in each
+artifact's header deliberately: every document is written to be read standalone, and a state that
+only existed in one file would be invisible to a reader holding the others. It is falsifiable, not
+self-sealing — execute P5.1 and the observer row's state changes.
 
 6. **Downgrade language only.** Write "contractually read-only; no write path observed", never
    "security-enforced". Write "designed, unrehearsed", never "proven".
@@ -90,9 +95,10 @@ Every control row states its entry criterion to the next state.
 > checklist, and a version-controlled diagram.
 
 **Scope of the discovery, stated exactly:** discovery is specified rather than completed. Stakeholder
-intent, constraints, assumptions, non-goals, risks, and decision owners are explicit; three of the
-fourteen architecture-blocking questions are answered, and eleven remain open, tracked with sources
-and dates in `01_DISCOVERY_CLOSURE.md`.
+intent, constraints, assumptions, non-goals, risks, and decision owners are explicit. Of the fourteen
+architecture-blocking questions, two are answered, one is answered in part, and eleven remain open,
+tracked with sources and dates in `01_DISCOVERY_CLOSURE.md` (counted by the register's own status
+column: 2 `ANSWERED`, 1 `PARTIAL`, 11 `OPEN`).
 
 **Attribution, stated exactly:**
 
@@ -167,8 +173,8 @@ fleet, applied to its own production.
 | `04_DEVELOPMENT_PLAN.md` | plan author | 2 |
 | `05_IMPLEMENTATION_CHECKLIST.md` | checklist author | 2 |
 | `07_FAILURE_AND_REHEARSAL_PLAN.md` | failure-plan author | 2 |
-| `08_PORTFOLIO_BRIEF.md` | coordinator | 3 |
-| `01_DISCOVERY_CLOSURE.md`, `README.md`, `00_DELIVERABLE_CONTRACT.md` | coordinator | 3 |
+| `08_PORTFOLIO_BRIEF.md` | coordinator (the operator, T. Gonczar) | 3 |
+| `01_DISCOVERY_CLOSURE.md`, `README.md`, `00_DELIVERABLE_CONTRACT.md` | coordinator (the operator, T. Gonczar) | 3 |
 
 Interfaces were frozen before authoring began: the invariants in §1, the ten Mission Package fields,
 the phase IDs `P0`–`P9`, the decision IDs `D1`–`D8`, the cut priorities, the validation vocabulary,
@@ -179,10 +185,15 @@ Two fallbacks were taken during the diagram work and are recorded rather than hi
 collapse (`E19`–`E23` → one edge) and the `E29` reroute to `L5`. Both are noted in the `.mmd` header
 and in this table.
 
+Artifacts cite different commits in their verification lines because each was last verified at a
+different point in the sequence; `HISTORY.md` lists the commits and what each changed, so a reader
+without git can still place every claim.
+
 Six artifacts disagreeing is the predicted failure mode of parallel authorship. It was checked, not
 assumed: a mechanical census across all artifacts (node IDs, edge IDs, the ten-field schema, the cut
 order, `D1`–`D8`, the phase index, the validation states) and an independent adversarial review
-(23 findings, all fixed). The results are recorded in `07_FAILURE_AND_REHEARSAL_PLAN.md`.
+(23 findings in one adversarial pass — 6 MAJOR, 14 MINOR, 3 NIT, counted by the reviewer's own severity labels — all fixed). The findings themselves are published with locations and dispositions in
+`09_REVIEW_RECORD.md`, not merely counted; the summary is in `07_FAILURE_AND_REHEARSAL_PLAN.md`.
 
 ---
 

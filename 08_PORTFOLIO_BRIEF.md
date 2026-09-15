@@ -15,8 +15,13 @@ every statement about the artifacts was read against this repository's working t
 `531830a`, in these files — `00_DELIVERABLE_CONTRACT.md` (§1–§7), `01_DISCOVERY_CLOSURE.md`
 (§1–§5), `02_REUSE_LEDGER.md` (§0–§5), `03_ARCHITECTURE_BLUEPRINT.md` (§0–§12),
 `04_DEVELOPMENT_PLAN.md` (§1–§15), `05_IMPLEMENTATION_CHECKLIST.md`, `06_ARCHITECTURE.mmd`,
-`07_FAILURE_AND_REHEARSAL_PLAN.md` (§1–§10). The engagement brief is the one source cited from
-outside this repository (§1). No rehearsal has run and the event has not happened, so nothing
+`07_FAILURE_AND_REHEARSAL_PLAN.md` (§1–§10). Nothing below cites a source outside this repository
+for a technical claim. Three outside inputs are named where they are used, and none of them is
+reproduced here: the engagement brief, held by the operator — it is the authority for the ten-field
+shape of the reuse records (`02_REUSE_LEDGER.md` §0); the operator's prior-work experience, cited in
+`02_REUSE_LEDGER.md` §3 as provenance for reuse decisions and never as evidence about this design;
+and one relayed team-contact statement about event duration (`01_DISCOVERY_CLOSURE.md` Q2, labelled
+`[UNVERIFIED — second-hand]`). No rehearsal has run and the event has not happened, so nothing
 below claims a tested mechanism or an observed outcome.
 
 ---
@@ -27,7 +32,7 @@ A five-person cybersecurity team entered an October 2026 hackathon with an **unk
 revealed at or near event start — and a duration measured in hours. They asked for a working method:
 how to research a domain none of them knows, plan against it, and build across five machines
 without the coordination itself consuming the clock.
-`[FACT — the engagement brief §1; blueprint §2]`
+`[FACT — blueprint §1–§2 and the "Client:" line of its header]`
 
 The interesting constraint is not technical difficulty. It is **simultaneity**: research, planning,
 and building overlap in one short window, across five people who cannot all hold the same context.
@@ -116,8 +121,9 @@ What can be shown:
 - **The package was reviewed adversarially and cross-checked mechanically, and the defects found are
   listed rather than hidden.** An independent adversarial review produced 23 findings, 6 of them
   MAJOR, all recorded and fixed; a mechanical census of ten checks across every artifact found the
-  rest — emoji, absolute paths, a D4 decision-text divergence, and a namespace collision between
-  cut-priority P0–P2 and phases P0–P9 — also fixed. `[FACT — 00_DELIVERABLE_CONTRACT.md §5]`
+  rest — emoji, absolute paths, a D4 decision-text divergence, and a namespace collision in which
+  the cut priorities and the plan phases used the same `P` labels, since resolved by renaming the
+  cut priorities to `C0`–`C2` — also fixed. `[FACT — 00_DELIVERABLE_CONTRACT.md §5]`
 - **Answering one discovery question exposed a live design gap that is now covered.** Q2 (24 hours
   or more, two days with overnight work) showed that the observer's stall rule would fire on
   deliberately sleeping lanes; the four mechanisms that close the gap are named where they apply —
@@ -146,7 +152,7 @@ What can be shown:
   07_FAILURE_AND_REHEARSAL_PLAN.md §3 PM-12]`
 - **Coordination overhead is charged against the same clock as building.** The design's own risk
   is that three roles for five people is too much process; the explicit cut order (blueprint §8.2)
-  is the answer, and whether the P0 floor really fits in the event window is `[UNPROVEN]` until
+  is the answer, and whether the never-cut floor (cut priority C0) really fits in the event window is `[UNPROVEN]` until
   the time-box drill (P6.6) runs.
 - **No hackathon outcome is claimed.** The team owns implementation; this engagement produced the
   workflow, not the solution, and no semantic correctness of anything they build is asserted.
@@ -174,14 +180,16 @@ no claim that monitoring improves delivery.
 > checklist, and a version-controlled diagram.
 
 Discovery is specified rather than completed: stakeholder intent, constraints, assumptions,
-non-goals, risks and decision owners are explicit; three of the fourteen architecture-blocking
-questions are answered and eleven remain open, tracked in `01_DISCOVERY_CLOSURE.md`.
+non-goals, risks and decision owners are explicit. Of the fourteen architecture-blocking questions,
+two are answered, one is answered in part, and eleven remain open, tracked in
+`01_DISCOVERY_CLOSURE.md`.
 
 This sentence is usable as of 2026-09-14: all artifacts exist, and the agreement sweep ran — a
 mechanical cross-artifact census (node/edge IDs, ten-field schema, cut order, D1–D8, ENFORCED-as-
 state, attribution, phase index) plus an independent adversarial review. Its findings — 23 review
 findings, 6 of them MAJOR, and the census violations (emoji, absolute paths, a D4 decision-text
-divergence, and a namespace collision between cut-priority P0–P2 and phases P0–P9) — were fixed and
+divergence, and a namespace collision in which the cut priorities and the plan phases used the same
+`P` labels) — were fixed; the collision by renaming the cut priorities to `C0`–`C2`, the rest
 committed in `99fd9c4`; the census re-checks that followed returned clean. The claim above is
 therefore stated as a claim, frozen with its scope in `00_DELIVERABLE_CONTRACT.md` §3; the
 does-not-prove list in §6 still bounds it.

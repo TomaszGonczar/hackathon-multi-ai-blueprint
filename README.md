@@ -23,7 +23,7 @@ documentation to stand them up without a second architecture session.
 
 Source of truth: [`06_ARCHITECTURE.mmd`](06_ARCHITECTURE.mmd) (Mermaid, ELK layout; legend
 included; normal flow solid blue, observation dashed grey, failure/escalation dashed red,
-capability selection dotted purple). Rendered with `-w 2400`; committed raster is 2384×2643 px.
+capability selection dotted purple). Rendered with `-w 2400`; the committed raster is 2384×2855 px (the render command in `06_ARCHITECTURE.mmd` reproduces it).
 The embed above is reduced for orientation only; read the diagram at full size:
 [PNG](render/06_ARCHITECTURE.png) · [SVG](render/06_ARCHITECTURE.svg).
 
@@ -47,11 +47,13 @@ The embed above is reduced for orientation only; read the diagram at full size:
 
 **Shared records** (both readers):
 
+- [`HISTORY.md`](HISTORY.md) — the commit sequence, so the provenance lines in the artifacts resolve in a copy without git history.
+- [`09_REVIEW_RECORD.md`](09_REVIEW_RECORD.md) — every review finding with its location and disposition, and the mechanical census results: the evidence behind the claim that review happened and defects were fixed.
 - [`00_DELIVERABLE_CONTRACT.md`](00_DELIVERABLE_CONTRACT.md) — the frozen interfaces this package was authored against: system invariants, house style, the diagram node and edge IDs every artifact cites, the file-ownership map, and the two recorded diagram fallbacks. Read it to see why the artifacts agree with each other and with the diagram.
 - [`01_DISCOVERY_CLOSURE.md`](01_DISCOVERY_CLOSURE.md) — every question the architecture branches on, its answer or its open status, the answer's source and date, and what each answer changed in the other artifacts.
 
 Every artifact cross-references the diagram by node ID (`MP`, `L1`–`L5`, `OB`, `MERGE`, …) and edge
-ID (`E1`–`E30`), so the four primary artifacts and the diagram cannot silently disagree.
+ID (`E1`–`E30`), and a mechanical census checks the agreement once per revision — after that sweep, further drift has no automatic check, so the identifiers are what make a disagreement findable rather than impossible (`07_FAILURE_AND_REHEARSAL_PLAN.md` §4 CATCH-6).
 
 ## Reading order
 

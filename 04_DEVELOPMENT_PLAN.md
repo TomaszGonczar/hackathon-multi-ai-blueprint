@@ -1,6 +1,6 @@
 # Development Plan — Multi-AI Workflow for a Five-Person Cybersecurity Hackathon
 
-**Status:** draft v2, 2026-09-14
+**Status:** draft v2, 2026-09-14 **Amended 2026-09-15** (discovery closure, overnight protocol, portfolio readiness, and review findings): every change is recorded per commit in `HISTORY.md`, and the review findings that drove them are itemised in `09_REVIEW_RECORD.md`.
 **Companion to:** `03_ARCHITECTURE_BLUEPRINT.md`
 **Purpose:** an ordered, implementation-ready plan the team can execute without another architecture session
 **Not in scope:** building the hackathon solution
@@ -50,7 +50,7 @@ The **Mission Package** is the seam between them: nothing topic-specific can exi
 | Phase | When | Owner | Produces | Gate | Validation state |
 |---|---|---|---|---|---|
 | **P0 — Discovery closure** | T-14 to T-7 | Architect + team | Closed questions, signed scope | Team sign-off | `DESIGNED+CHECKED` — check: §3 per-task acceptance column; entry: filled answer register, every answer sourced, executed at prep time |
-| **P1 — Reuse ledger** | T-10 to T-7 | Architect | `REUSE_LEDGER.md` | Every candidate classified | `DESIGNED+CHECKED` — check: §4 gate + 10-field record; entry: ledger filled and every blueprint §3–§5 component classified |
+| **P1 — Reuse ledger** | T-10 to T-7 | Architect | `02_REUSE_LEDGER.md` | Every candidate classified | `DESIGNED+CHECKED` — check: §4 gate + 10-field record; entry: ledger filled and every blueprint §3–§5 component classified |
 | **P2 — Environment inventory** | T-7 to T-3 | Team | Machine/account matrix | All five machines reachable | `DESIGNED+CHECKED` — check: §5 gate (self-report by command, authenticated call); entry: recorded output for all five machines |
 | **P3 — Core setup: research machine** | T-5 to T-2 | Architect + 1 engineer | Working S1 | Dry-run produces a synthetic package | `DESIGNED+CHECKED` — check: §6 synthetic dry run + anti-cheerleader test; entry: dry-run package read cold and acted on by a second person (§9 6.2) |
 | **P4 — Core setup: development fleet** | T-5 to T-2 | Architect + team | Repo, ownership, merge rule | Two-machine collision test passes | `DESIGNED+CHECKED` — check: P4.8 collision test; entry: collision drill run and result recorded (§9 6.3) |
@@ -138,8 +138,10 @@ Classify every candidate as `REUSE` / `ADAPT` / `REFERENCE ONLY` / `DROP`.
 | P3.3 Contradiction surfacing | Architect | Report section | Deliberately contradictory synthetic sources stay contradictory in output |
 | P3.4 Mission Package generator | Architect | Schema + renderer | Package validates against schema; every required field present |
 | P3.5 Freeze and amendment protocol | Architect | Protocol doc | An edit creates a numbered amendment; silent edit is impossible |
-| P3.6 Approval gate | Architect | Human approval step | Package cannot enter development without a recorded approval |
+| P3.6 Approval gate | Architect | Human approval step | Package cannot enter development without a recorded approval; the approval record names the organizer criterion each `acceptance_tests` entry serves (P3.9 trace) |
 | P3.7 Degraded modes | Architect | Behaviour table | Offline test: last frozen package still served |
+| P3.8 Untrusted-input boundary | Architect | Research rule + test | A synthetic source set containing instruction-shaped text yields an `evidence` entry that quotes it with provenance and **zero** lane instructions derived from it; the package marks it as a source property |
+| P3.9 Rubric trace | Architect + team | Trace table | Every `acceptance_tests` entry names the organizer criterion it serves (Q3, `01_DISCOVERY_CLOSURE.md`); entries with no criterion are either justified in writing or deleted |
 
 **Gate:** a synthetic dry run produces a package a second person can read and act on without asking the author anything.
 
@@ -208,7 +210,7 @@ Classify every candidate as `REUSE` / `ADAPT` / `REFERENCE ONLY` / `DROP`.
 
 **Gate:** the rehearsal record exists, including what failed. A rehearsal that found nothing is treated as insufficient, not as a pass.
 
-**Rationale, from the sibling project:** a determinism suite that has never been observed to fail is not evidence. Same principle — a workflow drill that has never failed has proven nothing.
+**Rationale:** a check that has never been observed to fail is not evidence, and a workflow drill that has never failed has proven nothing — a drill in which nothing can go wrong tests nothing. The gate above therefore rests on the recorded failure, not on the green result.
 
 **Diagram cross-references (`06_ARCHITECTURE.mmd`):** 6.2 exercises E1–E3 (`RM --> MP --> APPR --> MP`). 6.3 exercises E27 (same-surface escalation) against the ownership rule behind E4–E8. 6.4 exercises E29 (degraded local adoption of the frozen package). 6.5 exercises E30 (observer outage is itself visible).
 
@@ -235,6 +237,19 @@ Machine health → credentials present → repository reachable → roles announ
 
 **Q2 — resolved in part, 2026-09-15: duration is 24 hours or more; the expected shape is two days with part of the team working overnight.** `[FACT — operator report of a team contact, 2026-09-15]` `[UNVERIFIED — second-hand; organizer confirmation pending]` Consequences, applied: the short-event branch is closed — the observer is not cut for duration reasons and continuous mode stays ON by default; the cut order in blueprint §8.2 is therefore driven by **pressure, not duration**; and the four overnight rows above become live requirements rather than options. Still open: exact start/stop times, submission deadline, preparation rules — these set `<freeze-threshold>` and `<submission-buffer>` at T7-09 and change no structure. See `01_DISCOVERY_CLOSURE.md` Q2, and the "Time running out" row in §11.
 
+**Time and cost budget — the frame, with the numbers owed at T7-09.** Every other cost in this design is named; the event's own budget was not, and an unmodelled budget is how coordination silently eats the clock (`07_FAILURE_AND_REHEARSAL_PLAN.md` §3 PM-3). The frame is fixed now so the numbers have somewhere to land:
+
+| Budget line | Owner | Value | Filled at |
+|---|---|---|---|
+| Event window (start, stop, submission deadline) | `<team-lead>` | `<event-window>` | T7-09, from organizer material |
+| Package approval (research freeze → `APPR`) | `<architect>` | `<approval-budget>` | T7-09; measured at drill 6.2 |
+| Startup sequence ES-01…ES-09 | `<team-lead>` | `<startup-budget>` | T7-09; measured at drill 6.1 |
+| Per-cycle coordination overhead (sync, triage, handover) | `<team-lead>` | `<cycle-overhead-budget>` | T7-09; measured across one full rehearsal cycle |
+| Triage load on the observer's reports | `<s1-operator>` | `<triage-budget>` | T7-09; measured at drill 6.5 |
+| **C0 floor** — the never-cut set must fit inside the event window | `<team-lead>` | `<c0-floor-target>` | Drill 6.6 is the measurement, and it now has a target to hit rather than only a duration to report |
+
+Drill 6.6 recalibrates the §9 step timeouts against these values; until it runs, every timeout in `07` §6 is an estimate and is labelled as one.
+
 ### P9 Teardown
 Stop observer → release credentials → archive evidence → **sanitize before anything reaches a portfolio** → confirm no participant, repository, or organizer material is exposed.
 
@@ -251,7 +266,7 @@ Stop observer → release credentials → archive evidence → **sanitize before
 | Plan diverges from reality | Observer reports deviation (E25, escalated on E26 `DR --> ESC`) | Human decides: amend or accept (amendment via E28 `ESC --> MP`) | Continue against frozen package, accepting known drift | `DESIGNED+CHECKED` — check: §6 anti-cheerleader test (deviation reported, not defended); entry: one amend-or-accept decision recorded at 6.2/6.7 | `DESIGNED` — entry: P3.5 protocol defines a drift-acceptance record and a drill produces one |
 | CI unavailable | No automated check result (E15/E16 `PR <--> CI` silent) | Manual verification by a second person | Weaker evidence, stated as such | `DESIGNED` — entry: drill disables CI, manual verification produces a recorded command + output at E17 | `DESIGNED` — entry: same drill records the evidence downgrade statement on the PR |
 | Observer down | Missing reports | Team notices on the next ask | Continue without monitoring | `DESIGNED+CHECKED` — check: §9 6.5 (loss visible); entry: drill run, detection lag recorded | `DESIGNED+CHECKED` — check: §9 6.5 ("team continues building"); entry: drill run, continued building recorded |
-| Time running out | Clock | Apply cut order (blueprint §8.2; duration branch — see the Q2 note in §10) | Ship only the never-cut set (cut priority P0) | `DESIGNED` — entry: a tabletop step invokes the cut order at a simulated clock mark and records which rows were cut | `DESIGNED` — entry: same tabletop records the P0-only ship decision |
+| Time running out | Clock | Apply cut order (blueprint §8.2; duration branch — see the Q2 note in §10) | Ship only the never-cut set (cut priority C0, never cut) | `DESIGNED` — entry: a tabletop step invokes the cut order at a simulated clock mark and records which rows were cut | `DESIGNED` — entry: same tabletop records the C0-only ship decision |
 | "It works" asserted | No reproducible check | Demand the command and its output | Treat as unverified | `DESIGNED+CHECKED` — check: §12 matrix (every row names a reproducible check); entry: one claim refused without command output during rehearsal, recorded | `DESIGNED+CHECKED` — check: claim-label vocabulary (`[UNPROVEN]`); entry: rehearsal record labels the claim `[UNPROVEN]` |
 | Lane dark overnight (work unpushed) | No push or heartbeat from the lane | If a pause was declared → expected; no action until the resume-by time. If undeclared → observer stall alert, then a reachability check | Reassign from `REPO` state alone; the push-before-offline rule (DC-14) is what bounds the loss to time rather than work | `DESIGNED+CHECKED` — check: DC-14 (push before offline) | `DESIGNED+CHECKED` — check: §9 drill 6.4 extended to an offline lane |
 | Declared-paused lane reported as a stall | Observer emits a stall alert for a lane holding an active pause declaration | Treat it as a defect in the cadence rule, never in the lane: suppress the alert and correct the rule before the next night window | The declaration suppresses the alert; the false positive is logged against P5.4 — an observer that cries wolf gets muted (blueprint §5.6) | `DESIGNED` — entry: one declared pause observed producing zero stall alerts in rehearsal | `DESIGNED` — entry: same drill records the suppressed alert and the rule correction |
@@ -292,7 +307,7 @@ Explicitly **not** in this plan:
 - a permanent agent-per-human role ontology;
 - a second authoritative mirror of the repository;
 - dashboards built for appearance;
-- importing Omega V3 components wholesale;
+- importing prior-work components wholesale;
 - any claim that multi-agent agreement equals truth;
 - publishing participant, sponsor, repository, or credential information.
 
@@ -305,7 +320,7 @@ Blueprint §10, questions 1–14, remain the plan's inputs. Two of them change t
 - **Q1 (one team or five?) — ANSWERED 2026-09-15: one five-person team.** One fleet, up to five workstreams (lanes `L1`–`L5`), one registry mapped to the five named members; the five-teams branch is closed (`01_DISCOVERY_CLOSURE.md` Q1). P4's shape no longer waits on this answer.
 - **Q2 (exact duration) — PARTIAL 2026-09-15: 24 hours or more, expected two days with overnight work.** The short-event branch is closed, the cut order becomes pressure-driven, and the overnight rows in §10 are live requirements. Exact hours, deadline, and preparation rules remain open, recorded at T7-09; they set `<freeze-threshold>` and `<submission-buffer>` but change no structure (`01_DISCOVERY_CLOSURE.md` Q2).
 
-**P0 gate status (2026-09-15):** Q1 is answered and Q2 is answered in the part that changes structure, so P1 onward may start. The remaining half of Q2 is a constants question, not a shape question, and the thirteen other questions close at T7-01 (blueprint §10).
+**P0 gate status (2026-09-15):** Q1 is answered and Q2 is answered in the part that changes structure, so P1 onward may start. The remaining half of Q2 is a constants question, not a shape question; the other twelve questions (eleven open, one partial) close at T7-01 (blueprint §10; `01_DISCOVERY_CLOSURE.md` §1).
 
 ---
 

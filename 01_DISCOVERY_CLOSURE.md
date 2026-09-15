@@ -87,7 +87,7 @@ marked TBD until then.
 
 ## 3. Remaining gaps and why three of them are load-bearing
 
-Thirteen questions are still open. Three of them can invalidate a design claim rather than merely
+**Eleven questions are still open, one is answered in part, and two are answered** (counted by status in the §1 register: 11 rows marked `OPEN`, 1 marked `PARTIAL`, 2 marked `ANSWERED`). Three of the open ones can invalidate a design claim rather than merely
 parameterise it, and they should be closed first:
 
 | Question | Why it is load-bearing | What happens if it stays open |

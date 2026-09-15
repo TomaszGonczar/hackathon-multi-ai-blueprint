@@ -1,12 +1,13 @@
 # Implementation Checklist — Multi-AI Workflow for a Five-Person Cybersecurity Hackathon
 
-**Status:** draft v1, 2026-09-14
+**Status:** draft v1, 2026-09-14 **Amended 2026-09-15** (discovery closure, overnight protocol, portfolio readiness, and review findings): every change is recorded per commit in `HISTORY.md`, and the review findings that drove them are itemised in `09_REVIEW_RECORD.md`.
 **Register:** team runbook. Imperative, binary, assignable. Usable under time pressure by someone who has never read the blueprint.
 **Companion to:** `03_ARCHITECTURE_BLUEPRINT.md` (authority §7, cut order §8.2), `04_DEVELOPMENT_PLAN.md` (phases P0–P9, failure matrix §11), `06_ARCHITECTURE.mmd` (node/edge IDs per `00_DELIVERABLE_CONTRACT.md` §4)
 **Derives from:** every item below is traceable to a plan phase or blueprint rule. This checklist introduces no new mechanism. `[READ]`
+**Command examples:** illustrative and macOS/Linux-flavoured, with `<placeholders>` throughout. Machine operating systems are an open question (Q4 in `01_DISCOVERY_CLOSURE.md`); per-OS variants are written once Q4 closes at T7-01. Until then a command that does not run as written is a known gap, not a surprise.
 **Not in scope:** building the hackathon solution.
 
-**Verification method:** derived by reading `04_DEVELOPMENT_PLAN.md` §2–§11 and `03_ARCHITECTURE_BLUEPRINT.md` §3.2, §3.4, §4.2, §4.4–§4.5, §5, §7, §8.2–§8.3, §9 at commit `3ea098f`; required time-slice structure and topic list from `04_DEVELOPMENT_PLAN.md` §9–§10; node/edge IDs from `00_DELIVERABLE_CONTRACT.md` §4. No item in this file has ever been executed; no rehearsal has run. `[FACT]`
+**Verification method:** derived by reading `04_DEVELOPMENT_PLAN.md` §2–§11 and `03_ARCHITECTURE_BLUEPRINT.md` §3.2, §3.4, §4.2, §4.4–§4.5, §5, §7, §8.2–§8.3, §9 at commit `3ea098f`; the seven time slices are this file's own derivation from `04_DEVELOPMENT_PLAN.md` §2 (phase windows) and §10 (event-day phases), and the required operational topics are listed in §12 below; node/edge IDs from `00_DELIVERABLE_CONTRACT.md` §4. No item in this file has ever been executed; no rehearsal has run. `[FACT]`
 
 ---
 
@@ -61,7 +62,7 @@ Slots are roles, never names in this document. At T7-02 each slot receives exact
   - fail: <rollback> → escalate <slot> <condition>
 ```
 
-`[OPT]` marks an item cuttable under pressure — cut priority P1 in blueprint §8.2 (see §10). Commands appear in fenced blocks, one command set per block. **All commands are synthetic examples**: `<angle-bracket>` placeholders only, no real credentials, no participant names, no operator home-directory paths.
+`[OPT]` marks an item cuttable under pressure — cut priority **C1** (cut under pressure) in blueprint §8.2, a namespace of its own distinct from the plan phases `P0`–`P9` (see §10). Commands appear in fenced blocks, one command set per block. **All commands are synthetic examples**: `<angle-bracket>` placeholders only, no real credentials, no participant names, no operator home-directory paths.
 
 ---
 
@@ -85,7 +86,7 @@ Slots are roles, never names in this document. At T7-02 each slot receives exact
   - verify: answers log shows 14 rows; each row = answer + source, or assumption + fallback.
   - fail: assign each blank to a slot with a deadline; if Q1 or Q2 is still blank → preparation halts → escalate `<team-lead>`.
 
-- [ ] **T7-02 · Every owner slot in §0.3 is assigned to exactly one human in the private team registry; each assigned human confirms aloud. Zero unassigned slots.**
+- [ ] **T7-02 · Every owner slot in §0.3 is assigned to exactly one human in the private team registry; each assigned human confirms aloud. Zero unassigned slots. If the team runs with fewer than five lanes, the role-collapse order is applied (§10, cut priority C1) and the collapsed slots are named here.**
   - owner `<team-lead>` · trigger: T-7 session, after T7-01 · ref P0.7 | nodes `MERGE`, `ESC` | edges —
   - verify: registry shows a human against every slot; merge-owner is one named human (blueprint D6).
   - fail: `<team-lead>` assigns by decision and records it; unassigned at T-1 → GO/NO-GO item for `<team-lead>`.
@@ -161,7 +162,7 @@ Slots are roles, never names in this document. At T7-02 each slot receives exact
 - [ ] **T1-01 · Dry-run package produced (drill 6.2): a synthetic topic through S1 yields a Mission Package with all ten fields, validating against the schema; a named second person reads it and states their next action without asking the author anything.**
   - owner `<s1-operator>` + one reader · trigger: T-1 rehearsal window · ref P3 §6 gate | nodes `RM`, `MP`, `APPR` | edges E1–E2
   - verify: validator output + the second person's recorded statement, both in the rehearsal record.
-  - fail: repair the generator and rerun once; still failing by T-1 evening → the package for the event is authored by hand into the same schema (S1 degrades to research-only); the package itself is P0, never cut (§10) → escalate `<architect>`.
+  - fail: repair the generator and rerun once; still failing by T-1 evening → the package for the event is authored by hand into the same schema (S1 degrades to research-only); the package itself is C0, never cut (§10) → escalate `<architect>`.
 
 - [ ] **T1-02 · Provenance holds: in the dry-run package, count of claims that lack a source AND lack the `[unverified]` marker = 0.**
   - owner `<s1-operator>` · trigger: after T1-01 · ref P3.2, blueprint §3.2 rule 1 | nodes `RM`, `MP` | edges E1
@@ -317,7 +318,7 @@ Slots are roles, never names in this document. At T7-02 each slot receives exact
 - [ ] **ES-06 · Roles announced aloud: `<team-lead>` reads the ownership registry; each `<lane-owner-N>` answers "present, lane N, surface X"; `<merge-owner>` and escalation contacts named aloud. Five answers recorded.**
   - owner `<team-lead>` · trigger: after ES-05 · ref P7, P4.2 | nodes `L1`–`L5`, `MERGE`, `ESC` | edges —
   - verify: five responses in the event log (audio or notes).
-  - fail: an absent lane → DC-07 replacement before start; no replacement → lanes consolidate per cut priority P2 (serialize, §10) → escalate `<team-lead>`.
+  - fail: an absent lane → DC-07 replacement before start; no replacement → lanes consolidate per cut priority C2 (serialize, §10) → escalate `<team-lead>`.
 
 - [ ] **ES-07 · Observer status stated aloud: ON with cadence `<report-cadence>` and alerts bounded to deviation/failure/conflict/stall — or OFF as a tier-2 cut. If ON, the first heartbeat (observer: OK) is seen within one cadence.**
   - owner `<s1-operator>` announces; `<team-lead>` records · trigger: after ES-06 · ref P7, P5.4, P5.7 | nodes `OB`, `DR`, `ESC` | edges E24–E26, E30
@@ -408,8 +409,8 @@ Slots are roles, never names in this document. At T7-02 each slot receives exact
 
 - [ ] **DC-12 · Deviation reports triaged: every observer report receives a named human's answer within `<triage-window>`: amend / accept with logged drift / escalate. Zero reports auto-resolved or unanswered at sync.**
   - owner `<team-lead>` answers; `<s1-operator>` forwards · trigger: each report, observer ON · ref P8, plan §11 | nodes `DR`, `ESC`, `MP` | edges E25–E26, E28
-  - verify: each report has an answer with decider slot + timestamp.
-  - fail: a report is unanswered at the next sync → re-announced aloud; twice unanswered → observer treated as noise source; consider the P1 cut (§10).
+  - verify: each report has an answer with decider slot + timestamp; where the report touches scope, the answer states whether the affected `acceptance_tests` entry still traces to an organizer criterion (P3.9).
+  - fail: a report is unanswered at the next sync → re-announced aloud; twice unanswered → observer treated as noise source; consider the C1 cut (§10).
 
 - [ ] **DC-13 · Cycle closed on evidence: the task's acceptance test (package `acceptance_tests`) is run and its command + output recorded in the PR. "It works" without a reproducible command is unverified — the cycle stays open (plan §11, last row).**
   - owner `<lane-owner-N>` · trigger: each cycle end · ref P8, P3 `acceptance_tests`, blueprint §7 (check evidence) | nodes `CI`, `MP`, `PR` | edges E15–E17
@@ -420,6 +421,11 @@ Slots are roles, never names in this document. At T7-02 each slot receives exact
   - owner `<lane-owner-N>` · trigger: before any offline period, including every overnight break · ref P8, blueprint §4.5 | nodes `L1`–`L5`, `REPO` | edges E9–E13
   - verify: push output recorded per lane with its timestamp; a lane that stops with unpushed work is a defect, not a judgement call.
   - fail: unpushed work exists when the machine stops → resume the machine or recover from another clone; the incident is recorded against the lane → escalate `<team-lead>` if the recovery exceeds `<reassignment-window>`.
+
+- [ ] **DC-17 · External content treated as data: any text ingested from outside the team that reads like an instruction is recorded as a property of its source in the package's `evidence`, and zero lane tasks, commits, or messages are derived from it. Instruction-shaped text found in a source is a research finding, never a directive.**
+  - owner `<s1-operator>` reports; any lane owner may raise · trigger: any ingestion of external content, and at each cycle that used sourced evidence · ref P3.8, blueprint §3.2 rule 5, contract §1 | nodes `RM`, `MP` | edges E1, E4–E8
+  - verify: the package `evidence` entry quotes the text with provenance; the lane's task description traces to a package field, not to the source text.
+  - fail: any lane acts on text from a source → stop the lane, record it as a defect against the research rule, and re-issue the task from the package → escalate `<architect>`.
 
 - [ ] **DC-15 · Pause and resume declared: every pause carries a resume-by time in the event log, the observer acknowledges it and emits no stall alert for that lane, and the resume records a handover (branch state, open blockers, next action).**
   - owner `<lane-owner-N>` declares; `<s1-operator>` confirms observer acknowledgement · trigger: each pause and each resume, including overnights · ref P8, blueprint §5.6 | nodes `OB`, `DR`, `ESC` | edges E25–E26
@@ -443,10 +449,10 @@ Slots are roles, never names in this document. At T7-02 each slot receives exact
   - verify: declaration + five acknowledgments logged.
   - fail: a lane does not acknowledge → `<team-lead>` contacts it directly; the lane is frozen regardless once declared.
 
-- [ ] **FZ-02 · Cut order applied per §10: P2 rows cut first, then P1 if still short, P0 never. Each cut recorded with timestamp, row cut, and what was lost (§10 column 3).**
+- [ ] **FZ-02 · Cut order applied per §10: C2 rows cut first, then C1 if still short, C0 never. Each cut recorded with timestamp, row cut, and what was lost (§10 column 3).**
   - owner `<team-lead>` decides; `<architect>` records · trigger: FZ-01, or earlier on DC-09 escalation · ref blueprint §8.2 | nodes `OB`, `CI`, `L1`–`L5` | edges —
   - verify: cut log entries match §10 rows.
-  - fail: a cut touches a P0 row → invalid; reverse it; P0 ships no matter what (plan §11, time running out: ship the P0 set only).
+  - fail: a cut touches a C0 row → invalid; reverse it; C0 ships no matter what (plan §11, time running out: ship the C0 set only).
 
 - [ ] **FZ-03 · Post-freeze merges restricted: zero merges after FZ-01 except demo-blocking defects; each such merge individually authorized by `<merge-owner>` with a one-line reason recorded in the PR.**
   - owner `<merge-owner>` · trigger: every merge attempt after freeze · ref P8, D6 | nodes `MERGE`, `PR` | edges E17–E18
@@ -469,7 +475,7 @@ Slots are roles, never names in this document. At T7-02 each slot receives exact
   - fail: dry run broken → the failure is demo-blocking; FZ-03 fix path applies.
 
 - [ ] **FZ-07 · Observer minimized or OFF per FZ-02: state announced aloud. Branch: if OFF → manual Git reads at each sync point, with the reader named (blueprint §8.2: on-demand Git reads remain).**
-  - owner `<s1-operator>` · trigger: FZ-02 cut of the P1 observer row, or noise per DC-12 · ref P5.7 | nodes `OB`, `ESC` | edges E30
+  - owner `<s1-operator>` · trigger: FZ-02 cut of the C1 observer row, or noise per DC-12 · ref P5.7 | nodes `OB`, `ESC` | edges E30
   - verify: announced state + named reader (if OFF) logged.
   - fail: state unclear → treat as OFF and announce OFF; ambiguity in monitoring is worse than absence.
 
@@ -512,7 +518,7 @@ Slots are roles, never names in this document. At T7-02 each slot receives exact
 
 - [ ] **SB-04 · Honest diff stated: every cut feature, open unknown, and manual-verification substitute appears in the demo/submission notes. `<skeptic>` cross-checks the notes against the amendment log + FZ-05 output; zero unexplained differences.**
   - owner `<skeptic>` cross-checks; `<architect>` writes · trigger: before SB-02 delivery · ref plan §11 (topic harder than expected — state unknowns in the demo), P8 | nodes `MP`, `DR` | edges —
-  - verify: cross-check result recorded: notes vs. amendments, difference count = 0.
+  - verify: cross-check result recorded: notes vs. amendments, difference count = 0; where an organizer criterion (P3.9 trace) is not served by any shipped feature, the notes say so explicitly rather than leaving the gap unnamed.
   - fail: an unclaimed gap exists → fix the notes before delivery; delivery of an overclaim is a privacy/honesty defect, not a rounding error.
 
 - [ ] **SB-05 · Post-submission lock: no force-push and no history rewrite on the integration branch after SB-01; a probe rewrite is rejected by protection; later changes happen only on new branches.**
@@ -583,19 +589,20 @@ A checked box corresponds to an **observed condition**: a command output, a reco
 
 ## 10. Cut order under time pressure
 
-Priorities below are the **scope-cut priorities P0/P1/P2 of blueprint §8.2** — not the plan phases P0–P9. Rows 1–3 reproduce blueprint §8.2 verbatim; the last column maps each row to this checklist.
+Priorities below are the **scope-cut priorities C0/C1/C2 of blueprint §8.2** — not the plan phases P0–P9. Rows 1–3 reproduce blueprint §8.2 verbatim; the last column maps each row to this checklist.
 
 | Priority | Component | If cut, what is lost | Checklist consequence |
 |---|---|---|---|
-| **P0 — never cut** | Mission Package + frozen baseline | The fleet builds against nothing | ES-04, DC-01 stay in force in every scenario |
-| **P0 — never cut** | One-writer-per-workspace | Collisions consume the clock | DC-02, DC-03 stay in force even when lanes serialize |
-| **P0 — never cut** | Human merge authority | Unrecoverable integration damage | DC-11, FZ-03 stay in force; no exception under time pressure |
-| **P1 — cut under pressure** | Observer continuous mode | Loses monitoring; on-demand Git reads remain | ES-07 announces OFF; DC-08/DC-12 fall back to manual Git reads (FZ-07) |
-| **P1 — cut under pressure** | Checklist items marked optional | Slower restart; nothing breaks | Drop the `[OPT]` items: T1-07, ES-05, DC-08 |
-| **P2 — cut first** | Parallel workstreams | Slower, but sequential still ships | Lanes serialize under DC-02/DC-03; the registry still governs order |
-| **P2 — cut first** | Automated CI beyond one check | Manual verification, weaker evidence | DC-05's manual-verification branch becomes the default path |
+| **C0 — never cut** | Mission Package + frozen baseline | The fleet builds against nothing | ES-04, DC-01 stay in force in every scenario |
+| **C0 — never cut** | One-writer-per-workspace | Collisions consume the clock | DC-02, DC-03 stay in force even when lanes serialize |
+| **C0 — never cut** | Human merge authority | Unrecoverable integration damage | DC-11, FZ-03 stay in force; no exception under time pressure |
+| **C1 — cut under pressure** | Observer continuous mode | Loses monitoring; on-demand Git reads remain | ES-07 announces OFF; DC-08/DC-12 fall back to manual Git reads (FZ-07) |
+| **C1 — cut under pressure** | Checklist items marked optional | Slower restart; nothing breaks | Drop the `[OPT]` items: T1-07, ES-05, DC-08 |
+| **C1 — cut under pressure** | Role collapse on `S1` and at `MERGE` | One human holds two roles (observer operator folded into a lane owner; merge owner folded into the team lead). Costs attention at the worst moment, and makes the merge rule's addressee less available — never the authority itself | T7-02 assigns the collapsed slots and the merge-alternate path (P0.7) is used; DC-11 and DC-16 stay in force |
+| **C2 — cut first** | Parallel workstreams | Slower, but sequential still ships | Lanes serialize under DC-02/DC-03; the registry still governs order |
+| **C2 — cut first** | Automated CI beyond one check | Manual verification, weaker evidence | DC-05's manual-verification branch becomes the default path |
 
-**Branching rule.** If remaining time < `<freeze-threshold>` (T7-09) → cut the P2 rows now. If the projected finish still exceeds the deadline → cut the P1 rows. Never cut a P0 row: the fallback is to ship the P0 set only (plan §11, "time running out"). Every cut is recorded: timestamp, row cut, decider slot, what was lost.
+**Branching rule.** If remaining time < `<freeze-threshold>` (T7-09) → cut the C2 rows now. If the projected finish still exceeds the deadline → cut the C1 rows. Never cut a C0 row: the fallback is to ship the C0 set only (plan §11, "time running out"). Every cut is recorded: timestamp, row cut, decider slot, what was lost.
 
 ---
 
@@ -613,15 +620,15 @@ Priorities below are the **scope-cut priorities P0/P1/P2 of blueprint §8.2** �
 - the observer is silent past one `<report-cadence>` (outage — treat as OFF, announce it);
 - the remote is unreachable past `<retry-interval>` × 3 (DC-06 → ES-08 fallback).
 
-**Freeze rule:** at deadline − `<freeze-threshold>`, `<team-lead>` declares freeze aloud (FZ-01). Cut order: P2 first, then P1, never P0 (§10). Every lane ends at PASS@sha or CUT (FZ-04). Package acceptance tests run on the integration branch (FZ-05). One demo dry run (FZ-06). Post-freeze merges: demo-blocking defects only, with reasons (FZ-03).
+**Freeze rule:** at deadline − `<freeze-threshold>`, `<team-lead>` declares freeze aloud (FZ-01). Cut order: C2 first, then C1, never C0 (§10). Every lane ends at PASS@sha or CUT (FZ-04). Package acceptance tests run on the integration branch (FZ-05). One demo dry run (FZ-06). Post-freeze merges: demo-blocking defects only, with reasons (FZ-03).
 
 **Failure one-liners (plan §11):** S1 lost → build against the local frozen package, observer OFF (DC-06). Collision → stop both lanes, reassign per registry (DC-02). CI down → manual verification, logged as weaker (DC-05). Person/machine lost → reassign from Git state alone (DC-07). Network down → commit locally, push on reconnect (DC-06). Time short → cut order (§10). "It works" with no command → unverified, cycle stays open (DC-13).
 
 ---
 
-## 12. Coverage map — concept §3 required topics
+## 12. Coverage map — required operational topics
 
-Every topic required by `28_HACKATHON_TOMORROW_CONCEPT.md` §3, and where it is covered:
+The ten operational topics this checklist is required to cover, in the order the table uses, so this section needs no source outside this repository: credential placement, repository access, machine health, time synchronization, connectivity loss, worker replacement, conflicting writes, failing CI, human override, offline fallback. Where each is covered:
 
 | Required topic | Items |
 |---|---|
@@ -650,7 +657,7 @@ Every topic required by `28_HACKATHON_TOMORROW_CONCEPT.md` §3, and where it is 
 | P5 Observer | T1-11, T1-12, T1-13, T1-18, ES-07, DC-08, DC-12, FZ-07 (TD-01/TD-02 verify P5 outputs at teardown; listed under P9) |
 | P6 Rehearsal | T1-01 (6.2), T1-09 (6.3), T1-13 (6.5), T1-14 (6.4), T1-15 (6.1), T1-17 (6.6–6.8 + gate) |
 | P7 Event-day startup | ES-01 … ES-09 |
-| P8 Event operation | DC-01 … DC-16, FZ-01 … FZ-08, SB-01 … SB-05 |
+| P8 Event operation | DC-01 … DC-17, FZ-01 … FZ-08, SB-01 … SB-05 |
 | P9 Teardown | TD-01 … TD-06 |
 
 No plan phase lacks checklist coverage. `[FACT — method: each phase's tasks in plan §3–§10 were mapped item-by-item while writing §2–§8; the mapping above is the result, and every item ID listed exists in this file.]`
@@ -659,6 +666,6 @@ No plan phase lacks checklist coverage. `[FACT — method: each phase's tasks in
 
 ## 14. Status
 
-73 checkable items (counting method: `grep -c '^- \[ \] ' 05_IMPLEMENTATION_CHECKLIST.md` returns 74; subtract the one template line inside the §0.5 format-example code block, which is an illustration, not a checkable item → 73. Distribution, counted per ID prefix the same way: T-7 = 10, T-1 = 19, event start = 9, per-cycle = 16, freeze = 8, submission = 5, teardown = 6.)
+74 checkable items (counting method: `grep -c '^- \[ \] ' 05_IMPLEMENTATION_CHECKLIST.md` returns 75; subtract the one template line inside the §0.5 format-example code block, which is an illustration, not a checkable item → 74. Distribution, counted per ID prefix the same way: T-7 = 10, T-1 = 19, event start = 9, per-cycle = 17, freeze = 8, submission = 5, teardown = 6.)
 
 Nothing in this checklist has been executed. It is designed, unrehearsed. The P6 rehearsal (plan §9) is its first test, and its recorded failures are expected to correct this document (T1-17). All command examples are synthetic.
