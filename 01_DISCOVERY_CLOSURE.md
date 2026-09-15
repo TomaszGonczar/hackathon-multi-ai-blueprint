@@ -38,14 +38,13 @@ operator in session on 2026-09-15. No organizer material was consulted — none 
 | Q11 | Is the topic revealed before or at the event? | OPEN | — | — | Organizers | Blueprint §3 research runway | T7-01 |
 | Q12 | Which external services are permitted? | OPEN | — | — | Organizers | Blueprint §3.4 degraded modes | T7-01 |
 | Q13 | What may be captured for the portfolio? | OPEN | — | — | Team + organizers | Blueprint §11 | T7-10 |
-| Q14 | Who executes this plan after delivery? | **ANSWERED** | **The five-person team.** The operator designed the architecture and workflow and does not participate in the event or in the solution. `[FACT — return brief §1 and its non-responsibility clause]` Flagged for operator confirmation, because the brief is the authority and not this file. | Return brief §1 | Operator (per brief) | Plan §2 owners column, §3–§10 | Confirm at T7-02 |
+| Q14 | Who executes this plan after delivery? | **ANSWERED** | **The five-person team.** The operator designed the architecture and workflow and does not participate in the event or in the solution. `[FACT — operator, 2026-09-15]` | Operator decision, 2026-09-15 | Operator (scope) | Plan §2 owners column, §3–§10 | Closed |
 
-**Why this list is 14 and the return brief lists 20.** The brief's twenty questions include
+**Why this register is 14 questions and not more.** The engagement's question list includes
 operating facts that do not change any artifact (which machines support remote execution, where
-observer notifications appear, and similar). §10 of the blueprint distilled them to the fourteen
-that actually move a section, and named the section for each. The remaining six are handled as P2
-inventory items in the checklist, not as architecture blockers. `[FACT — blueprint §10 preamble;
-plan §5]`
+observer notifications appear, and similar). Blueprint §10 distilled it to the fourteen that
+actually move a section, and named the section for each. The remainder are handled as P2 inventory
+items in the checklist, not as architecture blockers. `[FACT — blueprint §10 preamble; plan §5]`
 
 ---
 

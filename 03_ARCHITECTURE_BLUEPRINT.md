@@ -9,7 +9,7 @@
 **Claim labels.** `[FACT]` — executed or read directly. `[INFERENCE]` — reasoned from evidence. `[UNPROVEN]` — designed, not tested. Every statement about runtime behaviour in this blueprint is `[UNPROVEN]` unless anchored to a read artifact.
 **Validation states.** Every mechanism and control carries exactly one state: `DESIGNED` — specified here, no check has ever exercised it. `DESIGNED+CHECKED` — specified, and a defined check exists that can exercise it (the check is named in the row). `ENFORCED` — a mechanism makes the violation impossible, and that mechanism has been observed to block it. **Nothing in this blueprint is `ENFORCED`**: no rehearsal has run and the event has not happened (§8.4). Every control row states its entry criterion to the next state.
 **Verification method.** Draft v1 read at commit `3ea098f`. Files inspected: this document (§0–§12); `04_DEVELOPMENT_PLAN.md` (§2, §4–§12 — named checks P3.x/P4.x/P5.x, rehearsal drills 6.1–6.8, failure and acceptance matrices); the shared deliverable contract (invariants §1, house style §2, attribution §3, diagram node inventory §4). No command was executed against a live system; this file produced no render.
-**Diagram cross-references.** Components in §3–§6 map to node IDs in `06_ARCHITECTURE.mmd` (inventory: contract §4). §3, §4, and §5 each carry a mapping line; §6 carries a full node-mapping table beneath its inline sketch.
+**Diagram cross-references.** Components in §3–§6 map to node IDs in `06_ARCHITECTURE.mmd` (inventory: `00_DELIVERABLE_CONTRACT.md` §4). §3, §4, and §5 each carry a mapping line; §6 carries a full node-mapping table beneath its inline sketch.
 
 ---
 
@@ -55,7 +55,10 @@ Any component that assumes a domain has already failed the brief.
 
 ## 2. Discovery record
 
-Recorded as part of a client-style discovery with the five team members. Intent, not tooling, came first.
+Written as the discovery frame for this engagement: intent, constraints, and the questions that must be
+closed are recorded here. Intent, not tooling, came first. **This section states a specified
+discovery, not the record of a session that has already occurred** — the questions themselves, with
+their answers, open status, sources, and decision owners, are tracked in `01_DISCOVERY_CLOSURE.md`.
 
 ### STAKEHOLDER INTENT
 Win a cybersecurity hackathon whose topic is unknown at preparation time, without losing hours to coordination overhead.
@@ -109,7 +112,7 @@ The research machine does not produce "the answer." It produces a **structured p
 ### 3.2 Non-negotiable rules
 
 1. **Provenance is mandatory.** Every claim carries a source and an access date. A claim without a source is marked `[unverified]` and cannot be built against.
-2. **Agreement is not truth.** Several sources or agents agreeing is recorded as agreement, never as verification. This rule exists because the sibling project `dSearch` measured exactly this and **falsified** it: 261 corroborated URLs, only 38 correct — precision 0.1456.
+2. **Agreement is not truth.** Several sources or agents agreeing is recorded as agreement, never as verification: corroboration is a property of the sources, not of the world. A research system that treats consensus as confirmation manufactures its own evidence, and the package it freezes then carries confidence it did not earn.
 3. **Contradictions are preserved, not merged.** A contradiction is information. Resolving it by averaging destroys the signal.
 4. **Topic-agnostic.** No domain-specific component, prompt, or assumption.
 
@@ -282,7 +285,7 @@ The canonical diagram additionally carries `AG` (task-selected capability bundle
 | Observer permissions | Read-only credentials | Enforced by token scope, not by instruction | `DESIGNED+CHECKED` — check: P5.1, plan §8 (write attempt fails by credential) | `ENFORCED` when P5.1 is observed blocking a real write attempt through the scoped token; "enforced by token scope" names the intended mechanism, not an observed one |
 | Credentials | Per person, least privilege | Never in the repository, never in prompts | `DESIGNED+CHECKED` — check: P2 credential placement, plan §5 | `ENFORCED` when the P2 inventory is observed: every secret's location verified, none in the repo or in a prompt |
 
-**The enforcement principle, learned from the sibling rehearsal:** an instruction in a prompt is not a control. In `27_ORCA_VERTICAL_SLICE_REHEARSAL`, a reviewer was *instructed* read-only and no mechanism made mutation impossible. The correction was to narrow the claim — not to pretend the instruction was enforcement.
+**The enforcement principle:** an instruction in a prompt is not a control. A role described as read-only is read-only only when something makes mutation impossible; where that mechanism cannot be configured, the claim is narrowed in writing rather than upgraded in prose.
 
 Applied here: the observer is read-only because its **credential cannot write**. If that cannot be configured, the claim is downgraded and stated as such.
 
@@ -339,7 +342,7 @@ No rehearsal has occurred, because the event has not happened. The blueprint the
 |---|---|
 | Three independent systems | Adds a failure domain and a baseline-transfer bug class for no capability gain |
 | Autonomous AI merge | No recovery path under time pressure; destroys the audit trail |
-| Semantic GitHub judge | Would place an opaque judgement where auditable evidence is required — the exact error `dSearch` falsified |
+| Semantic GitHub judge | Would place an opaque judgement where auditable evidence is required; a judgement that cannot be audited is not evidence |
 | Permanent five-agent-per-human ontology | Ages badly the moment task shapes change |
 | Custom distributed runtime | Massive cost, no evidence of need before rehearsal |
 | Dashboard for appearance | Cost with no operational consumer |
@@ -370,7 +373,7 @@ These are **not** architectural gaps; they are facts only the team and organizer
 | 13 | What may be captured for the portfolio? | §11 |
 | 14 | Who executes this plan after delivery? | Development plan §2 (owners column) and §3–§10 in full, including §9 rehearsal |
 
-**Resolution status (2026-09-15).** Q1 (one team or five) is ANSWERED — one five-person team; Q14 (who executes) is ANSWERED from the return brief — the five-person team, with the operator not participating; Q2 (duration) is PARTIAL — 24 hours or more with overnight work, exact hours still open. The remaining eleven questions are OPEN and close at T7-01. The full register, with each answer's source, date, authority, and affected section, is `01_DISCOVERY_CLOSURE.md`; this table stays as the question list, and the register is where answers accumulate.
+**Resolution status (2026-09-15).** Q1 (one team or five) is ANSWERED — one five-person team; Q14 (who executes) is ANSWERED by the operator — the five-person team, with the operator not participating; Q2 (duration) is PARTIAL — 24 hours or more with overnight work, exact hours still open. The remaining eleven questions are OPEN and close at T7-01. The full register, with each answer's source, date, authority, and affected section, is `01_DISCOVERY_CLOSURE.md`; this table stays as the question list, and the register is where answers accumulate.
 
 ---
 
@@ -378,7 +381,16 @@ These are **not** architectural gaps; they are facts only the team and organizer
 
 **The claim, stated exactly** (usable only once all artifacts exist and agree):
 
-> The operator ran client-style discovery with a five-person cybersecurity team facing an unknown topic, and designed an implementation-ready multi-AI workflow: a research machine that freezes an approved Mission Package, a five-machine development fleet under one-writer ownership, and a read-only degradable observer. Deliverables: architecture blueprint, A–Z development plan, implementation checklist, and a version-controlled diagram.
+> The operator designed and documented an implementation-ready multi-AI workflow for a five-person
+> cybersecurity team facing an unknown hackathon topic: a research machine that freezes an approved
+> Mission Package, a five-machine development fleet under one-writer ownership, and a read-only,
+> degradable observer. Deliverables: architecture blueprint, A–Z development plan, implementation
+> checklist, and a version-controlled diagram.
+
+**Scope of the discovery, stated exactly:** discovery is specified rather than completed. Stakeholder
+intent, constraints, assumptions, non-goals, risks, and decision owners are explicit; three of the
+fourteen architecture-blocking questions are answered, and eleven remain open, tracked with sources
+and dates in `01_DISCOVERY_CLOSURE.md`.
 
 **Attribution, stated exactly:**
 

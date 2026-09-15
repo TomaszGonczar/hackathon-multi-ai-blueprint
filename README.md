@@ -45,7 +45,10 @@ The embed above is reduced for orientation only; read the diagram at full size:
 | [`07_FAILURE_AND_REHEARSAL_PLAN.md`](07_FAILURE_AND_REHEARSAL_PLAN.md) | Validation ledger, three-state control table, premortem, catch ledger, decision log with missing-data entries, rehearsal drills |
 | [`08_PORTFOLIO_BRIEF.md`](08_PORTFOLIO_BRIEF.md) | Fifteen-minute case study: problem → decisions → evidence → limitations |
 
-**Shared record** (both readers): [`01_DISCOVERY_CLOSURE.md`](01_DISCOVERY_CLOSURE.md) — every question the architecture branches on, its answer or its open status, the answer's source and date, and what each answer changed in the other artifacts.
+**Shared records** (both readers):
+
+- [`00_DELIVERABLE_CONTRACT.md`](00_DELIVERABLE_CONTRACT.md) — the frozen interfaces this package was authored against: system invariants, house style, the diagram node and edge IDs every artifact cites, the file-ownership map, and the two recorded diagram fallbacks. Read it to see why the artifacts agree with each other and with the diagram.
+- [`01_DISCOVERY_CLOSURE.md`](01_DISCOVERY_CLOSURE.md) — every question the architecture branches on, its answer or its open status, the answer's source and date, and what each answer changed in the other artifacts.
 
 Every artifact cross-references the diagram by node ID (`MP`, `L1`–`L5`, `OB`, `MERGE`, …) and edge
 ID (`E1`–`E30`), so the four primary artifacts and the diagram cannot silently disagree.

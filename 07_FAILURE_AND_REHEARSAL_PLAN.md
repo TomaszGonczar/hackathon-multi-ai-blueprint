@@ -11,7 +11,7 @@ recorded FINDING, not a confession.
 
 ## 0. Legend and verification method
 
-**Claim labels** (house style, contract §2):
+**Claim labels** (house style, `00_DELIVERABLE_CONTRACT.md` §2):
 
 | Label | Meaning |
 |---|---|
@@ -31,16 +31,16 @@ rationale and the entry criteria for the next level):
 **Nothing in this project is `ENFORCED`.** No row in this document claims otherwise.
 
 **Verification-method line.** Repository `hackathon-multi-ai-blueprint` inspected at commit
-`3ea098f` (drafts of 03 and 04). Files read in full for this artifact:
-`03_ARCHITECTURE_BLUEPRINT.md` (§0–§12), `04_DEVELOPMENT_PLAN.md` (§1–§15), the shared
-deliverable contract, and the operator's own evidence corpus:
-`13_LESSONS/01_FAILURE_CATALOG.md`, `13_LESSONS/03_DECLARATION_PROTOCOL.md`,
-`13_LESSONS/27_ORCA_VERTICAL_SLICE_REHEARSAL/05_FAILURES_AND_CORRECTIONS.md`.
+`531830a` — the working tree this revision was written against, after the discovery closure and the
+agreement sweep. Files read in full for this artifact: `00_DELIVERABLE_CONTRACT.md`, the frozen
+authoring contract this package was written against and cited below as "contract §N";
+`03_ARCHITECTURE_BLUEPRINT.md` (§0–§12); `04_DEVELOPMENT_PLAN.md` (§1–§15);
+`05_IMPLEMENTATION_CHECKLIST.md` (§0–§10); `01_DISCOVERY_CLOSURE.md`; and `06_ARCHITECTURE.mmd` for
+the node and edge identifiers.
 **No rehearsal has been run, because the event has not occurred** (October 2026). Nothing in this
-document reports an executed test of the hackathon workflow. Where prior executions are cited
-(`dSearch`, the Orca vertical-slice rehearsal, the Omega v3 archaeology), they are executions of
-*sibling* projects, anchored to their source files, and they are the reason specific rules exist
-here — not evidence that this design works.
+document reports an executed test of the hackathon workflow. Every catch and every remaining limit
+recorded below was found by reading the artifacts in this repository or by a mechanical check run
+across them; this document cites no source outside it.
 
 Diagram cross-references use the node IDs of `06_ARCHITECTURE.mmd` (contract §4): `RM` research
 mode, `MP` Mission Package, `OB` observer, `DR` deviation report, `L1`–`L5` lanes, `REPO`/`PR`/`CI`,
@@ -83,21 +83,23 @@ exactly the P3–P6 workload, and each row says which drill closes it.
 Security-assessment vocabulary applied to every declared rule of the design:
 
 - **declared** — the rule exists in an artifact; nothing evidences or enforces it.
-- **declared+evidenced** — a defined check or measured precedent exists and is named; not executed here.
+- **declared+evidenced** — a defined check exists and is named; not executed here.
 - **enforced+automated-check** — a mechanism blocks violation and has been observed blocking it.
   **No row carries this class. The class is empty.**
 
-**Why this table exists — the operator's own measured precedent.** `[FACT]` The Omega v3
-archaeology (`01_FAILURE_CATALOG.md`, RC-1, census table) found **13 of 17 governance mechanisms
-with at least one declared field and no production consumer** — HITL gates declared
-`enforced_by:"human"` with zero non-test callers; a spend cap whose only reader was a validator;
-`validate_tool_call` imported by the dispatcher and never called. The declarations looked like
-controls in documentation. The root cause recorded there: "a declaration is cheap and feels like
-progress; wiring it is expensive and invisible." Every rule below is currently in exactly RC-1's
-shape — declared, consumer not yet built — and this table records that as a set of numbered
-FINDINGs *before* merge, instead of discovering it by archaeology months later. A
-declared-not-enforced row is a FINDING, not a confession: it is the typed, visible form of the gap
-(`03_DECLARATION_PROTOCOL.md`: an absence has no shape; `DECLARED_ONLY` + reason does).
+**Why this table exists.** Contract §1, the declaration principle, stated in full: "A declaration is
+cheap and feels like progress; wiring it is expensive and invisible. Every declared field names the
+reader that consumes it, or it is deleted." A declared rule with no consumer is indistinguishable
+from a control in documentation; the difference appears only when someone traces the reader. This
+table traces it here, against a system that does not exist yet, and records the result as a set of
+numbered FINDINGs *before* delivery. A declared-not-enforced row is a FINDING, not a confession: it
+is the typed, visible form of the gap — a missing reader is a defect with a name, not an absence
+with none.
+
+**The enforcement column is empty by design.** No mechanism in this design has ever been observed
+blocking anything, so `DESIGNED+CHECKED` is the ceiling for every rule below until the P6 rehearsal
+runs (§6), and every row that lacks even a check says so in the FINDING column. Nothing in this
+document claims otherwise.
 
 | Rule (contract §1 / blueprint) | Class | Consumer or check | FINDING |
 |---|---|---|---|
@@ -106,11 +108,11 @@ declared-not-enforced row is a FINDING, not a confession: it is the typed, visib
 | Human owns merge (D6) | declared+evidenced | Check defined: P4.6 audit + protection config; never run (V4). | **F-3:** until the audit executes, "no AI merge path exists" is `[UNPROVEN]`. |
 | One writer per workspace (D5) | declared+evidenced | Check defined: P4.8 collision test; never run (V3). | — (tracked as V3) |
 | Facts require sources | declared+evidenced | Check defined: P3.2 inspection; never run (V9). | — (tracked as V9) |
-| Agreement is not truth | declared+evidenced | Measured external precedent: `dSearch` — 261 corroborated URLs, 38 correct, precision 0.1456 `[FACT]` (blueprint §3.2 rule 2). Check defined: P3.3 contradiction test (V10). | — (the precedent is why the rule exists; see catch ledger C1) |
+| Agreement is not truth | declared+evidenced | Contract §1, stated in full: "Agreement is not truth. Several sources or agents agreeing is recorded as agreement, never as verification: corroboration is a property of the sources, not of the world." Check defined: P3.3 contradiction test (V10). | — (tracked as V10) |
 | Degrade visibly | declared+evidenced | Checks defined: P3.7 offline test, drills 6.4/6.5 (V7); every failure-matrix row in plan §11 has a named fallback. | — (tracked as V7) |
-| Every field names its reader | declared | This artifact package *is* the reader-naming exercise; no gate fails a field with no reader. | **F-4:** every `MP` field (blueprint §3.3) currently has **zero production consumers** — the system is unbuilt. This is RC-1's exact shape, logged deliberately. Entry out: P3.4 generator + schema validator become the first consumers; then each field must name its reader in the package schema or carry a `DECLARED_ONLY`-style reason. |
+| Every field names its reader | declared | This artifact package *is* the reader-naming exercise; no gate fails a field with no reader. | **F-4:** every `MP` field (blueprint §3.3) currently has **zero production consumers** — the system is unbuilt. This is the declaration principle's own failure shape, logged deliberately. Entry out: P3.4 generator + schema validator become the first consumers; then each field names its reader in the package schema or is deleted (contract §1). |
 | Scope cut is explicit | declared | The cut-order table exists (blueprint §8.2); no check exercises a cut (V8). | **F-5:** an unexercised cut order may be uncuttable — e.g. if P0 items turn out to depend on a P1 item. Drill 6.6's forced-cut step is the entry criterion. |
-| Instruction is not enforcement (D7) | declared+evidenced | Check defined: P5.1 write-attempt execution test (V5); precedent: `27_ORCA_VERTICAL_SLICE_REHEARSAL` instructed-read-only finding `[FACT]` (catch ledger C2). | — (tracked as V5; the whole rule exists because the precedent was measured) |
+| Instruction is not enforcement (D7) | declared+evidenced | Contract §1 principle, stated in full: "An instruction in a prompt is not a control. A role described as read-only is read-only only when something makes mutation impossible; where that mechanism cannot be configured, the claim is narrowed in writing rather than upgraded in prose." Check defined: P5.1 write-attempt execution test (V5); the mechanism is credential scope, not wording (blueprint §7). | — (tracked as V5) |
 | Credentials: per person, least privilege, never in repo or prompt | declared | None. No secret-scan or prompt-hygiene check is defined anywhere in 03/04/05. | **F-6:** a leaked token in a prompt or commit would be caught only by accident. Check that should exist: a secret scan in P2 (credential placement audit) and a pre-commit scan at `REPO`. Owner: architect, before P5. |
 
 Summary: **11 rules — 6 declared+evidenced, 5 declared, 0 enforced+automated-check; 6 open
@@ -154,31 +156,39 @@ line that was supposed to hold it.
 What the design process already caught, in aerospace escape-distance framing: **where the defect
 should have been caught, where it actually was caught, and how far it traveled before anyone
 stopped it.** Escape distance is the cost measure — a defect caught at design costs a sentence;
-caught in production, an archaeology round.
+caught after delivery, a rebuild. Every entry below was found by reading this package or by a
+mechanical check over it; nothing here rests on an execution, because nothing here has been
+executed.
 
 | # | Catch | Should have been caught at | Actually caught at | Escape distance | What it produced here | Label and anchor |
 |---|---|---|---|---|---|---|
-| C1 | **Agreement-as-truth.** Corroboration by multiple sources was treated as verification. Measured: 261 corroborated URLs, 38 correct — precision **0.1456**. | Design of the corroboration feature, before shipping it as the product's differentiator. | Post-hoc precision measurement in the sibling project `dSearch`, after the claim was in production. | Shipped product → measurement. Full escape. | Blueprint §3.2 rule 2 and the contract invariant "agreement is not truth"; P3.3 contradiction-preservation test (V10); the rejected "semantic GitHub judge" alternative (blueprint §9) cites this measurement by name. | `[FACT]` blueprint §3.2; contract §1 |
-| C2 | **Instructed read-only is not enforced read-only.** A reviewer role was told to be read-only; no capability fence existed — "no `readOnly` enforcement field exists in the receipt". | Design of the reviewer role: the receipt schema was the moment to require an enforcement field. | The vertical-slice rehearsal's own findings pass — one rehearsal of escape, caught before the claim reached a portfolio. | Spec → rehearsal. One phase. | Blueprint §7: enforcement by credential, not instruction; D7 with a pre-committed downgrade; P5.1 execution test ("a write attempt through this token fails — proven by execution"); ledger V5. | `[FACT]` `27_ORCA_VERTICAL_SLICE_REHEARSAL/05_FAILURES_AND_CORRECTIONS.md`, finding row 4 ("Reviewer was instructed read-only but not capability-fenced") |
-| C3 | **Declaration without consumer.** 13 of 17 governance mechanisms in Omega v3 had at least one declared field with no production reader; documentation cited them as controls. | PR merge time — one declaration-protocol header line per field (`_enforced_by` / `_status` / `_skip_reason`), ~30 seconds each. | Archaeology, months later, at commit `3ceb7be` — the most expensive possible catch. | Merge → shipped system → archaeology. Maximum escape. | The three-state control table (§2 of this document) and its 6 FINDINGs; the contract invariant "every field names its reader"; F-4 logging the Mission Package's current zero-consumer state *as the same shape, caught before merge this time*. | `[FACT]` `01_FAILURE_CATALOG.md` RC-1 (census table); `03_DECLARATION_PROTOCOL.md` |
-| C4 | **Implicit evidence rules.** The sibling rehearsal's preflight returned NO-GO before the first build step because launch and evidence rules were implicit in the spec. | Spec authoring: evidence fields (model, effort, SHA, receipt) should have been explicit on the page. | The rehearsal's own preflight gate — caught before any execution wasted effort. | Spec → preflight. Zero escape into execution. | Plan §3 makes P0 a real phase with exactly this rationale quoted ("the sibling rehearsal … failed its own preflight (NO-GO) precisely because launch and evidence rules were implicit"); every drill in §6 below ships a defined evidence artifact. | `[FACT]` `27_ORCA_VERTICAL_SLICE_REHEARSAL/05_FAILURES_AND_CORRECTIONS.md`, finding row 2; plan §3 |
-| C5 | **Worktree as security containment.** Git worktrees were assumed to sandbox a worker. They do not. | Containment design, before it was listed as a control. | The rehearsal — "explicitly falsified in rehearsal: it is not a sandbox". | Design → rehearsal. One phase. | Reuse ledger marks it **DROP** (plan §4); worktree isolation survives only as cooperative concurrency (REUSE), never as a security claim; no artifact here claims containment. | `[FACT]` plan §4 reuse-ledger row "Worktree as *security* containment — DROP" |
-| C6 | **Cross-artifact drift in distributed authoring.** Six artifacts written by parallel workers under one contract will drift at the seams — node IDs, phase names, counts. | Now: at design of the authoring process itself, before the workers wrote anything. | Pre-emptively, by construction: the contract froze the shared inventory (node IDs, field names, phase IDs, validation vocabulary) *before* the parallel wave, and scheduled the agreement sweep after it. | Zero escape **if the sweep runs**. The catch is only as real as wave 4. | Contract §4 frozen inventory; contract §5 one-writer-per-file map; sweep owned by the coordinator; drill 6.7 re-hunts drift independently; PM-11 records the residual. | `[INFERENCE]` (risk) + `[FACT]` (the authoring mode and the scheduled sweep, contract §5) |
+| C1 | **Read-only by instruction.** The observer's read-only claim rested on an instruction to the observer; nothing made a write impossible. | The observer permission table (blueprint §5.4), where every row should have named the mechanism that enforces it, so that the "commit, push, merge — no, never" row could not be satisfied by prose. | Design review of this package, before any artifact was delivered: the claim was narrowed to a credential test plus a pre-committed downgrade, instead of being left as an instruction. | Design → design review, inside one authoring pass. Zero escape into implementation — no component was built on the instruction, because no component exists yet. Residual cost: the narrowed claim is still `[UNPROVEN]` until the test runs. | Contract §1's enforcement principle; blueprint §7 (enforcement by credential, not by instruction); D7's pre-committed downgrade ("then state the limit"); plan §8 P5.1 write-attempt test; ledger V5; premortem PM-7. | `[FACT]` contract §1; blueprint §5.4, §7; `04_DEVELOPMENT_PLAN.md` §8 P5.1; §1 V5 of this document |
+| C2 | **A declared field with no reader.** The Mission Package's ten fields are specified and consumed by nothing: no generator, no schema validator, no lane reader exists. | The moment the package schema was specified (blueprint §3.3) — one line per field naming the reader that consumes it, which contract §1 now requires of every field. | The three-state control table (§2), which classifies every declared rule and finds six with no consumer; logged as FINDING F-4 before delivery. | Design → pre-delivery audit. Zero escape: nothing downstream has consumed the fields, because nothing downstream exists. This is a catch without a fix — the fields stay unconsumed until P3 builds the first reader. | FINDINGs F-1…F-6 (§2); contract §1's reader-naming invariant; P3.4 generator and schema validator named as the first consumers; §7 row 4; §10 follow-up 4. | `[FACT]` §2 F-4 of this document; contract §1; blueprint §3.3 |
+| C3 | **The overnight gap.** The stall rule, as first written, would have fired on every deliberately sleeping lane: the cadence was designed for one continuous block of hours, and the event is 24 hours or more with overnight work. | The cadence design (blueprint §5.6; plan §10) — the stall rule should have been stated with its window and its exclusions, and the duration assumption behind it ("one continuous block") written down as an assumption rather than left implicit in the prose. | Answering Q2, the discovery question on duration and preparation rules, on 2026-09-15, after the artifacts had been drafted; the answer is recorded in `01_DISCOVERY_CLOSURE.md` §2. | Five artifacts. The gap sat at once in blueprint §5.6, plan §10, the checklist's cadence items, the ledger's absent night row, and this document's own PM-6; one answered question required a correction in each — blueprint §5.6, plan §10–§12, checklist DC-14–DC-16, ledger V12, premortem PM-12. | Four mechanisms: pause declaration excluded from stall alerts (DC-15), push-before-offline (DC-14), recorded shift handover, and one named awake human on the night escalation channel (DC-16); plan §10 P8's four cadence rows, §11 rows 10–12, §12 acceptance row; ledger V12; premortem PM-12. | `[FACT]` `01_DISCOVERY_CLOSURE.md` §2 Q2; `05_IMPLEMENTATION_CHECKLIST.md` DC-14–DC-16; `04_DEVELOPMENT_PLAN.md` §10 P8; §1 V12 and §3 PM-12 of this document |
+| C4 | **The observer's blindspot.** The observer measures the fleet against the Mission Package, and the observer is the same machine that authored the package — so deviation-vs-package cannot detect a package that misread the topic. | The observer design (blueprint §5.1). Placing observation on `S1` because that is where the baseline lives is the right call for version skew; the same passage should have stated what that placement cannot see. | The premortem (§3, PM-4) — the section that claims the observer covers deviation is the section that states its blindspot. | Zero escape into delivery, and zero distance closed: a carried exposure, not a fixed defect. No mechanism in this design detects a misread topic, which is why the escalation trigger names a human and not a threshold. | PM-4 and its remaining-exposure cell; the escalation trigger "plan and reality have diverged", which summons a named human (blueprint §4.4; plan P4.7); the falsifiability requirement on the `objective` field (blueprint §3.3), which at least makes a misread statable. | `[INFERENCE]` §3 PM-4 of this document; blueprint §5.1, §4.4; plan P4.7 |
+| C5 | **Claims that survived their own author's check.** The independent adversarial review of this package produced 23 findings, 6 of them MAJOR, all recorded and fixed — among them a claimed consumer that had no reader, and acceptance constants no reader could observe. | Each author's pass over their own file. Every finding was findable by reading one's own claims as a stranger would; the review's value was that a stranger actually did it. | The independent adversarial review, run against the package before delivery; the finding counts and the fixing commit are recorded in `08_PORTFOLIO_BRIEF.md` §7 and `00_DELIVERABLE_CONTRACT.md` §5. | One authoring wave. The findings were caught before any reader outside the project saw the package; the cost was a correction pass, not a rebuild. | The corrections themselves; §7's rows; drill 6.7's named-skeptic instruction and its hunt list (counts that appear in more than one artifact, validation states that disagree with evidence); contract §2 rule 8's ban on acceptance conditions nothing can observe. | `[FACT]` `00_DELIVERABLE_CONTRACT.md` §5; `08_PORTFOLIO_BRIEF.md` §7; §6.7 of this document |
+| C6 | **Cross-artifact drift, realized.** Six artifacts written by parallel workers under one frozen inventory still drifted at the seams: emoji, absolute paths, a `D4` decision whose text differed between two artifacts, and a namespace collision in which the cut priorities and the phases both used `P0`–`P2`. | The authoring rules (contract §4–§5): one writer per file plus a frozen inventory were supposed to make the seams safe. They made drift *visible* rather than impossible, and that distinction is the catch. | The coordinator's mechanical cross-artifact census — ten checks over node IDs, edge IDs, the ten-field schema, the cut order, `D1`–`D8`, the phase index and the validation states — run before commit; its findings were fixed and committed. | Within the authoring wave: no violation reached a reader outside the project. Cheap, because the checks were mechanical; wide enough that the corrections touched more than one artifact. | The corrected artifacts; the standing hunt list in §6.7; §7's correction-pass rule that a finding closed by discussion is not closed; PM-11, which is this catch turned into a premortem entry. | `[FACT]` `00_DELIVERABLE_CONTRACT.md` §5; `08_PORTFOLIO_BRIEF.md` §7; §3 PM-11 of this document |
 
-Reading the ledger: C1 and C3 escaped fully and were paid for with archaeology. C2, C4, C5 were
-caught one phase downstream. C6 is the attempt to catch at zero distance — design-time — and §9
-records honestly that its check (the sweep) is manual and unexecuted as of this writing.
+Reading the ledger: C3 and C6 cost the most — C3 because one missing fact (a duration) forced
+corrections in five artifacts, C6 because it falsified the assumption that a frozen inventory
+prevents drift on its own. C1, C2 and C4 were caught inside the design pass, at zero escape into
+implementation; C4's price is that nothing closes it. C5 was caught one wave downstream, by a reader
+with no stake in the claims, at the cost of a correction pass. Nothing in this ledger is an executed
+test: every entry is a defect in a document, found by reading it. §9 records the authoring mode that
+produced them.
 
 ---
 
 ## 5. Decision log with missing-data entries
 
 Every decision from blueprint §9 D1–D8, with the data that was **absent** when it was made, the
-assumption that stands in for the data (GitLab postmortem convention: name the assumption that
-turned out to be wrong — pre-naming it makes the wrong-turn cheap to spot), what data would change
-the call, and where that data will come from. All 14 open questions (blueprint §10, plan §14) were
-open at authoring time; the two structural ones (Q1, Q2) are called out under the decisions they
-feed.
+assumption that stands in for the data (the missing-data record names the assumption that will turn
+out to be wrong — pre-naming it makes the wrong turn cheap to spot), what data would change the
+call, and where that data will come from. All 14 open questions (blueprint §10, plan §14) were open
+when these decisions were made; the two structural ones (Q1, Q2) are called out under the decisions
+they feed. Q1 and Q2 have since been answered in part — one five-person team; 24 hours or more with
+overnight work (`01_DISCOVERY_CLOSURE.md` §2) — and neither answer reverses a decision below: it
+supplies the value that was missing when the assumption was written.
 
 | # | Decision | Missing data at decision time | Assumption made in its absence (the thing that is wrong if the decision is wrong) | What data would change the call | Reversal condition (blueprint §9) | Where the data comes from |
 |---|---|---|---|---|---|---|
@@ -200,10 +210,11 @@ only be demonstrated by the answers arriving. The affected-section mapping is al
 - **Q1 (one team or five?)** — feeds D5 and the ownership registry (P4.2). Wrong assumption: that
   the fleet shape is knowable before the answer. It is not; the registry is deliberately written
   *after* P0.
-- **Q2 (exact duration and prep rules)** — feeds the cut order (blueprint §8.2) and every drill
-  timeout in §6 below. Wrong assumption: that the timeouts chosen here transfer to the real window.
-  Drill 6.6 is the recalibration step; until it runs, the §6 timeouts are `[INFERENCE]` from
-  "hours, not days".
+- **Q2 (duration and preparation rules)** — feeds the cut order (blueprint §8.2), the overnight
+  cadence (plan §10 P8) and every drill timeout in §6 below. The duration half is answered: 24 hours
+  or more, with overnight work (`01_DISCOVERY_CLOSURE.md` §2). Start/stop times, submission deadline
+  and preparation rules remain open. Wrong assumption: that the timeouts chosen here transfer to the
+  real window. Drill 6.6 is the recalibration step; until it runs, the §6 timeouts are `[INFERENCE]`.
 
 Per plan §3's gate: any question still unanswered at the end of P0 is recorded as an assumption
 with a stated fallback — never silently defaulted. This section is where those records land.
@@ -218,8 +229,8 @@ procedure, observable pass condition, evidence artifact, timeout, and what to re
 **The gate, restated and binding:** *a rehearsal that found nothing is treated as insufficient, not
 as a pass* (plan §9). A drill whose record contains zero findings is re-run or re-scoped — the
 rationale is the plan's own: "a workflow drill that has never failed has proven nothing." Timeouts
-below are `[INFERENCE]` from the Q2-unanswered prep window (see §5); drill 6.6 recalibrates them
-against the real window.
+below are `[INFERENCE]` from a preparation window that Q2 fixes only as "24 hours or more" (see §5);
+drill 6.6 recalibrates them against the real window.
 
 ### 6.1 Tabletop walkthrough
 
@@ -351,9 +362,9 @@ against the real window.
 - **Timeout:** 60 minutes.
 - **Record on failure:** any finding that could not be resolved becomes a **remaining limit** with
   a named owner and a decision date — it is copied verbatim into §7's Remaining-limit column and
-  must appear in the event-day risk briefing. An unresolved finding that is not carried forward is
-  the RC-4 additive-trap shape: the concept survives because deleting it from every surface is
-  tedious (`01_FAILURE_CATALOG.md` RC-4).
+  must appear in the event-day risk briefing. A finding that is not carried forward is not closed:
+  it survives as a tolerated defect that no surface names, which is worse than an open one, because
+  the next reader has no way to count it.
 
 **Rehearsal completion criterion** (plan §15): the plan is complete not when documents exist but
 when P6 passes *or its failures are recorded as corrections*. This section exists to make the
@@ -363,21 +374,20 @@ second branch as executable as the first.
 
 ## 7. Failures and corrections
 
-Table shape per `27_ORCA_VERTICAL_SLICE_REHEARSAL/05_FAILURES_AND_CORRECTIONS.md`: Finding |
-Evidence | Correction | Remaining limit. Seeded with the known remaining limits as of commit
-`3ea098f`; drill findings append rows, they do not replace these.
+Table shape: Finding | Evidence | Correction | Remaining limit. Seeded with the known remaining
+limits of the design as of this revision; drill findings append rows, they do not replace these.
 
 | Finding | Evidence | Correction | Remaining limit |
 |---|---|---|---|
-| No mechanism in this design has ever been exercised | No rehearsal has run; the event has not occurred (blueprint §8.4: "the blueprint therefore makes no claim that any mechanism is *proven*") | Drills 6.1–6.8 defined in §6 with pass conditions, evidence artifacts, timeouts, and failure-recording instructions; the validation ledger (§1) names which drill upgrades which row | Drills test the preparation window, not event pressure. The event is single-shot: there is no second attempt in which a corrected mechanism gets exercised under real load. |
-| "Observer is read-only" currently describes a credential that does not exist | Blueprint §7 requires enforcement by credential; P5.1 defines the execution test; no token has been provisioned; Q9 (org capabilities) is open | P5.1 scheduled T-3→T-1 as the load-bearing test; downgrade language pre-committed: "contractually read-only; no write path observed" — never "security-enforced" (contract §2 rule 7) | If credential scoping proves unavailable (D7 reversal), no mechanical barrier exists between `OB` and writes to `REPO`. The claim shrinks to instruction plus absence-of-write-path, stated as such. |
+| No mechanism in this design has ever been exercised | No rehearsal has run; the event has not occurred (blueprint §8.4: "The blueprint therefore makes no claim that any mechanism is *proven*") | Drills 6.1–6.8 defined in §6 with pass conditions, evidence artifacts, timeouts, and failure-recording instructions; the validation ledger (§1) names which drill upgrades which row | Drills test the preparation window, not event pressure. The event is single-shot: there is no second attempt in which a corrected mechanism gets exercised under real load. |
+| "Observer is read-only" currently describes a credential that does not exist | Blueprint §7 requires enforcement by credential; P5.1 defines the execution test; no token has been provisioned; Q9 (org capabilities) is open | P5.1 scheduled T-3→T-1 as the load-bearing test; downgrade language pre-committed: "contractually read-only; no write path observed" — never "security-enforced" (contract §2 rule 6) | If credential scoping proves unavailable (D7 reversal), no mechanical barrier exists between `OB` and writes to `REPO`. The claim shrinks to instruction plus absence-of-write-path, stated as such. |
 | The anti-cheerleader mitigation is schema shape only | Blueprint §8.3 removes any assessment field from `DR`; no check exists against biased *selection* of what `OB` looks at | Drill 6.5 observes report content against the drill's known injected deviations; P5.3 schema inspection is V6's entry criterion | An observer that under-reports by omission is schema-clean. Selection bias in what gets watched has no detection mechanism in this design; it is mitigated only by humans asking "where are we?" on demand (P5.5) and comparing against raw Git state. |
-| Every Mission Package field has zero production consumers | The system is unbuilt; fields are declared in blueprint §3.3; this is RC-1's exact shape (`01_FAILURE_CATALOG.md`: 13 of 17 mechanisms declared without consumer) | Logged as F-4 before merge rather than found by archaeology; contract invariant "every field names its reader"; P3.4 generator + schema validator are the scheduled first consumers | Until P3 runs, the only consumer of the package design is this artifact package itself — documentation reading documentation. The declaration protocol's statuses (`ENFORCED` / `DECLARED_ONLY` / `RESERVED`) should be applied to the schema when it is written; that application does not exist yet. |
+| Every Mission Package field has zero production consumers | The system is unbuilt; the ten fields are declared in blueprint §3.3 and nothing reads them — no generator, no schema validator, no lane | Logged as F-4 before delivery rather than after an audit; contract §1 requires every declared field to name its reader or be deleted; P3.4 generator + schema validator are the scheduled first consumers | Until P3 runs, the only consumer of the package design is this artifact package itself — documentation reading documentation. The schema has not been audited field-by-field against contract §1; §10 follow-up 4 schedules that audit for P3. |
 | The cut order has never been executed | Blueprint §8.2 is a table; no drill forces an actual cut (V8, F-5) | Drill 6.6 now includes a forced-cut step: if the time-box overruns, a P1/P2 item is actually disabled and the post-cut total re-timed | Event-day cutting happens under a load no rehearsal can simulate, and PM-3's exposure stands: a P0 item may prove to depend on a cut P1 item. |
-| This package was authored by distributed workers under a frozen contract | Contract §5 ownership map: six files, six owners, waves 1–4; cross-artifact drift is the architecture's own predicted failure mode applied to itself (PM-11) | Coordinator agreement sweep at wave 4 before commit; drill 6.7 independently re-hunts contradictions across all six artifacts; 6.8 resolves them in the artifacts | The sweep is manual and runs once. Post-sweep drift — including event-day amendments to these artifacts — has no check. |
-| Every §6 drill timeout is an estimate | Q2 (exact duration) is open at authoring time; timeouts were inferred from "hours, not days" (blueprint §2) | Drill 6.6 recalibrates all §6 timeouts against the measured window and records the calibration | Until 6.6 runs, a drill could be mis-timed in either direction: too loose (proves nothing about event speed) or too tight (fails mechanisms that would have held). |
+| This package was authored by distributed workers under a frozen contract | Contract §5 ownership map: six artifacts, six single-writer owners, three waves; cross-artifact drift is the architecture's own predicted failure mode applied to itself (PM-11) | Coordinator agreement sweep before commit — run 2026-09-14, its findings fixed and committed; drill 6.7 independently re-hunts contradictions across all six artifacts; 6.8 resolves them in the artifacts | The sweep is manual and runs once. Post-sweep drift — including event-day amendments to these artifacts — has no check. |
+| Every §6 drill timeout is an estimate | Q2 is answered only in part: 24 hours or more, start/stop times open (`01_DISCOVERY_CLOSURE.md` §2); timeouts were inferred from "hours, not days" (blueprint §2) | Drill 6.6 recalibrates all §6 timeouts against the measured window and records the calibration | Until 6.6 runs, a drill could be mis-timed in either direction: too loose (proves nothing about event speed) or too tight (fails mechanisms that would have held). |
 
-The correction pattern is the sibling rehearsal's, kept deliberately: **narrow the claim to the
+The correction pattern applied throughout: **narrow the claim to the
 evidence actually observed.** No prompt instruction, no schema shape, no green drill, and no
 document is promoted into a security or semantic guarantee.
 
@@ -385,21 +395,21 @@ document is promoted into a security or semantic guarantee.
 
 ## 8. Positive patterns
 
-What this design got right, with evidence (house-style requirement, contract §2 rule 6). These are
-patterns to preserve deliberately — the failure catalog's own lesson is that the defects above were
-*findable* because the honest structures existed.
+What this design got right, with evidence (house-style requirement, contract §2 rule 8). These are
+patterns to preserve deliberately — §4's catches were *findable* because the structures that record
+an obligation, a validation state, and a limit already existed.
 
 | Pattern | Evidence | Why it matters |
 |---|---|---|
 | Validation states with entry criteria, borrowed from DOE/TRL | Contract §2; §1 of this document: all 12 rows carry rationale + next-state criteria | "Unrehearsed" reads as method, not apology. A reader can see exactly what observation would upgrade any claim. |
-| The reuse ledger drops falsified things instead of re-listing them | Plan §4: "Worktree as *security* containment — **DROP** — explicitly falsified in rehearsal"; heartbeat protocol "DROP for v1 — cost without demonstrated need" | A ledger that only says REUSE is marketing. The DROP rows are why the REUSE rows are credible. |
-| The found-nothing gate | Plan §9: "A rehearsal that found nothing is treated as insufficient, not as a pass"; carried into §6 here and into 6.7's skeptic instruction | Kills rehearsal-as-theater at the rule level, before anyone is tempted. Mirrors the sibling lesson: "a defined gate you don't run is a decision you didn't make." |
+| The reuse ledger drops falsified things instead of re-listing them | Plan §4: the row "Worktree as *security* containment" is **DROP**; the heartbeat protocol is "DROP for v1 — cost without demonstrated need". Worktrees share the repository — they are not a sandbox — so no artifact here claims containment. | A ledger that only says REUSE is marketing. The DROP rows are why the REUSE rows are credible. |
+| The found-nothing gate | Plan §9: "A rehearsal that found nothing is treated as insufficient, not as a pass"; carried into §6 here and into 6.7's skeptic instruction | Kills rehearsal-as-theater at the rule level, before anyone is tempted. A gate defined but never run is a decision that was never made. |
 | Cut order shipped as a deliverable, not an admission | Blueprint §8.1: the cut table "is part of the deliverable, not an admission" | Under time pressure, the decision is already made and written. The team executes a cut instead of debating one. |
 | Every decision carries a named reversal condition, including two "Never"s | Blueprint §9 D1–D8; D6 and D8 reverse "Never" — and §5 of this document still names D6's exposed operational assumption | A decision without a reversal condition is a belief. The two "Never"s are the only places this design takes a stand without data, and both are marked as such. |
-| Every failure-matrix row has a named fallback | Plan §11: nine failures, each with detection, response, and fallback columns filled — including "weaker evidence, stated as such" for CI loss | "Degrade visibly" is structural, not aspirational: there is no row where the fallback cell is empty. |
-| Downgrade language pre-committed before the test that needs it | D7: "then state the limit"; P5.1: "never softened into 'we told it not to write'"; contract §2 rule 7 | The wording of an honest limitation is hardest to choose *after* the limitation is found. Choosing it in advance removes the incentive to soften. |
-| Anti-RC-1 invariant at contract level | Contract §1: "Every field names its reader. No declared-but-unconsumed fields." | The operator's most expensive measured lesson (C3) became a design invariant of the next project instead of a warning in a postmortem nobody reads. |
-| Premortem executed before the event, not after | §3 of this document: 11 named failure reasons with mitigations and locations, written while the failure is still hypothetical | Prospective hindsight is cheap now and unobtainable in October. PM-4's "baseline may be the wrong thing" is visible as a design exposure now; post-event it would only be a regret. |
+| Every failure-matrix row has a named fallback | Plan §11: twelve failures, each with detection, response, and fallback columns filled — including "weaker evidence, stated as such" for CI loss, and the two overnight rows added 2026-09-15 | "Degrade visibly" is structural, not aspirational: there is no row where the fallback cell is empty. |
+| Downgrade language pre-committed before the test that needs it | D7: "then state the limit"; P5.1: "never softened into 'we told it not to write'"; contract §2 rule 6 | The wording of an honest limitation is hardest to choose *after* the limitation is found. Choosing it in advance removes the incentive to soften. |
+| Reader-naming invariant at contract level | Contract §1: "Every declared field names the reader that consumes it, or it is deleted." | A declared-but-unread field becomes a schema defect at authoring time instead of a discovery at the next audit — the invariant is cheap to apply while the field is being written and expensive to reconstruct afterwards. |
+| Premortem executed before the event, not after | §3 of this document: 12 named failure reasons with mitigations and locations, written while the failure is still hypothetical | Prospective hindsight is cheap now and unobtainable in October. PM-4's "baseline may be the wrong thing" is visible as a design exposure now; post-event it would only be a regret. |
 
 ---
 
@@ -413,34 +423,35 @@ applied to itself.
    (contract §5). That is `MP`-freeze, one-writer-per-workspace, human-only-merge, and
    numbered-amendment — run on documents instead of code, with the shared contract playing the
    Mission Package role. `[FACT]`
-2. **The risk this authoring mode carries is cross-artifact drift** — the failure mode the
-   architecture predicts for the fleet, occurring in the artifacts that describe it. Node IDs,
-   phase numbers, field names, and counts exist in more than one file; workers cannot see each
-   other's files while writing. `[INFERENCE]`
-3. **The mitigation is the agreement sweep** — the coordinator's wave-4 pass before commit
-   (contract §5), plus drill 6.7 as an independent re-check at rehearsal time. The sweep is
-   manual, runs once, and has not run as of this writing; PM-11 and §7 record that as a remaining
-   limit rather than claiming it closed. `[FACT]`
+2. **Distributed authorship under a frozen contract made cross-artifact drift the predicted failure
+   mode — and it occurred.** Freezing the inventory made the seams checkable, not safe: the census
+   found a `D4` decision text that differed between two artifacts and a `P`-prefix collision between
+   the cut priorities and the phase IDs, and the independent review added 23 findings on top. What
+   caught the drift was the agreement sweep plus the review — a mechanical check over the artifacts,
+   and a reader with no stake in them — not the freeze by itself. PM-11 and §7 record what remains
+   uncaught after that pass. `[FACT]`
+3. **Answering one discovery question exposed a live design gap that five artifacts had not
+   carried.** Q2 returned "24 hours or more, with overnight work", and the stall rule as written
+   would have alerted on every deliberately sleeping lane — a gap that had survived blueprint §5.6,
+   plan §10, the checklist's cadence items, the ledger and this document's own premortem until the
+   question was answered. Re-reading those artifacts had not surfaced it; one answered question did.
+   The lesson is not that the artifacts were careless, but that their completeness was bounded by
+   the questions they left open — and the cheapest test of that boundary is to answer a question,
+   not to read harder. `[FACT — the answer; INFERENCE — the generalisation]`
 4. **Freezing interfaces before parallel work is what made the parallel authoring safe.** The
    contract's node/edge inventory (§4), field names, phase IDs P0–P9, decision IDs D1–D8, and the
    validation vocabulary were fixed *before* any worker started — the same sequencing plan P4.4
    demands of interfaces and code. Workers consumed the inventory; none renegotiated it. Where a
    worker needed a change, the contract's own rule applied: report it, do not edit a file you do
    not own. `[FACT]`
-5. **Workers skipped project-wide validation by design; the coordinator runs it once.** Mid-flight
+5. **Workers skipped project-wide validation by design; the coordinator ran it once.** Mid-flight
    validation against siblings' half-finished files produces phantom failures — the documentation
    analogue of running the test suite against another writer's worktree. This is one-writer
-   discipline extended to checks, and it means *no artifact in this package has been validated
-   against its siblings yet*. That is stated plainly instead of being discovered by a reader.
-   `[FACT]`
-6. **Honest labeling is the load-bearing practice, and it compounds.** The reason this document
-   could cite RC-1, the rehearsal's instructed-read-only finding, and `dSearch`'s precision
-   measurement as design inputs is that those projects labeled their dormant and falsified parts
-   accurately at the time (`PROPOSAL`, `WARN-ONLY`, the narrowed rehearsal claims). The failure
-   catalog's own emphasis: "this honesty is why it was countable." Every `DESIGNED` row, every
-   FINDING, and every remaining limit in this file is an investment in the next audit's ability to
-   count. `[FACT — the quoted pattern; INFERENCE — the compounding claim]`
-7. **A premortem written by the same mind that wrote the design is weaker than one written by a
+   discipline extended to checks, and it means the only cross-artifact validation this package has
+   ever had is the single pass recorded in §4 (C5, C6). Drift introduced after that pass — including
+   event-day amendments to these artifacts — has no check; that is stated in §7 rather than left for
+   a reader to discover. `[FACT]`
+6. **A premortem written by the same mind that wrote the design is weaker than one written by a
    skeptic with skin in the game.** §3 is the architect arguing against himself; 6.7 exists because
    that argument needs an adversary to be trustworthy. This is recorded here so that a reader does
    not over-read §3's completeness. `[INFERENCE]`
@@ -485,13 +496,14 @@ artifact:
    in every artifact remains `[UNPROVEN]`. (Owner: architect, P5, T-3→T-1.)
 2. Execute drills 6.1–6.8 in order before T-1; produce each drill's evidence artifact; re-run any
    drill whose record contains zero findings. (Owner: whole team, P6.)
-3. Close Q1 and Q2 in writing at P0; verify no P1+ work started before closure — plan §14's gate
-   is procedural, so the check is the P0 record itself. (Owner: architect + team, P0.)
-4. When the P3.4 package schema exists, apply the declaration protocol to every field: name its
-   reader, or mark it `DECLARED_ONLY` with a reason. Re-audit F-4 and §2 at that point. (Owner:
-   architect, P3.)
-5. Run the wave-4 cross-artifact agreement sweep before the coordinator commits; then re-hunt at
-   6.7 independently — the sweep being manual and once-run is a recorded limit, not a control.
-   (Owner: coordinator, wave 4.)
+3. Close the questions still open in writing at P0; the register in `01_DISCOVERY_CLOSURE.md` §3
+   names Q6, Q9 and Q10 as load-bearing — each can invalidate a claim, not merely parameterise it.
+   Verify no P1+ work started before closure — plan §14's gate is procedural, so the check is the P0
+   record itself. (Owner: architect + team, P0.)
+4. When the P3.4 package schema exists, audit every field against contract §1: name the reader that
+   consumes it, or delete the field. Re-audit F-4 and §2 at that point. (Owner: architect, P3.)
+5. Re-hunt cross-artifact agreement independently at 6.7: the sweep ran once, before commit, and is
+   a recorded limit rather than a control — drift introduced after it has no check.
+   (Owner: architect + skeptic, P6.)
 6. Define the stall-detection window for `OB` at P5.2 — PM-6's exposure (an unstipulated window
    means noise or silence) closes only when a number exists. (Owner: architect, P5.)

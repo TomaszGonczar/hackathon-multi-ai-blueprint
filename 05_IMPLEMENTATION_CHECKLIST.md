@@ -2,11 +2,11 @@
 
 **Status:** draft v1, 2026-09-14
 **Register:** team runbook. Imperative, binary, assignable. Usable under time pressure by someone who has never read the blueprint.
-**Companion to:** `03_ARCHITECTURE_BLUEPRINT.md` (authority §7, cut order §8.2), `04_DEVELOPMENT_PLAN.md` (phases P0–P9, failure matrix §11), `06_ARCHITECTURE.mmd` (node/edge IDs per contract §4)
+**Companion to:** `03_ARCHITECTURE_BLUEPRINT.md` (authority §7, cut order §8.2), `04_DEVELOPMENT_PLAN.md` (phases P0–P9, failure matrix §11), `06_ARCHITECTURE.mmd` (node/edge IDs per `00_DELIVERABLE_CONTRACT.md` §4)
 **Derives from:** every item below is traceable to a plan phase or blueprint rule. This checklist introduces no new mechanism. `[READ]`
 **Not in scope:** building the hackathon solution.
 
-**Verification method:** derived by reading `04_DEVELOPMENT_PLAN.md` §2–§11 and `03_ARCHITECTURE_BLUEPRINT.md` §3.2, §3.4, §4.2, §4.4–§4.5, §5, §7, §8.2–§8.3, §9 at commit `3ea098f`; required time-slice structure and topic list from `omega-component-prep/13_LESSONS/28_HACKATHON_TOMORROW_CONCEPT.md` §3; node/edge IDs from contract §4. No item in this file has ever been executed; no rehearsal has run. `[FACT]`
+**Verification method:** derived by reading `04_DEVELOPMENT_PLAN.md` §2–§11 and `03_ARCHITECTURE_BLUEPRINT.md` §3.2, §3.4, §4.2, §4.4–§4.5, §5, §7, §8.2–§8.3, §9 at commit `3ea098f`; required time-slice structure and topic list from `04_DEVELOPMENT_PLAN.md` §9–§10; node/edge IDs from `00_DELIVERABLE_CONTRACT.md` §4. No item in this file has ever been executed; no rehearsal has run. `[FACT]`
 
 ---
 
@@ -576,7 +576,7 @@ A checked box corresponds to an **observed condition**: a command output, a reco
 
 - The verify line of each item names the evidence. No evidence, no check mark.
 - A box checked without observation is a **defect**: record it in the rehearsal/event log with the item ID and the true state. Defects found in rehearsal are the expected output of P6 (plan §9 gate: a rehearsal that found nothing is insufficient).
-- Evidence quality rules inherited from the blueprint: a green exit code that scanned nothing is not evidence (§7); multi-source or multi-agent agreement is recorded as agreement, never as verification (§3.2 — the sibling project `dSearch` measured 261 corroborated URLs, 38 correct, precision 0.1456 `[FACT, source: blueprint §3.2]`).
+- Evidence quality rules inherited from the blueprint: a green exit code that scanned nothing is not evidence (§7); multi-source or multi-agent agreement is recorded as agreement, never as verification (§3.2 — corroboration is a property of the sources, not of the world).
 - "It works" without a reproducible command is treated as unverified (plan §11, last row; applied at DC-13).
 
 ---

@@ -4,7 +4,7 @@
 **Companion to:** `03_ARCHITECTURE_BLUEPRINT.md`
 **Purpose:** an ordered, implementation-ready plan the team can execute without another architecture session
 **Not in scope:** building the hackathon solution
-**Changelog:** v2 (2026-09-14) — header legend + verification method added; validation-state columns added to §2, §11, §12; `06_ARCHITECTURE.mmd` node/edge cross-references (contract §4) added to §6–§11; every §12 row strengthened to a reproducible check; Q1/Q2 branching notes added to §7 and §10; §13–§14 unchanged; §15 tied to cross-artifact agreement. v1 committed at `3ea098f`.
+**Changelog:** v2 (2026-09-14) — header legend + verification method added; validation-state columns added to §2, §11, §12; `06_ARCHITECTURE.mmd` node/edge cross-references (`00_DELIVERABLE_CONTRACT.md` §4) added to §6–§11; every §12 row strengthened to a reproducible check; Q1/Q2 branching notes added to §7 and §10; §13–§14 unchanged; §15 tied to cross-artifact agreement. v1 committed at `3ea098f`.
 
 **Verification method:** [FACT] baseline commit `3ea098f` ("Draft v1: architecture blueprint and development plan") confirmed by `git log`; working tree clean before this edit; changes verified by `git diff`. [READ] files inspected: `03_ARCHITECTURE_BLUEPRINT.md` §0–§12 (package fields §3.3, ownership §4.2, authority §7, cut order §8.2, decisions D1–D8 §9, open questions §10, completion §12), `04_DEVELOPMENT_PLAN.md` §1–§15 at `3ea098f`, and the shared deliverables contract §1–§7 (diagram inventory §4). [UNPROVEN] every mechanism in this plan: no rehearsal has run and the event has not happened.
 
@@ -26,7 +26,7 @@
 
 Nothing in this project is `ENFORCED`: no rehearsal has run. Every row carrying a state also carries its **entry criteria** — the observation that would upgrade it. For rows that are not enforcement mechanisms (procedures, documents, drills), `ENFORCED` is not reachable and the entry criteria name the recorded execution that would make the row evidence-backed.
 
-Diagram node IDs (`RM`, `MP`, `OB`, `DR`, `AG`, `L1`–`L5`, `REPO`, `PR`, `CI`, `APPR`, `MERGE`, `ESC`) and edge IDs (E1–E30) cited in this plan refer to `06_ARCHITECTURE.mmd` per contract §4.
+Diagram node IDs (`RM`, `MP`, `OB`, `DR`, `AG`, `L1`–`L5`, `REPO`, `PR`, `CI`, `APPR`, `MERGE`, `ESC`) and edge IDs (E1–E30) cited in this plan refer to `06_ARCHITECTURE.mmd` per the frozen inventory in `00_DELIVERABLE_CONTRACT.md` §4.
 
 ---
 
@@ -81,13 +81,13 @@ The **Mission Package** is the seam between them: nothing topic-specific can exi
 
 **Gate:** every question has a written answer with an owner. Unanswered questions are recorded as assumptions with a stated fallback — never silently defaulted.
 
-**Why this is a real phase:** the sibling rehearsal `27_ORCA_VERTICAL_SLICE_REHEARSAL` failed its own preflight (NO-GO) precisely because launch and evidence rules were implicit. The correction was to make them explicit *before* execution. Same pattern here.
+**Why this is a real phase:** a preflight that leaves the launch and evidence rules implicit produces its NO-GO at the worst possible moment — the first execution step, with the clock already running. Writing them down before anything runs is the entire point of the phase.
 
 ---
 
 ## 4. P1 — Reuse ledger
 
-**Goal:** decide what transfers from prior work, and refuse to import accumulated coupling. The return brief calls this "avoid starting from scratch without importing accumulated mistakes."
+**Goal:** decide what transfers from prior work, and refuse to import accumulated coupling — start from an examined position rather than from scratch, without carrying forward mechanisms whose cost has never been justified.
 
 Classify every candidate as `REUSE` / `ADAPT` / `REFERENCE ONLY` / `DROP`.
 
@@ -145,7 +145,7 @@ Classify every candidate as `REUSE` / `ADAPT` / `REFERENCE ONLY` / `DROP`.
 
 **Explicit test — the anti-cheerleader check:** feed the system a plan that is objectively wrong and verify the observer reports deviation rather than defending it (schema: P5.3; exercised at drill 6.5; scored at §12 row "Observer reports facts, not judgements").
 
-**Diagram cross-references (`06_ARCHITECTURE.mmd`, contract §4):** P3.4 produces node `MP` ("Mission Package vN — frozen · versioned") and implements E1 `RM --> MP` ("sourced findings + contradictions"). P3.5 keeps `MP` immutable; changes re-enter `MP` only via E28 `ESC --> MP` ("numbered amendment request"). P3.6 implements `APPR` with E2 `MP --> APPR` ("package vN for approval") and E3 `APPR --> MP` ("approval record"); only an approved `MP` crosses the boundary to the fleet on E4–E8 `MP --> L1..L5`. P3.7's degraded serving of the last frozen package underpins E29 ("degraded: adopt frozen package locally if S1 lost", any lane; drawn `REPO --> L5` in the rendered diagram per the contract's collision fallback, "(any lane)" wording kept).
+**Diagram cross-references (`06_ARCHITECTURE.mmd`; inventory: `00_DELIVERABLE_CONTRACT.md` §4):** P3.4 produces node `MP` ("Mission Package vN — frozen · versioned") and implements E1 `RM --> MP` ("sourced findings + contradictions"). P3.5 keeps `MP` immutable; changes re-enter `MP` only via E28 `ESC --> MP` ("numbered amendment request"). P3.6 implements `APPR` with E2 `MP --> APPR` ("package vN for approval") and E3 `APPR --> MP` ("approval record"); only an approved `MP` crosses the boundary to the fleet on E4–E8 `MP --> L1..L5`. P3.7's degraded serving of the last frozen package underpins E29 ("degraded: adopt frozen package locally if S1 lost", any lane; drawn `REPO --> L5` in the rendered diagram per the contract's collision fallback, "(any lane)" wording kept).
 
 ---
 
