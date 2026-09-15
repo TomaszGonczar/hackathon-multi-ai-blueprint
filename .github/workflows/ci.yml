@@ -1,0 +1,68 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    name: Markdown & Census Verification
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Verify internal markdown links
+        run: |
+          python3 -c '
+          import os, re, sys
+          broken = []
+          for root, dirs, files in os.walk("."):
+              if ".git" in root or "node_modules" in root: continue
+              for f in files:
+                  if f.endswith(".md"):
+                      p = os.path.join(root, f)
+                      with open(p, encoding="utf-8") as fp: text = fp.read()
+                      for name, link in re.findall(r"\[([^\]]+)\]\(([^)]+)\)", text):
+                          if link.startswith(("http", "#", "mailto")): continue
+                          target = os.path.normpath(os.path.join(os.path.dirname(p), link.split("#")[0]))
+                          if not os.path.exists(target):
+                              broken.append((p, link, target))
+          if broken:
+              print(f"Found {len(broken)} broken links:")
+              for b in broken: print(f"  {b[0]}: {b[1]} -> {b[2]}")
+              sys.exit(1)
+          print("All internal markdown links resolve successfully!")
+          '
+
+      - name: Verify checklist & validation census counts
+        run: |
+          python3 -c '
+          import re, sys
+          with open("05_IMPLEMENTATION_CHECKLIST.md") as f: c5 = f.read()
+          items = re.findall(r"^- \[ \] \*\*([A-Z0-9\-]+) ·", c5, re.M)
+          # Note: T7-01-1, T7-01-2, T7-01-3 are formatted without bullet dot
+          extra = re.findall(r"^- \[ \] \*\*(T7-01-\d):\*\*", c5, re.M)
+          total_items = len(items) + len(extra)
+          print(f"Counted {total_items} checkable items in 05")
+          if total_items != 77:
+              print(f"ERROR: Expected 77 items, got {total_items}")
+              sys.exit(1)
+
+          with open("07_FAILURE_AND_REHEARSAL_PLAN.md") as f: c7 = f.read()
+          v_rows = re.findall(r"\| (V\d+) \|", c7)
+          print(f"Counted {len(v_rows)} validation ledger rows in 07")
+          if len(v_rows) != 13:
+              print(f"ERROR: Expected 13 validation rows, got {len(v_rows)}")
+              sys.exit(1)
+          print("Census verification passed!")
+          '

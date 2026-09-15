@@ -39,7 +39,7 @@ The embed above is reduced for orientation only; read the diagram at full size:
 
 | File | What it is |
 |---|---|
-| [`05_IMPLEMENTATION_CHECKLIST.md`](05_IMPLEMENTATION_CHECKLIST.md) | 74 binary, assignable checks across seven time slices (T-7, T-1, event start, per cycle, freeze, submission, teardown) plus an event-day quick card |
+| [`05_IMPLEMENTATION_CHECKLIST.md`](05_IMPLEMENTATION_CHECKLIST.md) | 77 binary, assignable checks across seven time slices (T-7, T-1, event start, per cycle, freeze, submission, teardown) plus an event-day quick card |
 
 **Reviewer register** (narrative, trade-offs, judgment):
 

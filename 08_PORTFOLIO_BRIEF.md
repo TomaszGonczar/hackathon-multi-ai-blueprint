@@ -174,7 +174,7 @@ no claim that monitoring improves delivery.
 
 > The operator designed and documented an implementation-ready multi-AI workflow for a five-person
 > cybersecurity team facing an unknown hackathon topic: a research machine that freezes an approved
-> Mission Package, a five-machine development fleet under one-writer ownership, and a read-only,
+> Mission Package, a multi-laptop development fleet under one-writer ownership, and a read-only,
 > degradable observer. Deliverables: architecture blueprint, A–Z development plan, implementation
 > checklist, and a version-controlled diagram.
 

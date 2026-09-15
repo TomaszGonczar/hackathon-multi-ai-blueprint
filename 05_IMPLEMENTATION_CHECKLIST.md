@@ -653,7 +653,7 @@ The ten operational topics this checklist is required to cover, in the order the
 
 | Plan phase | Checklist items |
 |---|---|
-| P0 Discovery closure | T7-01, T7-02, T7-09, T7-10 |
+| P0 Discovery closure | T7-01, T7-01-1, T7-01-2, T7-01-3, T7-02, T7-09, T7-10 |
 | P1 Reuse ledger | T7-03 |
 | P2 Environment inventory | T7-04, T7-05, T7-06, T7-07, T7-08, T1-16 |
 | P3 Research machine | T1-01, T1-02, T1-03, T1-04, T1-05, T1-06, T1-07 |
@@ -670,6 +670,6 @@ No plan phase lacks checklist coverage. `[FACT — method: each phase's tasks in
 
 ## 14. Status
 
-74 checkable items (counting method: `grep -c '^- \[ \] ' 05_IMPLEMENTATION_CHECKLIST.md` returns 75; subtract the one template line inside the §0.5 format-example code block, which is an illustration, not a checkable item → 74. Distribution, counted per ID prefix the same way: T-7 = 10, T-1 = 19, event start = 9, per-cycle = 17, freeze = 8, submission = 5, teardown = 6.)
+77 checkable items (counting method: `grep -c '^- \[ \] ' 05_IMPLEMENTATION_CHECKLIST.md` returns 78; subtract the one template line inside the §0.5 format-example code block, which is an illustration, not a checkable item → 77. Distribution, counted per ID prefix the same way: T-7 = 13, T-1 = 19, event start = 9, per-cycle = 17, freeze = 8, submission = 5, teardown = 6.)
 
 Nothing in this checklist has been executed. It is designed, unrehearsed. The P6 rehearsal (plan §9) is its first test, and its recorded failures are expected to correct this document (T1-17). All command examples are synthetic.
