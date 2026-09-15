@@ -113,17 +113,16 @@ What can be shown:
   already exists, the artifact line it lives on, and the exposure that remains; §4 adds a catch
   ledger of what this design process already caught, and §5 the decision log naming the data that
   was absent for every judgment call. `[FACT — 07_FAILURE_AND_REHEARSAL_PLAN.md §3–§5]`
-- **The validation ledger states what is not proven.** Twelve mechanisms, each with a written
-  rationale for its state and the entry criterion to the next: four `DESIGNED`, eight
+- **The validation ledger states what is not proven.** Thirteen mechanisms, each with a written
+  rationale for its state and the entry criterion to the next: four `DESIGNED`, nine
   `DESIGNED+CHECKED`, **zero `ENFORCED`**. A declaration is cheap and feels like progress; wiring it
   is expensive and invisible. Every declared field names the reader that consumes it, or it is
   deleted. `[FACT — 07_FAILURE_AND_REHEARSAL_PLAN.md §1–§2]`
 - **The package was reviewed adversarially and cross-checked mechanically, and the defects found are
-  listed rather than hidden.** An independent adversarial review produced 23 findings, 6 of them
-  MAJOR, all recorded and fixed; a mechanical census of ten checks across every artifact found the
-  rest — emoji, absolute paths, a D4 decision-text divergence, and a namespace collision in which
-  the cut priorities and the plan phases used the same `P` labels, since resolved by renaming the
-  cut priorities to `C0`–`C2` — also fixed. `[FACT — 00_DELIVERABLE_CONTRACT.md §5]`
+  listed rather than hidden.** An initial adversarial review produced 23 findings (6 MAJOR),
+  followed by a 10-check mechanical census, and a subsequent Principal-Engineer review that
+  produced 13 findings (4 High, 6 Med, 3 Low), all recorded with dispositions in
+  `09_REVIEW_RECORD.md` and fixed across the artifacts. `[FACT — 09_REVIEW_RECORD.md §1–§4]`
 - **Answering one discovery question exposed a live design gap that is now covered.** Q2 (24 hours
   or more, two days with overnight work) showed that the observer's stall rule would fire on
   deliberately sleeping lanes; the four mechanisms that close the gap are named where they apply —

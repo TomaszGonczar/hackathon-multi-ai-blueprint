@@ -16,6 +16,8 @@ them.
 | `64e33a5` | 2026-09-14 | The agreement sweep recorded as run; the portfolio claim in `07` and `08` corrected from "sweep not yet run" to the actual state. |
 | `531830a` | 2026-09-15 | Discovery closure: Q1 (one team), Q2 (24 h or more, two days with overnight work) and Q14 (the team executes) answered and recorded; `01_DISCOVERY_CLOSURE.md` created; the overnight protocol designed in response to Q2 (plan §10 cadence rows, §11 failure rows, checklist DC-14–DC-16, ledger V12, premortem PM-12). |
 | `711c8b3` | 2026-09-15 | Portfolio readiness: every citation of the operator's private toolchain removed and replaced with this package's own reasoning or its own audit results; `00_DELIVERABLE_CONTRACT.md` published so cross-references resolve; the claim reworded to what the artifacts support. |
+| `5e5baab` | 2026-09-15 | Principal-Engineer review applied: untrusted-input boundary (V13, DC-17, P3.8), budget frame, rubric trace, review record published (`09_REVIEW_RECORD.md`). |
+| `HEAD` | 2026-09-15 | Independent review findings resolved (`09_REVIEW_RECORD.md` §4, F-01 to F-10) and Flowsint (`reconurge/flowsint`) incorporated as candidate L-14 and rehearsal fixture. |
 
 **What this file is not.** It is a derived view of the repository's commit log, kept so a reader
 without git can verify the provenance lines. It records what changed; it makes no claim about whether

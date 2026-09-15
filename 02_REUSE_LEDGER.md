@@ -47,7 +47,7 @@ acceptance matrix, non-goals); `03_ARCHITECTURE_BLUEPRINT.md` §3.3 (Mission Pac
 (validation ledger), §2 (three-state control table), §3 (premortem), §4 (catch ledger), §6 (drills
 6.1–6.8), §9 (meta-lessons); `00_DELIVERABLE_CONTRACT.md` §1–§5; `01_DISCOVERY_CLOSURE.md` Q1–Q2.
 This ledger ran no executions of its own: the event has not happened and no rehearsal has run.
-Candidate count method: the 13 records below are 1:1 with the 13 rows of plan §4, in plan order;
+Candidate count method: the 14 records below are 1:1 with the 14 rows of plan §4, in plan order;
 none added, none removed.
 
 **Package-level audit.** This file was authored under the one-writer-per-file rule it applies to the
@@ -313,12 +313,28 @@ what that means and which in-repo check would produce the missing evidence.
 | 10 | DECISION | **DROP** — places opaque judgement where evidence is required (plan §4, `04_DEVELOPMENT_PLAN.md` §4). |
 | — | Validation state | `DESIGNED` (absence by decision). → `DESIGNED+CHECKED` when: P5.3 schema check and P6 6.7 review have run and confirmed no assessment path exists. Re-entry is not anticipated: D6's reversal condition is "never" and the corroboration falsification stands; only a contract change, not a ledger amendment, could reopen this. |
 
+### L-14 — Flowsint OSINT graph & transform architecture — **ADAPT**
+
+| # | Field | Record |
+|---|---|---|
+| 1 | SOURCE | Open-source OSINT investigation platform (`reconurge/flowsint`): visual graph interface, local Docker execution, and 30+ modular Python/Docker transforms for entity and threat infrastructure mapping. `[FACT — open-source repository; https://github.com/reconurge/flowsint]` |
+| 2 | CURRENT CONSUMER | Concrete rehearsal target for P6 rehearsal drills 6.2 and 6.3 (`04_DEVELOPMENT_PLAN.md` §9; `07_FAILURE_AND_REHEARSAL_PLAN.md` §6.2/6.3); optional domain capability bundle base (`AG` node in `06_ARCHITECTURE.mmd`) if the event topic involves threat intelligence, OSINT, or attack-surface recon. |
+| 3 | BEHAVIOUR PROVED TO DATE | `[UNPROVEN]` Nothing is proved for this project: no rehearsal has run. The in-repo checks that would prove it are **P6 step 6.2** (synthetic dry-run package decomposing a recon topic into three Flowsint transforms) and **P6 step 6.3** (two lanes building custom transforms in disjoint directories under the ownership registry without collision). |
+| 4 | TARGET USE | Two uses: (1) **Concrete synthetic rehearsal codebase** for drills 6.2 and 6.3 so the team rehearses against a real Python/Docker repository rather than an abstract schema; (2) **Transform modularity pattern**: each lane implements an independent transform in `transforms/<module>/` with its own isolated dependencies, solving the shared-manifest collision risk across parallel workstreams. |
+| 5 | DEPENDENCIES | Docker and Docker Compose on lane machines (`04_DEVELOPMENT_PLAN.md` §5 machine matrix; item T7-04); Python 3 runtime; Git worktree isolation (`04_DEVELOPMENT_PLAN.md` §7, P4.1). |
+| 6 | MULTI-MACHINE RISK | Docker performance and network variance across heterogenous machines (tested at T7-04 / ES-01); transform dependencies must remain self-contained within each transform folder to avoid churn on root manifests (`pyproject.toml`). |
+| 7 | SECURITY / PRIVACY RISK | External API keys used by OSINT transforms (Shodan, Censys, VirusTotal, Exa) must live strictly in the local environment placement map (T7-06), never committed to git or exposed in graph exports; transforms run locally without external telemetry. |
+| 8 | REQUIRED REWRITE | Drop cloud deployment and multi-user authentication overhead; isolate custom transforms into self-contained subdirectories; ensure transform runners can execute headless/CLI for automated CI checks (`PR` → `CI`) without requiring browser UI interaction during automated verification. |
+| 9 | TARGET TEST OR REHEARSAL | **P6 step 6.2** synthetic dry run (S1 authors Mission Package specifying custom Flowsint transforms) and **P6 step 6.3** (two machines concurrently authoring transforms in `transforms/` without collision; pass = zero merge conflicts). |
+| 10 | DECISION | **ADAPT** — adopt modular transform architecture and local Docker runner as a synthetic rehearsal fixture and domain baseline; drop hosted multi-user service layer (plan §4, `04_DEVELOPMENT_PLAN.md` §4). |
+| — | Validation state | `DESIGNED+CHECKED` — checks defined in P6 6.2 and 6.3. → `ENFORCED` when rehearsal drill observes two lanes concurrently implementing and executing independent transforms without merge conflicts. |
+
 ---
 
 ## 4. Summary
 
-Count method: 1:1 against plan §4 rows (`04_DEVELOPMENT_PLAN.md` §4), in order. 13 candidates =
-5 REUSE + 2 ADAPT + 1 REFERENCE ONLY + 5 DROP (one of the five scoped "for v1"). None added, none
+Count method: 1:1 against plan §4 rows (`04_DEVELOPMENT_PLAN.md` §4), in order. 14 candidates =
+5 REUSE + 3 ADAPT + 1 REFERENCE ONLY + 5 DROP (one of the five scoped "for v1"). None added, none
 removed, none re-decided.
 
 | ID | Candidate | Verdict (plan §4) | Validation state | Target check → phase | Load-bearing in-repo anchor |
@@ -336,6 +352,7 @@ removed, none re-decided.
 | L-11 | Hosted vector search / embeddings | **DROP** | DESIGNED | P6 6.2 (need would surface here) | `03` §1.2, §10; `04` §6 |
 | L-12 | Custom dispatcher / scheduler | **DROP** | DESIGNED | P6 6.6/6.7 | `04` §13; `07` §4 |
 | L-13 | Semantic GitHub judge | **DROP** | DESIGNED | P5.3; P6 6.7 | `03` §9; `04` §13 |
+| L-14 | Flowsint OSINT graph & transform architecture | **ADAPT** | DESIGNED+CHECKED | P6 6.2; P6 6.3 | `04` §4, §9; `07` §6.2 |
 
 Numbered short forms in the last column follow the anchor convention in §0: `03` = the blueprint,
 `04` = the development plan, `07` = the failure and rehearsal plan.

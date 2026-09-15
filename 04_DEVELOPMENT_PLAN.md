@@ -106,6 +106,7 @@ Classify every candidate as `REUSE` / `ADAPT` / `REFERENCE ONLY` / `DROP`.
 | Hosted vector search / embeddings | **DROP** | No evidence of need; topic is unknown |
 | Custom dispatcher / scheduler | **DROP** | Explicitly a non-goal |
 | Semantic GitHub judge | **DROP** | Places opaque judgement where evidence is required |
+| Flowsint OSINT graph & transform architecture (`reconurge/flowsint`) | **ADAPT** | Modular transform pattern for disjoint parallel workstreams & synthetic rehearsal fixture; drop hosted multi-user service layer |
 
 **For each `REUSE`/`ADAPT` item, record:** source, behaviour actually proved, target use, dependencies, multi-machine risk, security risk, required rewrite, target test, decision.
 
@@ -179,7 +180,7 @@ Classify every candidate as `REUSE` / `ADAPT` / `REFERENCE ONLY` / `DROP`.
 |---|---|---|---|
 | P5.1 Read-only credential | Architect | Scoped token | A write attempt through this token **fails** — proven by execution |
 | P5.2 Watch set definition | Architect | Event list | Which GitHub events matter, and why |
-| P5.3 Deviation model | Architect | Output schema | Schema has observation fields only — no assessment field |
+| P5.3 Deviation model & sink | Architect | Output schema & sink | Schema has observation fields only — no assessment field; reports emit to an append-only JSONL log (`event_logs/deviation_reports.jsonl`) or local chat webhook; zero repo write permissions required |
 | P5.4 Reporting cadence | Architect | Bound | Alerts on deviation, failure, conflict, stall only — and never a stall alert for a lane whose owner has declared a pause (P8 pause declaration); a muted observer is a declared state, never a silent one (blueprint §5.6) |
 | P5.5 Ask-anytime path | Architect | Query flow | Any team member can ask "where are we?" and get a package-versioned answer |
 | P5.6 Outage visibility | Architect | Failure behaviour | Observer down is itself visible, not silently absent |
@@ -189,7 +190,7 @@ Classify every candidate as `REUSE` / `ADAPT` / `REFERENCE ONLY` / `DROP`.
 
 **P5.7 runtime cross-reference:** P5.7 starts and stops the `OB` process on `S1`; a missing heartbeat surfaces on E30 `OB --> ESC` ("observer outage is itself visible").
 
-**Diagram cross-references (`06_ARCHITECTURE.mmd`):** P5.1 scopes the credential carried on E24 `REPO --> OB` ("repo/PR/CI events — read-only credential"); `OB` carries the `degradable` class (tier 2). P5.2's watch set is exactly the events arriving on E24. P5.3 is the `DR` node ("deviation report — observation fields only, no assessment field"), fed by E25 `OB --> DR` ("deviation vs package vN"). P5.4 bounds when `OB` emits on E25/E26. P5.5's ask-anytime answer is versioned against `MP`. P5.6 implements E30 `OB --> ESC` ("observer outage is itself visible"). Human judgement is reached only via E26 `DR --> ESC` ("facts + risks, never assessment").
+**Diagram cross-references (`06_ARCHITECTURE.mmd`):** P5.1 scopes the credential carried on E24 `REPO --> OB` ("repo/PR/CI events — read-only credential"); `OB` carries the `degradable` class (tier 2). P5.2's watch set is exactly the events arriving on E24. P5.3 is the `DR` node ("deviation report — observation fields only, no assessment field"), fed by E25 `OB --> DR` ("deviation vs package vN") and published to the designated local log/webhook sink rather than GitHub, keeping `REPO` token scoping strictly read-only. P5.4 bounds when `OB` emits on E25/E26. P5.5's ask-anytime answer is versioned against `MP`. P5.6 implements E30 `OB --> ESC` ("observer outage is itself visible"). Human judgement is reached only via E26 `DR --> ESC` ("facts + risks, never assessment").
 
 ---
 
@@ -200,11 +201,11 @@ Classify every candidate as `REUSE` / `ADAPT` / `REFERENCE ONLY` / `DROP`.
 | Step | Method | Pass condition |
 |---|---|---|
 | 6.1 Tabletop walkthrough | Whole team, no tooling | Every participant can state what they own and what they may write |
-| 6.2 Synthetic topic dry run | S1 only | A package is produced and approved in bounded time |
-| 6.3 Two-machine collision drill | Two participants | Ownership rule holds; observer reports if violated |
+| 6.2 Synthetic topic dry run | S1 only | A package is produced and approved in bounded time, decomposing a recon topic into custom Flowsint transforms (`reconurge/flowsint` — candidate L-14) |
+| 6.3 Two-machine collision drill | Two participants | Ownership rule holds across transform surfaces; observer reports if violated |
 | 6.4 Disconnection drill | Kill one machine mid-task | Work is reassignable from Git state alone |
 | 6.5 Observer-off drill | Disable observer | Team continues building; loss is visible |
-| 6.6 Time-box check | Whole team | Setup fits inside the stated preparation window |
+| 6.6 Time-box check | Whole team | Setup fits inside the stated preparation window (measured for prep; event C0 floor calibrated separately in dry-run cycles) |
 | 6.7 Adversarial review | Architect + one skeptic | Contradictions across blueprint/plan/checklist recorded |
 | 6.8 Correction pass | Architect | Every found contradiction resolved in the artifacts, not in someone's head |
 
@@ -212,7 +213,7 @@ Classify every candidate as `REUSE` / `ADAPT` / `REFERENCE ONLY` / `DROP`.
 
 **Rationale:** a check that has never been observed to fail is not evidence, and a workflow drill that has never failed has proven nothing — a drill in which nothing can go wrong tests nothing. The gate above therefore rests on the recorded failure, not on the green result.
 
-**Diagram cross-references (`06_ARCHITECTURE.mmd`):** 6.2 exercises E1–E3 (`RM --> MP --> APPR --> MP`). 6.3 exercises E27 (same-surface escalation) against the ownership rule behind E4–E8. 6.4 exercises E29 (degraded local adoption of the frozen package). 6.5 exercises E30 (observer outage is itself visible).
+**Diagram cross-references (`06_ARCHITECTURE.mmd`):** 6.2 exercises E1–E3 (`RM --> MP --> APPR --> MP`) targeting Flowsint transform extensions. 6.3 exercises E27 (same-surface escalation) against the ownership rule behind E4–E8. 6.4 exercises E29 (degraded local adoption of the frozen package). 6.5 exercises E30 (observer outage is itself visible).
 
 ---
 
@@ -235,7 +236,7 @@ Machine health → credentials present → repository reachable → roles announ
 | Before any machine goes offline (sleep, power-down, disconnect) | Branch pushed and local state stated; only then may the machine go offline | Lane owner | E9–E13 (`lane --> REPO`) |
 | Overnight (each night window) | Exactly one named awake human owns the escalation channel; if none is awake, the alert set is reduced and the reduction announced | `<team-lead>` | E26/E30 — the reduction is a declared degraded state, subject to the same visibility rule as an observer outage |
 
-**Q2 — resolved in part, 2026-09-15: duration is 24 hours or more; the expected shape is two days with part of the team working overnight.** `[FACT — operator report of a team contact, 2026-09-15]` `[UNVERIFIED — second-hand; organizer confirmation pending]` Consequences, applied: the short-event branch is closed — the observer is not cut for duration reasons and continuous mode stays ON by default; the cut order in blueprint §8.2 is therefore driven by **pressure, not duration**; and the four overnight rows above become live requirements rather than options. Still open: exact start/stop times, submission deadline, preparation rules — these set `<freeze-threshold>` and `<submission-buffer>` at T7-09 and change no structure. See `01_DISCOVERY_CLOSURE.md` Q2, and the "Time running out" row in §11.
+**Q2 — provisionally resolved in part, 2026-09-15: duration is reported as 24 hours or more with overnight work expected.** `[INFERENCE — based on operator report of team contact; UNVERIFIED until organizer confirmation at T7-01]` Consequences, applied: overnight mechanisms are designed and ready, but the short-event cut rules remain an active fallback branch rather than permanently closed. If official organizer confirmation establishes a short sprint (≤18 hours), continuous observer mode is cut to C1 by duration alone. Still open: exact start/stop times, submission deadline, preparation rules — these set `<freeze-threshold>` and `<submission-buffer>` at T7-09 and change no structure. See `01_DISCOVERY_CLOSURE.md` Q2, and the "Time running out" row in §11.
 
 **Time and cost budget — the frame, with the numbers owed at T7-09.** Every other cost in this design is named; the event's own budget was not, and an unmodelled budget is how coordination silently eats the clock (`07_FAILURE_AND_REHEARSAL_PLAN.md` §3 PM-3). The frame is fixed now so the numbers have somewhere to land:
 
@@ -246,9 +247,9 @@ Machine health → credentials present → repository reachable → roles announ
 | Startup sequence ES-01…ES-09 | `<team-lead>` | `<startup-budget>` | T7-09; measured at drill 6.1 |
 | Per-cycle coordination overhead (sync, triage, handover) | `<team-lead>` | `<cycle-overhead-budget>` | T7-09; measured across one full rehearsal cycle |
 | Triage load on the observer's reports | `<s1-operator>` | `<triage-budget>` | T7-09; measured at drill 6.5 |
-| **C0 floor** — the never-cut set must fit inside the event window | `<team-lead>` | `<c0-floor-target>` | Drill 6.6 is the measurement, and it now has a target to hit rather than only a duration to report |
+| **C0 floor** — the never-cut set must fit inside the event window | `<team-lead>` | `<c0-floor-target>` | Measured across one full cycle rehearsal (drills 6.2–6.4); Drill 6.6 measures prep setup fit |
 
-Drill 6.6 recalibrates the §9 step timeouts against these values; until it runs, every timeout in `07` §6 is an estimate and is labelled as one.
+Drill 6.6 verifies that preparation setup fits the T-minus preparation window; one full dry-run cycle (drills 6.2–6.4) calibrates per-cycle execution against the C0 floor target. Until rehearsal runs, every timeout in `07` §6 is an estimate and is labelled as one.
 
 ### P9 Teardown
 Stop observer → release credentials → archive evidence → **sanitize before anything reaches a portfolio** → confirm no participant, repository, or organizer material is exposed.

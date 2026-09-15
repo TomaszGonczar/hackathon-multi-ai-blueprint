@@ -253,7 +253,7 @@ drill 6.6 recalibrates them against the real window.
 ### 6.2 Synthetic topic dry run
 
 - **Trigger:** P3 acceptance met (research machine produces a validating package).
-- **Procedure:** feed a synthetic topic (labelled synthetic) to `RM`; produce `MP` v1; run human
+- **Procedure:** feed a synthetic recon topic (labelled synthetic) to `RM`, targeting custom transform extensions to the Flowsint OSINT investigation platform (`reconurge/flowsint` — candidate L-14); produce `MP` v1; run human
   approval at `APPR` with a recorded approval; then attempt (i) a silent edit of the frozen
   package and (ii) a proper numbered amendment. A second person — not the author — reads the
   package and states what they would build first.
@@ -271,8 +271,8 @@ drill 6.6 recalibrates them against the real window.
 ### 6.3 Two-machine collision drill
 
 - **Trigger:** P4 acceptance met (repo topology, ownership registry, merge procedure exist).
-- **Procedure:** humans 1 and 2 both attempt a write to the same declared surface on their own
-  machines (`L1`, `L2`). Observe which layer stops the second writer: ownership registry, branch
+- **Procedure:** humans 1 and 2 both attempt a write to declared surfaces on their own
+  machines (`L1`, `L2`), using Flowsint transform directories (e.g. `transforms/subdomain_recon` vs `transforms/threat_intel` to verify disjoint isolation, then deliberately colliding on the same transform directory or root manifest). Observe which layer stops the second writer: ownership registry, branch
   protection, or nothing. Then inject a synthetic "interface wrong" fault into a lane and observe
   whether the escalation trigger (`E27`) reaches the named human via `ESC`.
 - **Pass condition (observable):** the second writer is blocked mechanically, or the violation is

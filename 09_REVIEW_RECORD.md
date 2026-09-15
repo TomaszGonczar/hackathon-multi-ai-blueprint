@@ -117,7 +117,26 @@ attempts succeeded, and all three are in the table above.
 
 ---
 
-## 4. What this record does not prove
+## 4. Independent Adversarial Review — 10 findings, dispositions below
+
+**Method.** A third independent pass conducted from a fresh terminal context without shared context, modeling a hiring Principal AI Engineer evaluating technical rigor, internal consistency, and operability under event clock. It audited the package against the `5e5baab` snapshot, recounted internal tables, performed falsification attacks on the core claims, tested 03:00 operational feasibility, and incorporated the Flowsint transform fixture (`reconurge/flowsint` — candidate L-14). All 10 findings were dispositioned and resolved in the package.
+
+| # | Severity | Location | Finding | Disposition |
+|---|---|---|---|---|
+| F-01 | MAJOR | `08` §4 | Validation ledger count stated "Twelve mechanisms... eight `DESIGNED+CHECKED`", contradicting `07` §1 which held 13 mechanisms (4 `DESIGNED`, 9 `DESIGNED+CHECKED`) after V13 was added | **Fixed.** `08` §4 updated to thirteen mechanisms (4 `DESIGNED`, 9 `DESIGNED+CHECKED`) |
+| F-02 | MAJOR | `README.md` | Checklist item tally stated 73 binary checks, contradicting `05` §14 which held 74 checkable items after DC-17 was introduced | **Fixed.** `README.md` updated to 74 binary, assignable checks |
+| F-03 | MAJOR | `HISTORY.md` | Omitted current commit `5e5baab` (implementing PE review), breaking offline SHA provenance | **Fixed.** Added commit row for `5e5baab` and subsequent release |
+| F-04 | MAJOR | `04` §10 | Redefined Drill 6.6 to measure event C0 floor, conflating preparation clock (T-minus) with event clock (T-plus) | **Fixed.** Rehearsal Drill 6.6 restored to preparation window verification; C0 floor calibrated via dry-run cycle execution |
+| F-05 | MAJOR | `04` §10, `03` §8.2 | Second-hand verbal report used to permanently close the short-event architectural branch before T-7 discovery closure | **Fixed.** Preserved short-event cut rules as an active fallback branch rather than declaring the branch permanently closed |
+| F-06 | MINOR | `05` §5 | Non-linear checklist numbering sequence (`DC-14 -> DC-17 -> DC-15 -> DC-16`) | **Fixed.** Reordered so `DC-17` follows `DC-16` linearly |
+| F-07 | MINOR | `08` §4 | Audit tally omitted the 13-finding Principal-Engineer review | **Fixed.** Added PE review and independent review to the audit summary |
+| F-08 | MINOR | `04` §8, `05` T7-06, T1-12 | Observer's Deviation Report (`DR`) publication sink unspecified while token was proven write-incapable on GitHub | **Fixed.** Designated sink as append-only JSONL log (`event_logs/deviation_reports.jsonl`) or local chat webhook |
+| F-09 | NIT | `03` §9 | D4 reversal condition phrased as machine capacity saturation without noting C1 observer degradation | **Fixed.** Phrasing clarified: under saturation, observer role is halted (C1 cut) while research remains on demand |
+| F-10 | NIT | `05` §13 | Phase index ellipsis `DC-01 … DC-17` obscured out-of-order sequence | **Fixed.** Resolved by F-06 sequential reordering |
+
+---
+
+## 5. What this record does not prove
 
 Review is not execution. Every finding above concerns the *documents*: what they assert, whether
 they agree, whether their acceptance conditions can be observed. Nothing in this file is evidence

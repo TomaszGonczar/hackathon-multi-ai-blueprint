@@ -321,7 +321,7 @@ Cut priorities sit in a namespace of their own — **C0 — never cut**, **C1 �
 | **C2 — cut first** | Parallel workstreams | Slower, but sequential still ships | `DESIGNED+CHECKED` — check: rehearsal drill 6.6 time-box, plan §9 | `ENFORCED` when drill 6.6 is observed: the parallel setup fits inside the preparation window |
 | **C2 — cut first** | Automated CI beyond one check (`CI`) | Manual verification, weaker evidence | `DESIGNED` | `DESIGNED+CHECKED` when one CI command is defined and observed runnable on a PR |
 
-**Duration resolved in part, 2026-09-15.** Q2 is answered as **24 hours or more**, expected two days with overnight work (`01_DISCOVERY_CLOSURE.md` Q2). Consequences for this table: the short-event branch is closed, so no row above is cut for duration reasons — the cut order is driven by **pressure, not duration**; and the observer's C1 row stays ON by default rather than being cut on a short-event assumption. The four overnight mechanisms the answer made necessary are defined in `04_DEVELOPMENT_PLAN.md` §10, with failure rows in its §11, checklist items DC-14–DC-16, ledger row V12, and premortem entry PM-12.
+**Duration provisionally resolved in part, 2026-09-15.** Q2 is reported as **24 hours or more**, expected two days with overnight work (`01_DISCOVERY_CLOSURE.md` Q2). Consequences for this table: overnight mechanisms are specified and ready, but the short-event cut rules remain an active fallback branch rather than permanently closed. If official organizer rules establish a shorter sprint (≤18 hours), continuous observer mode is cut to C1 by duration alone. The four overnight mechanisms are defined in `04_DEVELOPMENT_PLAN.md` §10, with failure rows in its §11, checklist items DC-14–DC-16, ledger row V12, and premortem entry PM-12.
 
 ### 8.3 The cheerleader risk
 
@@ -340,7 +340,7 @@ No rehearsal has occurred, because the event has not happened. The blueprint the
 | D1 | Observer is a role on S1, not a separate system | Baseline lives with the plan; one fewer failure domain | Research load saturates S1 during the event |
 | D2 | Mission Package is the only cross-boundary artifact | Removes prose drift and version skew | Fleet needs richer context than the package carries |
 | D3 | Package is frozen and amended, never silently edited | Makes plan drift visible | Amendments become so frequent the freeze loses meaning |
-| D4 | Research and observe run concurrently | Research does not stop at build start | Machine cannot sustain both |
+| D4 | Research and observe run concurrently | Research does not stop at build start | Machine cannot sustain both (observer role is halted to C1; research remains on demand) |
 | D5 | One writer per workspace | Collisions cost more than parallelism saves | Workstreams prove genuinely independent |
 | D6 | Human owns every merge | Integration damage is unrecoverable under time pressure | Never |
 | D7 | Observer read-only by credential | Instruction is not enforcement | Credential scoping unavailable — then state the limit |

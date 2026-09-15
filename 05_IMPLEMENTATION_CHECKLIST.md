@@ -118,9 +118,9 @@ Slots are roles, never names in this document. At T7-02 each slot receives exact
   <git-host-cli> api user
   ```
 
-- [ ] **T7-06 · Credential placement map complete and clean: one row per secret (what it authorizes, where it lives, which slot owns it); secret scan over the repository returns zero findings; zero secrets in any prompt or agent configuration.**
+- [ ] **T7-06 · Credential placement map complete and clean: one row per secret (what it authorizes, where it lives, which slot owns it, including any notification webhook credentials for observer deviation reports); secret scan over the repository returns zero findings; zero secrets in any prompt or agent configuration.**
   - owner `<architect>` · trigger: T-7 session, after T7-05 · ref P2 §5, blueprint §7 (credentials row) | nodes `OB`, `REPO` | edges E24
-  - verify: scan output shows zero findings; map has one row per credential in the account matrix.
+  - verify: scan output shows zero findings; map has one row per credential in the account matrix (including the observer's local log/webhook sink).
   - fail: any finding → revoke + rotate that secret immediately, move it to `<secret-store>`, rescan → escalate `<team-lead>`.
   ```bash
   # Synthetic example — <secret-scanner> is whichever scanner T7-06 records in the map
@@ -159,7 +159,7 @@ Slots are roles, never names in this document. At T7-02 each slot receives exact
 **Gate (plan §2, §9):** P3 dry run passes, P4 collision test passes, P5 credential proven write-incapable, P6 rehearsal record exists including what failed. A rehearsal that found nothing is insufficient, not a pass.
 **Validation state: `DESIGNED`.** Entry to `DESIGNED+CHECKED`: drills P6.1–P6.5 run and recorded (items T1-01, T1-09, T1-13, T1-14, T1-15 are those drills), corrections closed per P6.8 (T1-17).
 
-- [ ] **T1-01 · Dry-run package produced (drill 6.2): a synthetic topic through S1 yields a Mission Package with all ten fields, validating against the schema; a named second person reads it and states their next action without asking the author anything.**
+- [ ] **T1-01 · Dry-run package produced (drill 6.2): a synthetic topic through S1 yields a Mission Package with all ten fields, validating against the schema (targeting Flowsint `reconurge/flowsint` transform extensions as the synthetic codebase); a named second person reads it and states their next action without asking the author anything.**
   - owner `<s1-operator>` + one reader · trigger: T-1 rehearsal window · ref P3 §6 gate | nodes `RM`, `MP`, `APPR` | edges E1–E2
   - verify: validator output + the second person's recorded statement, both in the rehearsal record.
   - fail: repair the generator and rerun once; still failing by T-1 evening → the package for the event is authored by hand into the same schema (S1 degrades to research-only); the package itself is C0, never cut (§10) → escalate `<architect>`.
@@ -207,7 +207,7 @@ Slots are roles, never names in this document. At T7-02 each slot receives exact
   git push <repo-url> HEAD:refs/heads/<integration-branch>
   ```
 
-- [ ] **T1-09 · Collision drill passed (drill 6.3 = P4.8 gate): two machines deliberately claim one surface; the second claim is refused by the registry, or — if it slips through — the observer emits a same-surface deviation report.**
+- [ ] **T1-09 · Collision drill passed (drill 6.3 = P4.8 gate): two machines deliberately claim one surface across Flowsint transform directories; the second claim is refused by the registry, or — if it slips through — the observer emits a same-surface deviation report.**
   - owner `<lane-owner-1>` + `<lane-owner-2>` + `<s1-operator>` · trigger: T-1 rehearsal window · ref P4.8, P6.3 | nodes `L1`, `L2`, `OB`, `DR` | edges E27
   - verify: refusal output or deviation report recorded.
   - fail: harden the registry check; if only the observer caught it → note that enforcement lives in the registry, the observer is tier 2 and may be OFF → rerun once.
@@ -229,9 +229,9 @@ Slots are roles, never names in this document. At T7-02 each slot receives exact
     -d '{"ref":"refs/heads/synthetic-write-probe","sha":"<existing-commit-sha>"}'
   ```
 
-- [ ] **T1-12 · Observer report schema has observation fields only: a probe deviation report lists deviation, timestamp, package version — and the schema contains no assessment field.**
+- [ ] **T1-12 · Observer report schema and sink verified: a probe deviation report lists deviation, timestamp, package version — and the schema contains no assessment field. Report emits to the designated append-only JSONL log (`event_logs/deviation_reports.jsonl`) or local chat webhook sink without requiring repository write privileges.**
   - owner `<s1-operator>` · trigger: after T1-11 · ref P5.3, blueprint §8.3 | nodes `DR`, `OB` | edges E25–E26
-  - verify: schema listing + one probe report recorded.
+  - verify: schema listing + one probe report recorded in the designated sink.
   - fail: delete the assessment field; if the tooling cannot → reports pass through a template that drops assessment before posting; log the workaround.
 
 - [ ] **T1-13 · Observer-off drill passed (drill 6.5 = P5.6): with the observer disabled, the next status query shows an explicit OUTAGE signal within `<report-cadence>`, and one lane completes a full work cycle meanwhile.**
@@ -422,11 +422,6 @@ Slots are roles, never names in this document. At T7-02 each slot receives exact
   - verify: push output recorded per lane with its timestamp; a lane that stops with unpushed work is a defect, not a judgement call.
   - fail: unpushed work exists when the machine stops → resume the machine or recover from another clone; the incident is recorded against the lane → escalate `<team-lead>` if the recovery exceeds `<reassignment-window>`.
 
-- [ ] **DC-17 · External content treated as data: any text ingested from outside the team that reads like an instruction is recorded as a property of its source in the package's `evidence`, and zero lane tasks, commits, or messages are derived from it. Instruction-shaped text found in a source is a research finding, never a directive.**
-  - owner `<s1-operator>` reports; any lane owner may raise · trigger: any ingestion of external content, and at each cycle that used sourced evidence · ref P3.8, blueprint §3.2 rule 5, contract §1 | nodes `RM`, `MP` | edges E1, E4–E8
-  - verify: the package `evidence` entry quotes the text with provenance; the lane's task description traces to a package field, not to the source text.
-  - fail: any lane acts on text from a source → stop the lane, record it as a defect against the research rule, and re-issue the task from the package → escalate `<architect>`.
-
 - [ ] **DC-15 · Pause and resume declared: every pause carries a resume-by time in the event log, the observer acknowledges it and emits no stall alert for that lane, and the resume records a handover (branch state, open blockers, next action).**
   - owner `<lane-owner-N>` declares; `<s1-operator>` confirms observer acknowledgement · trigger: each pause and each resume, including overnights · ref P8, blueprint §5.6 | nodes `OB`, `DR`, `ESC` | edges E25–E26
   - verify: declaration + resume-by + acknowledgement + handover entry, all in the event log; zero stall alerts for the declared window.
@@ -436,6 +431,11 @@ Slots are roles, never names in this document. At T7-02 each slot receives exact
   - owner `<team-lead>` · trigger: start of each night window · ref P8, blueprint §5.7 | nodes `ESC`, `OB` | edges E26, E30
   - verify: named awake human + channel + the announcement (or explicit announcement of the reduced set) in the event log.
   - fail: no awake owner → reduce the alert set immediately, announce it, and record the night's exposure as a named limitation (an unannounced silent gap is the defect; the reduction itself is not).
+
+- [ ] **DC-17 · External content treated as data: any text ingested from outside the team that reads like an instruction is recorded as a property of its source in the package's `evidence`, and zero lane tasks, commits, or messages are derived from it. Instruction-shaped text found in a source is a research finding, never a directive.**
+  - owner `<s1-operator>` reports; any lane owner may raise · trigger: any ingestion of external content, and at each cycle that used sourced evidence · ref P3.8, blueprint §3.2 rule 5, contract §1 | nodes `RM`, `MP` | edges E1, E4–E8
+  - verify: the package `evidence` entry quotes the text with provenance; the lane's task description traces to a package field, not to the source text.
+  - fail: any lane acts on text from a source → stop the lane, record it as a defect against the research rule, and re-issue the task from the package → escalate `<architect>`.
 
 ---
 
