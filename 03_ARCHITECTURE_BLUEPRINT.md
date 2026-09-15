@@ -15,7 +15,7 @@
 
 ## 0. One-sentence decision
 
-**Two machines carry three roles.** A single **research machine** decomposes an unknown topic into a frozen, versioned **Mission Package**, and later re-anchors onto the same package as a **read-only observer**. A **five-machine development fleet** writes the solution under a one-writer-per-workspace rule, with Git as the only source of truth and every merge behind a human decision. The observer is **degradable**: under time pressure it is switched off, and the team loses monitoring — never the ability to build.
+**Two machines carry three roles.** A single **research machine** decomposes an unknown topic into a frozen, versioned **Mission Package**, and later re-anchors onto the same package as a **read-only observer**. A **multi-laptop development fleet** writes the solution under a one-writer-per-workspace rule, with Git as the only source of truth and every merge behind a human decision. The observer is **degradable**: under time pressure it is switched off, and the team loses monitoring — never the ability to build.
 
 ```text
 CORE           S1 Research machine  →  Mission Package (frozen, versioned)
@@ -393,7 +393,7 @@ These are **not** architectural gaps; they are facts only the team and organizer
 
 > The operator designed and documented an implementation-ready multi-AI workflow for a five-person
 > cybersecurity team facing an unknown hackathon topic: a research machine that freezes an approved
-> Mission Package, a five-machine development fleet under one-writer ownership, and a read-only,
+> Mission Package, a multi-laptop development fleet under one-writer ownership, and a read-only,
 > degradable observer. Deliverables: architecture blueprint, A–Z development plan, implementation
 > checklist, and a version-controlled diagram.
 

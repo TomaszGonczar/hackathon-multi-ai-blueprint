@@ -1,7 +1,7 @@
 # Hackathon Multi-AI Workflow Blueprint
 
 **One-sentence decision:** two machines carry three roles — a research machine freezes an approved,
-versioned Mission Package; a five-machine development fleet builds against it under one-writer
+versioned Mission Package; Each developer clones this repo to their local laptop and builds against it under one-writer
 ownership; a read-only, degradable observer on the research machine reports deviation from the
 frozen plan. Humans approve the package and own every merge.
 
@@ -11,11 +11,17 @@ states what observation would upgrade each claim.
 
 ## What this is
 
-An implementation-ready multi-AI workflow for a five-person cybersecurity team facing a hackathon
+An implementation-ready multi-AI workflow for a team facing a hackathon
 whose topic is unknown at preparation time. The package is topic-agnostic by design: its value is
-structure, not answers. It covers three systems — single-machine research, five-machine
+structure, not answers. It covers three systems — single-laptop research, multi-laptop
 development, and read-only GitHub observation — plus the plan, checklist, and rehearsal/failure
 documentation to stand them up without a second architecture session.
+
+## Setup (Local Multi-Laptop)
+
+- **You bring ready:** One laptop with the research AI system pre-installed and tested.
+- **Each team member:** Clones this repo + development fleet repo to their own laptop on event day.
+- **Network:** All laptops on same Wi-Fi / LAN (no cloud infrastructure required).
 
 ## The picture
 

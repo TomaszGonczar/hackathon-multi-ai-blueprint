@@ -86,6 +86,10 @@ Slots are roles, never names in this document. At T7-02 each slot receives exact
   - verify: answers log shows 14 rows; each row = answer + source, or assumption + fallback.
   - fail: assign each blank to a slot with a deadline; if Q1 or Q2 is still blank → preparation halts → escalate `<team-lead>`.
 
+- [ ] **T7-01-1:** Research laptop: AI system pre-installed and tested
+- [ ] **T7-01-2:** Developer laptops: Each member clones repo + installs fleet locally
+- [ ] **T7-01-3:** Network: All laptops on same Wi-Fi / LAN
+
 - [ ] **T7-02 · Every owner slot in §0.3 is assigned to exactly one human in the private team registry; each assigned human confirms aloud. Zero unassigned slots. If the team runs with fewer than five lanes, the role-collapse order is applied (§10, cut priority C1) and the collapsed slots are named here.**
   - owner `<team-lead>` · trigger: T-7 session, after T7-01 · ref P0.7 | nodes `MERGE`, `ESC` | edges —
   - verify: registry shows a human against every slot; merge-owner is one named human (blueprint D6).

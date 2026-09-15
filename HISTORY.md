@@ -19,6 +19,11 @@ them.
 | `5e5baab` | 2026-09-15 | Principal-Engineer review applied: untrusted-input boundary (V13, DC-17, P3.8), budget frame, rubric trace, review record published (`09_REVIEW_RECORD.md`). |
 | `6411afd` | 2026-09-15 | Independent review findings resolved (`09_REVIEW_RECORD.md` §4, F-01 to F-10) and Flowsint (`reconurge/flowsint`) incorporated as candidate L-14 and rehearsal fixture. |
 
+## [Unreleased]
+- **Change:** Reframe setup from "five-machine fleet" to "local multi-laptop"
+- **Impact:** Clarifies local prep (research laptop + dev clones) vs. cloud deployment
+- **Files:** `README.md`, `03_ARCHITECTURE_BLUEPRINT.md`, `05_IMPLEMENTATION_CHECKLIST.md`, `HISTORY.md`
+
 **What this file is not.** It is a derived view of the repository's commit log, kept so a reader
 without git can verify the provenance lines. It records what changed; it makes no claim about whether
 any change was correct, and nothing here is evidence that a mechanism works — no rehearsal has run.
