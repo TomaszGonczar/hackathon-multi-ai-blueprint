@@ -105,6 +105,27 @@ section per citation), and the operator's prior-work experience recorded as expe
 rests on evidence produced in a prior system as proof about this design; field 3 says per record
 what that means and which in-repo check would produce the missing evidence.
 
+### Executive Candidate Matrix
+
+| ID | Candidate | Verdict | Validation State | Target Check → Phase | Primary In-Repo Anchor |
+|---|---|---|---|---|---|
+| [L-01](#l-01--principalworker-separation--adapt) | Principal/worker separation | **ADAPT** | DESIGNED+CHECKED | P6 6.1; P4.2 | [`04` §9, §7](04_DEVELOPMENT_PLAN.md) |
+| [L-02](#l-02--task-and-result-contracts--reuse) | Task and result contracts | **REUSE** | DESIGNED+CHECKED | P6 6.2; P4.6 | [`04` §9, §7](04_DEVELOPMENT_PLAN.md) |
+| [L-03](#l-03--one-writer-per-workspace--reuse) | One-writer-per-workspace | **REUSE** | DESIGNED+CHECKED | P4.8; P6 6.3 | [`04` §7](04_DEVELOPMENT_PLAN.md); [`07` §6.3](07_FAILURE_AND_REHEARSAL_PLAN.md) |
+| [L-04](#l-04--independent-review-of-exact-candidate--reuse) | Independent review of exact candidate | **REUSE** | DESIGNED+CHECKED | P4.6; P6 | [`04` §7, §9](04_DEVELOPMENT_PLAN.md) |
+| [L-05](#l-05--evidence-before-completion--reuse) | Evidence-before-completion | **REUSE** | DESIGNED+CHECKED | P6 6.2/6.3; P4.6 | [`04` §11, §12](04_DEVELOPMENT_PLAN.md) |
+| [L-06](#l-06--read-only-observer--read-only-credential--adapt) | Read-only observer + read-only credential | **ADAPT** | DESIGNED+CHECKED | P5.1; P5.3; P6 6.5 | [`07` §1, §7](07_FAILURE_AND_REHEARSAL_PLAN.md) |
+| [L-07](#l-07--git-worktree-isolation--reuse) | Git worktree isolation | **REUSE** | DESIGNED+CHECKED | P4.3; P4.8; P6 6.4 | [`04` §7, §9](04_DEVELOPMENT_PLAN.md) |
+| [L-08](#l-08--worktree-as-security-containment--drop) | Worktree as *security* containment | **DROP** | DESIGNED | P6 6.7 | [`04` §4](04_DEVELOPMENT_PLAN.md); [`07` §6.7](07_FAILURE_AND_REHEARSAL_PLAN.md) |
+| [L-09](#l-09--heartbeatwatchdog-protocol--drop-for-v1) | Heartbeat/watchdog protocol | **DROP for v1** | DESIGNED | P6 6.4/6.6 | [`04` §8, §9](04_DEVELOPMENT_PLAN.md); [`07` §3](07_FAILURE_AND_REHEARSAL_PLAN.md) |
+| [L-10](#l-10--full-deterministic-gates-suite--reference-only) | Full deterministic gates suite | **REFERENCE ONLY** | DESIGNED | none (reference at P1) | [`04` §4](04_DEVELOPMENT_PLAN.md); [`07` §2, §4](07_FAILURE_AND_REHEARSAL_PLAN.md) |
+| [L-11](#l-11--hosted-vector-search--embeddings--drop) | Hosted vector search / embeddings | **DROP** | DESIGNED | P6 6.2 | [`03` §1.2](03_ARCHITECTURE_BLUEPRINT.md); [`04` §6](04_DEVELOPMENT_PLAN.md) |
+| [L-12](#l-12--custom-dispatcher--scheduler--drop) | Custom dispatcher / scheduler | **DROP** | DESIGNED | P6 6.6/6.7 | [`04` §13](04_DEVELOPMENT_PLAN.md); [`07` §4](07_FAILURE_AND_REHEARSAL_PLAN.md) |
+| [L-13](#l-13--semantic-github-judge--drop) | Semantic GitHub judge | **DROP** | DESIGNED | P5.3; P6 6.7 | [`03` §9](03_ARCHITECTURE_BLUEPRINT.md); [`04` §13](04_DEVELOPMENT_PLAN.md) |
+| [L-14](#l-14--flowsint-osint-graph--transform-architecture--adapt) | Flowsint OSINT graph & transform architecture | **ADAPT** | DESIGNED+CHECKED | P6 6.2; P6 6.3 | [`04` §4, §9](04_DEVELOPMENT_PLAN.md); [`07` §6.2](07_FAILURE_AND_REHEARSAL_PLAN.md) |
+
+---
+
 ### L-01 — Principal/worker separation — **ADAPT**
 
 | # | Field | Record |

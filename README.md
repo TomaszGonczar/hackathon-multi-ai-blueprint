@@ -49,6 +49,12 @@ capability selection dotted purple). Rendered with `-w 2400`; the committed rast
 The embed above is reduced for orientation only; read the diagram at full size:
 [PNG](render/06_ARCHITECTURE.png) · [SVG](render/06_ARCHITECTURE.svg).
 
+## Reading order
+
+- **Reviewer, 15 minutes:** [`08_PORTFOLIO_BRIEF.md`](08_PORTFOLIO_BRIEF.md) → the diagram above → [`03_ARCHITECTURE_BLUEPRINT.md`](03_ARCHITECTURE_BLUEPRINT.md) §0/§8/§9 → [`07_FAILURE_AND_REHEARSAL_PLAN.md`](07_FAILURE_AND_REHEARSAL_PLAN.md) validation ledger.
+- **Team member, 10 minutes:** README → [`05_IMPLEMENTATION_CHECKLIST.md`](05_IMPLEMENTATION_CHECKLIST.md) quick card (§11) → your slice in `05`.
+- **Implementer, full pass:** `03` → `04` → `05` → `07`, with `02` for provenance of each mechanism.
+
 ## Documents — two registers, one diagram
 
 **Team register** (imperative, scannable, usable under time pressure):
@@ -76,12 +82,6 @@ The embed above is reduced for orientation only; read the diagram at full size:
 
 Every artifact cross-references the diagram by node ID (`MP`, `L1`–`L5`, `OB`, `MERGE`, …) and edge
 ID (`E1`–`E30`), and a mechanical census checks the agreement once per revision — after that sweep, further drift has no automatic check, so the identifiers are what make a disagreement findable rather than impossible (`07_FAILURE_AND_REHEARSAL_PLAN.md` §4 CATCH-6).
-
-## Reading order
-
-- **Team member, 10 minutes:** README → `05` quick card → your slice in `05`.
-- **Reviewer, 15 minutes:** `08` → the diagram above → `03` §0/§8/§9 → `07` validation ledger.
-- **Implementer, full pass:** `03` → `04` → `05` → `07`, with `02` for provenance of each mechanism.
 
 ## Attribution and privacy
 
