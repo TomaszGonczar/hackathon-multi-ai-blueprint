@@ -42,7 +42,9 @@ criteria, constraints, assumptions, open questions, non-goals, risks, decisions 
 captured before any component was chosen `[FACT — blueprint §2]`, and fourteen questions that only
 the team and organizers can answer were explicitly **left open** rather than silently assumed —
 with the affected section named for each, so the architecture is written to survive either answer
-`[FACT — blueprint §10]`.
+`[FACT — blueprint §10]`. Three have since been answered or partly answered (Q1 one team; Q2 at
+least 24 hours, two days with overnight work; Q14 the team executes) and the rest remain open,
+tracked with sources and dates in [`01_DISCOVERY_CLOSURE.md`](01_DISCOVERY_CLOSURE.md).
 
 A reuse audit preceded architecture selection. Every candidate mechanism from the author's prior
 agent-system work was classified `REUSE / ADAPT / REFERENCE ONLY / DROP` against a ten-field record
@@ -116,9 +118,13 @@ What can be shown:
   only, no assessment field — but a schema constraint against a motivated rationaliser is
   `DESIGNED`, not `ENFORCED`, until the anti-cheerleader check passes. `[FACT — blueprint §8.3;
   04 §6]`
-- **Two of fourteen discovery questions change the shape of the plan.** One team or five; exact
-  duration. Both are answered by the organizers, not by this design; the artifacts hold either
-  shape and name where each answer lands. `[FACT — blueprint §10 Q1–Q2; 04 §14]`
+- **The two structural questions are settled, and one of them changed the design.** Q1 resolved as
+  one five-person team (the five-teams branch is closed). Q2 resolved as at least 24 hours, expected
+  two days with overnight work — which made overnight operation live and added four mechanisms the
+  design did not previously carry: pause declaration excluded from stall alerts, push-before-offline,
+  recorded shift handover, and a staffed overnight escalation channel (`[FACT]` Q2 is second-hand and
+  `[UNVERIFIED]` until an organizer confirms it). The night window is `[UNPROVEN]`: drills 6.1–6.8 run
+  in a single sitting, so the noise bound has never been tested at 03:00. `[FACT — 01 Q1–Q2; 04 §10–§12; 07 PM-12]`
 - **Coordination overhead is charged against the same clock as building.** The design's own risk
   is that three roles for five people is too much process; the explicit cut order (blueprint §8.2)
   is the answer, and whether the P0 floor really fits in the event window is `[UNPROVEN]` until

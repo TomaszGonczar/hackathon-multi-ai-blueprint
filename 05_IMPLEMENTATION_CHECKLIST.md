@@ -416,6 +416,21 @@ Slots are roles, never names in this document. At T7-02 each slot receives exact
   - verify: PR shows command + output for every acceptance test of the task.
   - fail: test fails → fix within the cycle, or escalate DC-09 (acceptance test unsatisfiable).
 
+- [ ] **DC-14 · Push before offline: no lane goes offline (sleep, power-down, disconnect) with unpushed work. Immediately before a machine stops, the branch is pushed and the local state is stated.**
+  - owner `<lane-owner-N>` · trigger: before any offline period, including every overnight break · ref P8, blueprint §4.5 | nodes `L1`–`L5`, `REPO` | edges E9–E13
+  - verify: push output recorded per lane with its timestamp; a lane that stops with unpushed work is a defect, not a judgement call.
+  - fail: unpushed work exists when the machine stops → resume the machine or recover from another clone; the incident is recorded against the lane → escalate `<team-lead>` if the recovery exceeds `<reassignment-window>`.
+
+- [ ] **DC-15 · Pause and resume declared: every pause carries a resume-by time in the event log, the observer acknowledges it and emits no stall alert for that lane, and the resume records a handover (branch state, open blockers, next action).**
+  - owner `<lane-owner-N>` declares; `<s1-operator>` confirms observer acknowledgement · trigger: each pause and each resume, including overnights · ref P8, blueprint §5.6 | nodes `OB`, `DR`, `ESC` | edges E25–E26
+  - verify: declaration + resume-by + acknowledgement + handover entry, all in the event log; zero stall alerts for the declared window.
+  - fail: a stall alert fires for a declared-paused lane → the cadence rule is defective, not the lane: suppress, correct the rule before the next night window, log the false positive (§11 row 3).
+
+- [ ] **DC-16 · Overnight escalation staffed: each night window names exactly one awake human who owns the escalation channel; if nobody is awake, the alert set is reduced and the reduction is announced aloud and recorded.**
+  - owner `<team-lead>` · trigger: start of each night window · ref P8, blueprint §5.7 | nodes `ESC`, `OB` | edges E26, E30
+  - verify: named awake human + channel + the announcement (or explicit announcement of the reduced set) in the event log.
+  - fail: no awake owner → reduce the alert set immediately, announce it, and record the night's exposure as a named limitation (an unannounced silent gap is the defect; the reduction itself is not).
+
 ---
 
 ## 6. Slice: Freeze
@@ -635,7 +650,7 @@ Every topic required by `28_HACKATHON_TOMORROW_CONCEPT.md` §3, and where it is 
 | P5 Observer | T1-11, T1-12, T1-13, T1-18, ES-07, DC-08, DC-12, FZ-07 (TD-01/TD-02 verify P5 outputs at teardown; listed under P9) |
 | P6 Rehearsal | T1-01 (6.2), T1-09 (6.3), T1-13 (6.5), T1-14 (6.4), T1-15 (6.1), T1-17 (6.6–6.8 + gate) |
 | P7 Event-day startup | ES-01 … ES-09 |
-| P8 Event operation | DC-01 … DC-13, FZ-01 … FZ-08, SB-01 … SB-05 |
+| P8 Event operation | DC-01 … DC-16, FZ-01 … FZ-08, SB-01 … SB-05 |
 | P9 Teardown | TD-01 … TD-06 |
 
 No plan phase lacks checklist coverage. `[FACT — method: each phase's tasks in plan §3–§10 were mapped item-by-item while writing §2–§8; the mapping above is the result, and every item ID listed exists in this file.]`
@@ -644,6 +659,6 @@ No plan phase lacks checklist coverage. `[FACT — method: each phase's tasks in
 
 ## 14. Status
 
-70 checkable items (counting method: `grep -c '^- \[ \] ' 05_IMPLEMENTATION_CHECKLIST.md` returns 71; subtract the one template line inside the §0.5 format-example code block, which is an illustration, not a checkable item → 70. Distribution, counted per ID prefix the same way: T-7 = 10, T-1 = 19, event start = 9, per-cycle = 13, freeze = 8, submission = 5, teardown = 6.)
+73 checkable items (counting method: `grep -c '^- \[ \] ' 05_IMPLEMENTATION_CHECKLIST.md` returns 74; subtract the one template line inside the §0.5 format-example code block, which is an illustration, not a checkable item → 73. Distribution, counted per ID prefix the same way: T-7 = 10, T-1 = 19, event start = 9, per-cycle = 16, freeze = 8, submission = 5, teardown = 6.)
 
 Nothing in this checklist has been executed. It is designed, unrehearsed. The P6 rehearsal (plan §9) is its first test, and its recorded failures are expected to correct this document (T1-17). All command examples are synthetic.

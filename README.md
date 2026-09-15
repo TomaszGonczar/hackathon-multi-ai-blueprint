@@ -33,7 +33,7 @@ The embed above is reduced for orientation only; read the diagram at full size:
 
 | File | What it is |
 |---|---|
-| [`05_IMPLEMENTATION_CHECKLIST.md`](05_IMPLEMENTATION_CHECKLIST.md) | 68 binary, assignable checks across seven time slices (T-7, T-1, event start, per cycle, freeze, submission, teardown) plus an event-day quick card |
+| [`05_IMPLEMENTATION_CHECKLIST.md`](05_IMPLEMENTATION_CHECKLIST.md) | 73 binary, assignable checks across seven time slices (T-7, T-1, event start, per cycle, freeze, submission, teardown) plus an event-day quick card |
 
 **Reviewer register** (narrative, trade-offs, judgment):
 
@@ -44,6 +44,8 @@ The embed above is reduced for orientation only; read the diagram at full size:
 | [`02_REUSE_LEDGER.md`](02_REUSE_LEDGER.md) | Every candidate from prior work classified REUSE / ADAPT / REFERENCE ONLY / DROP against a ten-field record, with what was actually proved |
 | [`07_FAILURE_AND_REHEARSAL_PLAN.md`](07_FAILURE_AND_REHEARSAL_PLAN.md) | Validation ledger, three-state control table, premortem, catch ledger, decision log with missing-data entries, rehearsal drills |
 | [`08_PORTFOLIO_BRIEF.md`](08_PORTFOLIO_BRIEF.md) | Fifteen-minute case study: problem → decisions → evidence → limitations |
+
+**Shared record** (both readers): [`01_DISCOVERY_CLOSURE.md`](01_DISCOVERY_CLOSURE.md) — every question the architecture branches on, its answer or its open status, the answer's source and date, and what each answer changed in the other artifacts.
 
 Every artifact cross-references the diagram by node ID (`MP`, `L1`–`L5`, `OB`, `MERGE`, …) and edge
 ID (`E1`–`E30`), so the four primary artifacts and the diagram cannot silently disagree.

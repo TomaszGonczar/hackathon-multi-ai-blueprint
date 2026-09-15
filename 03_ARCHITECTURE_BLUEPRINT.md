@@ -242,7 +242,7 @@ The observer **reports facts and risks**. It does not judge semantic correctness
 
 ### 5.6 Noise control
 
-An observer that alerts constantly is switched off within an hour — the failure mode that kills monitoring systems. Alerts are bounded: only deviation from the plan, CI failures, conflicts, and stalls. Everything else is available on request, not pushed.
+An observer that alerts constantly is switched off within an hour — the failure mode that kills monitoring systems. Alerts are bounded: only deviation from the plan, CI failures, conflicts, and stalls. Everything else is available on request, not pushed. **Stall alerts never fire for a lane whose owner has declared a pause** (declaration path: `04_DEVELOPMENT_PLAN.md` §10; checklist DC-15). The exception exists because an event of 24 hours or more includes deliberate sleep, and a stall rule that cannot tell sleep from silence produces exactly the noise that gets monitoring muted — see the overnight protocol added at Q2 resolution (`01_DISCOVERY_CLOSURE.md` Q2).
 
 ### 5.7 Degradation
 
@@ -308,6 +308,8 @@ Applied here: the observer is read-only because its **credential cannot write**.
 | **P2 — cut first** | Parallel workstreams | Slower, but sequential still ships | `DESIGNED+CHECKED` — check: rehearsal drill 6.6 time-box, plan §9 | `ENFORCED` when drill 6.6 is observed: the parallel setup fits inside the preparation window |
 | **P2 — cut first** | Automated CI beyond one check (`CI`) | Manual verification, weaker evidence | `DESIGNED` | `DESIGNED+CHECKED` when one CI command is defined and observed runnable on a PR |
 
+**Duration resolved in part, 2026-09-15.** Q2 is answered as **24 hours or more**, expected two days with overnight work (`01_DISCOVERY_CLOSURE.md` Q2). Consequences for this table: the short-event branch is closed, so no row above is cut for duration reasons — the cut order is driven by **pressure, not duration**; and the observer's P1 row stays ON by default rather than being cut on a short-event assumption. The four overnight mechanisms the answer made necessary are defined in `04_DEVELOPMENT_PLAN.md` §10, with failure rows in its §11, checklist items DC-14–DC-16, ledger row V12, and premortem entry PM-12.
+
 ### 8.3 The cheerleader risk
 
 The research machine authors the plan and later measures progress against it. A system grading its own homework will rationalise. **Mitigation:** the observer's output schema contains observation fields only — deviation magnitude, timestamp, package version. There is no field in which to argue that the plan is still fine. Assessment belongs to humans alone.
@@ -367,6 +369,8 @@ These are **not** architectural gaps; they are facts only the team and organizer
 | 12 | Which external services are permitted? | §3.4 degraded modes |
 | 13 | What may be captured for the portfolio? | §11 |
 | 14 | Who executes this plan after delivery? | Development plan §2 (owners column) and §3–§10 in full, including §9 rehearsal |
+
+**Resolution status (2026-09-15).** Q1 (one team or five) is ANSWERED — one five-person team; Q14 (who executes) is ANSWERED from the return brief — the five-person team, with the operator not participating; Q2 (duration) is PARTIAL — 24 hours or more with overnight work, exact hours still open. The remaining eleven questions are OPEN and close at T7-01. The full register, with each answer's source, date, authority, and affected section, is `01_DISCOVERY_CLOSURE.md`; this table stays as the question list, and the register is where answers accumulate.
 
 ---
 
