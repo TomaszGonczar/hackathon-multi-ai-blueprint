@@ -1,15 +1,6 @@
 # Hackathon Multi-AI Workflow Blueprint
 
 <p align="center">
-  <b>The Deterministic AI Systems Suite</b><br>
-  <a href="https://github.com/TomaszGonczar/dCompress"><b>dCompress</b></a> (Fact Memory) &middot;
-  <a href="https://github.com/TomaszGonczar/dsearch"><b>dsearch</b></a> (Retrieval Grounding) &middot;
-  <a href="https://github.com/TomaszGonczar/dproof"><b>dproof</b></a> (State Evidence) &middot;
-  <a href="https://github.com/TomaszGonczar/omega-zero"><b>omega-zero</b></a> (Governance) &middot;
-  <a href="https://github.com/TomaszGonczar/hackathon-multi-ai-blueprint"><b>hackathon-blueprint</b></a> (Operations)
-</p>
-
-<p align="center">
   <a href="https://github.com/TomaszGonczar/hackathon-multi-ai-blueprint/actions/workflows/ci.yml"><img src="https://github.com/TomaszGonczar/hackathon-multi-ai-blueprint/actions/workflows/ci.yml/badge.svg?branch=main" alt="CI"></a>
   <a href="05_IMPLEMENTATION_CHECKLIST.md"><img src="https://img.shields.io/badge/checklist-77%20binary%20checks-blue.svg" alt="77 Checks"></a>
   <a href="07_FAILURE_AND_REHEARSAL_PLAN.md"><img src="https://img.shields.io/badge/status-design%20complete-green.svg" alt="Design Complete"></a>
