@@ -9,17 +9,11 @@
 
 **Core design:** Two machine archetypes carry three roles across local laptops. A research machine freezes an approved Mission Package; each developer builds against it in an isolated local repository under single-writer ownership; a read-only observer monitors deviation from the frozen plan. Humans approve the package and own every merge.
 
-**Status:** design complete, unrehearsed. Every mechanism is `DESIGNED` or `DESIGNED+CHECKED`;
-nothing is `ENFORCED` — the October event has not happened and no rehearsal has run. Each artifact
-states what observation would upgrade each claim.
+**Status:** design complete, unrehearsed. Mechanisms are classified as `DESIGNED` or `DESIGNED+CHECKED`. No mechanism is marked `ENFORCED` because the October event has not occurred and no rehearsal has run. Artifacts define the observable criteria required to upgrade each status.
 
 ## What this is
 
-An implementation-ready multi-AI workflow for a team facing a hackathon
-whose topic is unknown at preparation time. The package is topic-agnostic by design: its value is
-structure, not answers. It covers three systems: single-laptop research, multi-laptop
-development, and read-only GitHub observation, plus the checklist and rehearsal documentation to
-stand them up without a second architecture session.
+An operational multi-AI workflow designed for hackathons with unannounced topics. It coordinates three distinct roles across local machines: single-laptop research, multi-laptop development, and read-only GitHub observation, supported by execution checklists and failure rehearsals.
 
 ## Setup (Local Multi-Laptop)
 
@@ -72,13 +66,12 @@ Every artifact cross-references the diagram by node ID (`MP`, `L1`–`L5`, `OB`,
 ID (`E1`–`E30`), and a mechanical census checks the agreement once per revision — after that sweep, further drift has no automatic check, so the identifiers are what make a disagreement findable rather than impossible (`07_FAILURE_AND_REHEARSAL_PLAN.md` §4 CATCH-6).
 
 ## Attribution and privacy
- 
-I designed the architecture and operational workflow. I did not participate in the hackathon competition or implement the team's application. The five-person engineering team owns the competition implementation. No hackathon outcome or semantic correctness is claimed.
 
-No participant names, repository contents, credentials, sponsor or organizer material, or
-topic-specific detail appear here. All examples are synthetic and labelled synthetic.
+I designed the architecture and operational workflow. The five-person engineering team owns the competition application.
 
-**Explicit non-claims:** This package does not prove a competition outcome, semantic correctness of the team's solution, runtime stability under live time pressure, or that monitoring improved delivery.
+No participant names, private repository contents, credentials, sponsor materials, or topic-specific details appear in this repository. All examples are synthetic.
+
+This package documents operational design and failure rehearsals. It makes no claims regarding competition outcomes, solution correctness, or runtime stability under live competition conditions.
 
 ## License
 
