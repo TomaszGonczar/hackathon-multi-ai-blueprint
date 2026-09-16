@@ -16,10 +16,7 @@
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT"></a>
 </p>
 
-**One-sentence decision:** two machine archetypes carry three roles across local laptops — a research machine freezes an approved,
-versioned Mission Package; each developer clones this repo to their local laptop and builds against it under one-writer
-ownership; a read-only, degradable observer on the research machine reports deviation from the
-frozen plan. Humans approve the package and own every merge.
+**Core design:** Two machine archetypes carry three roles across local laptops. A research machine freezes an approved Mission Package; each developer builds against it in an isolated local repository under single-writer ownership; a read-only observer monitors deviation from the frozen plan. Humans approve the package and own every merge.
 
 **Status:** design complete, unrehearsed. Every mechanism is `DESIGNED` or `DESIGNED+CHECKED`;
 nothing is `ENFORCED` — the October event has not happened and no rehearsal has run. Each artifact
@@ -29,9 +26,9 @@ states what observation would upgrade each claim.
 
 An implementation-ready multi-AI workflow for a team facing a hackathon
 whose topic is unknown at preparation time. The package is topic-agnostic by design: its value is
-structure, not answers. It covers three systems — single-laptop research, multi-laptop
-development, and read-only GitHub observation — plus the plan, checklist, and rehearsal/failure
-documentation to stand them up without a second architecture session.
+structure, not answers. It covers three systems: single-laptop research, multi-laptop
+development, and read-only GitHub observation, plus the checklist and rehearsal documentation to
+stand them up without a second architecture session.
 
 ## Setup (Local Multi-Laptop)
 
@@ -39,7 +36,7 @@ documentation to stand them up without a second architecture session.
 - **Each team member:** Clones this repo + development fleet repo to their own laptop on event day.
 - **Network:** All laptops on same Wi-Fi / LAN (no cloud infrastructure required).
 
-## The picture
+## Architecture Diagram
 
 ![Architecture diagram](render/06_ARCHITECTURE.png)
 
@@ -84,17 +81,13 @@ Every artifact cross-references the diagram by node ID (`MP`, `L1`–`L5`, `OB`,
 ID (`E1`–`E30`), and a mechanical census checks the agreement once per revision — after that sweep, further drift has no automatic check, so the identifiers are what make a disagreement findable rather than impossible (`07_FAILURE_AND_REHEARSAL_PLAN.md` §4 CATCH-6).
 
 ## Attribution and privacy
-
-The operator designed the architecture and workflow. The operator did not build, deploy, or test
-these systems, and did not participate in the hackathon solution. The five-person team owns
-implementation of the hackathon solution. No hackathon outcome or semantic correctness is claimed.
+ 
+I designed the architecture and operational workflow. I did not participate in the hackathon competition or implement the team's application. The five-person engineering team owns the competition implementation. No hackathon outcome or semantic correctness is claimed.
 
 No participant names, repository contents, credentials, sponsor or organizer material, or
 topic-specific detail appear here. All examples are synthetic and labelled synthetic.
 
-**This package does not prove:** any hackathon outcome; semantic correctness of the team's
-solution; that any mechanism held under real time pressure; rehearsal evidence (none exists yet);
-that monitoring improves delivery.
+**Explicit non-claims:** This package does not prove a competition outcome, semantic correctness of the team's solution, runtime stability under live time pressure, or that monitoring improved delivery.
 
 ## License
 
