@@ -1,0 +1,57 @@
+%% diagram-prosty.mmd — dwa systemy, jeden plik między nimi.
+%% Render (mermaid-cli 12.0.0 — nie ma już opcji -w, skalowanie przez -s):
+%%   npx -y @mermaid-js/mermaid-cli -i diagram-prosty.mmd -o diagram-prosty.png -b white -p pptr.json -s 3
+%%   npx -y @mermaid-js/mermaid-cli -i diagram-prosty.mmd -o diagram-prosty.svg -b white
+%%{init: {
+  "theme": "base",
+  "flowchart": { "htmlLabels": true, "padding": 12, "curve": "basis", "nodeSpacing": 34, "rankSpacing": 60 },
+  "themeVariables": {
+    "fontSize": "15px",
+    "primaryColor": "#eef2ff",
+    "primaryBorderColor": "#4f46e5",
+    "primaryTextColor": "#1e1b4b",
+    "lineColor": "#4b5563",
+    "edgeLabelBackground": "#ffffff"
+  }
+}}%%
+flowchart LR
+
+    TEMAT["<b>🎯 TEMAT</b><br/>ogłoszony o godz. 0"]:::start
+
+    subgraph S1["🔬 SYSTEM 1 — research + brainstorm · 1 laptop · ~2 h · OMP"]
+        direction TB
+        R["<b>Research</b> — 6–10 sesji równolegle<br/><i>każda = jedno pytanie → swój plik</i>"]:::s1
+        B["<b>Brainstorm</b> — 3 sesje, 3 wejścia<br/><i>pragmatyk · sceptyk · outsider</i>"]:::s1
+        V{{"<b>👥 ZESPÓŁ WYBIERA</b><br/>na głos · system 1 nie wybiera"}}:::human
+        R --> B --> V
+    end
+
+    KAPS{{"<b>📦 KAPSULA.md</b> — jedyny przewód<br/>co budujemy · dlaczego · co wiemy (z linkami)<br/>czego nie wiemy · 5 kawałków · jak sprawdzamy"}}:::capsule
+
+    subgraph S2["🚧 SYSTEM 2 — budowa · 5 osób × 5 worktree · OMP · do wysłania"]
+        direction TB
+        W["Każdy czyta kapsułę<br/>i robi SWÓJ katalog"]:::s2
+        C["<b>check.sh</b> — jedna komenda<br/><i>exit 0 = gotowe · bez niego nie startujemy</i>"]:::gate
+        RV["<b>Review</b> — świeża sesja<br/>widzi TYLKO diff + kapsułę<br/><i>1–2 agenty · tnijemy pierwsze</i>"]:::opt
+        W --> C --> RV
+    end
+    KAPS{{"<b>📦 KAPSULA.md</b><br/>co · dlaczego · co wiemy · czego nie wiemy<br/>5 kawałków · jedna komenda"}}:::capsule
+    MERGE{{"<b>✋ MERGE</b><br/>człowiek, imiennie<br/><i>+ wariant awaryjny z piątku</i>"}}:::human
+    MAIN[("<b>main</b> — to idzie na hackathon")]
+
+    TEMAT --> R
+    V -->|"wpisuje wybór<br/>i milczy"| KAPS
+    KAPS -->|"czytają jako pierwsze<br/>i nie wracają po radę"| W
+    RV --> MERGE
+    MERGE --> MAIN
+
+    classDef start fill:#fef3c7,stroke:#b45309,stroke-width:2px
+    classDef s1 fill:#faf5ff,stroke:#a855f7,stroke-width:1.5px
+    classDef s2 fill:#eef2ff,stroke:#4f46e5,stroke-width:1.5px
+    classDef human fill:#dcfce7,stroke:#15803d,stroke-width:2px
+    classDef capsule fill:#e0f2fe,stroke:#0369a1,stroke-width:3px
+    classDef gate fill:#dcfce7,stroke:#15803d,stroke-width:2px
+    classDef opt fill:#fff7ed,stroke:#c2410c,stroke-width:2px,stroke-dasharray:5 3
+
+    style S1 fill:#fcfaff,stroke:#a855f7,stroke-width:2px
+    style S2 fill:#f7f7ff,stroke:#6366f1,stroke-width:2px
