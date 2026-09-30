@@ -157,22 +157,93 @@ zakłada, że maszyna wjeżdża bez pytania.
 
 ---
 
-## Pliki
+## Stan steruje workflow — [`AGENTS.md`](AGENTS.md)
+
+Cały system ma **jeden plik, który agent czyta zawsze**, i w nim jest **jeden blok,
+który się zmienia**:
+
+```text
+STAN:        BUDOWA
+OD KIEDY:    2026-10-03 13:00
+NASTĘPNY:    SYNC o 15:00  ·  FREEZE 2026-10-04 12:00
+UWAGI:       w4 czeka na w1 — w1 nie wjechał od 11:20
+```
+
+Reszta pliku — reguły — jest z tego **wyprowadzona**, nie osobna. Dziewięć stanów
+(`PRZYGOTOWANIE` → `RESEARCH` → `BRAINSTORM` → `WYBOR` → `BUDOWA` → `SYNC` →
+`FREEZE` → `WYSYLKA` → `PO`) i tabela „co z tego wynika". Zmiana jednej linii
+przesuwa cały system do innego zachowania.
+
+To jest odpowiedź na pytanie *„co się dzieje w 3:00 w nocy, kiedy nikt nie
+patrzy"* — odpowiedzią nie jest instrukcja, tylko **odczyt stanu**. Sesja startuje,
+czyta `STAN: BUDOWA`, i wie co robić.
+
+### Dlaczego to musi być jeden plik, a nie osobna instrukcja na każdą fazę
+
+Instrukcji jest w repo dziewięć stanów × pięć kawałków = czterdzieści pięć
+wariantów. **Nikt tego nie przeczyta i nie zaktualizuje.** Jeden wskaźnik stanu
+plus tabela daje dokładnie tę samą moc w 190 liniach.
+
+### Reguła, która utrzymuje ten plik małym
+
+Z dokumentacji Claude Code, dosłownie:
+
+> *„Bloated CLAUDE.md files cause Claude to ignore your actual instructions!"*
+> *„For each line, ask: Would removing this cause Claude to make mistakes? If not,
+> cut it."*
+
+Stąd §8 w `AGENTS.md`: **linia, która nie zapobiega pomyłce, idzie do kosza.**
+I druga, ważniejsza: **linia, którą się ignoruje mimo jej obecności, też idzie do
+kosza** — przenosisz ją tam, gdzie jest egzekwowana mechanicznie.
+
+Jedna linia w całym pliku jest wyróżniona przez `IMPORTANT:`. Reguła z dokumentacji:
+jeśli agent pomija instrukcję, wyróżnij **właśnie tę jedną**, nie wszystkie. U nas
+to *„nie kończ, dopóki `check.sh` nie wyjdzie 0"* — bo to jedyna, na której
+trzyma się cała pętla.
+
+### Kto edytuje stan
+
+Do T+1:00 — **system-1**. Potem — **człowiek, na sync i na freeze**.
+**Agenci budujący nigdy.** Jeden plik, jeden autor w danej chwili — tak samo jak
+pięć katalogów.
+
+### Gdzie ten plik leży w sobotę
+
+W **katalogu głównym repo rozwiązania**, nie tutaj. Kopiujesz `AGENTS.md` i
+`KAPSULA.md` do swojego repo, bo to stamtąd agent je wczytuje.
+
+---
+
+## Pliki — dwie grupy, dwie publiczności
+
+**Dla agentów.** Wczytuje się automatycznie na początku każdej sesji. Agent nie czyta
+niczego innego, dopóki ten plik nie powie, że ma.
+
+| Plik | Co | Linie |
+|---|---|---|
+| [`AGENTS.md`](AGENTS.md) | **kontekst i sytuacja.** Stan systemu + reguły, które wynikają z tego stanu | 196 |
+| [`KAPSULA.md`](KAPSULA.md) | Szablon handoffu. W sobotę nadpisujecie go odpowiedziami. | 114 |
+
+**Dla ludzi.** Czytane własnymi słowy, kiedy trzeba zrozumieć *dlaczego*.
 
 | Plik | Co | Linie |
 |---|---|---|
 | [`1-RESEARCH.md`](1-RESEARCH.md) | System 1: rozbicie tematu, 5 sesji w 60 minut, brainstorm, wybór | 177 |
-| [`KAPSULA.md`](KAPSULA.md) | Szablon. W sobotę nadpisujecie go odpowiedziami. | 114 |
-| [`2-BUDOWA.md`](2-BUDOWA.md) | System 2: pięć sesji, test, maszynowy merge, czekanie na moduły | 271 |
+| [`2-BUDOWA.md`](2-BUDOWA.md) | System 2: pięć sesji, test, maszynowy merge, czekanie na moduły | 275 |
 | [`3-PIESC.md`](3-PIESC.md) | Zegar. Piątek 30 min, sobota godzina po godzinie. | 150 |
 
 ![Dwa systemy](diagram-prosty.png)
 
-**Uwaga o objętości:** 811 → 915 linii. Materiał **urósł**, bo maszynowy merge wymaga
-napisania reguły czekania i kolejności, których wcześniej nie było — a to jest
-jedyna rzecz, która może zatrzymać pętlę w nocy. Wyrzucone przy tej zmianie:
-walidacja merge'a przez człowieka, drabinka eskalacji, osobne stany „czeka / pytaj".
-Te ostatnie zastąpiła jedna tabela w kapsule.
+**Uwaga o objętości:** 811 → **1 188 linii**. Materiał rośnie, bo doszły dwa
+elementy, których wcześniej nie było: maszynowa kolejność mergów (bez niej pętla
+staje w nocy) i `AGENTS.md` (plik wczytywany na starcie każdej sesji).
+**Żaden z tych dwóch nie jest opcjonalny.** Wyrzucone przy tych zmianach:
+walidacja merge'a przez człowieka, drabinka eskalacji, osobne stany „czeka / pytaj",
+dziewięć ról dla pięciu osób.
+
+Linia, która się nie zmienia przez cały ten refaktor: **siedem reguł z `AGENTS.md`
+§4 to jest cały system operacyjny.** Wszystko inne jest uzasadnieniem, dlaczego są
+takie a nie inne.
 
 Pliki `00_`–`09_`, `render/` i `HISTORY.md` to **poprzedni pakiet** — ten sam, który
 był w `main`. Zostawiam je, bo [`archiwum/AUDYT.md`](archiwum/AUDYT.md) się do nich

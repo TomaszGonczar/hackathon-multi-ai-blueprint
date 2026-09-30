@@ -6,6 +6,10 @@
 do review.
 **Pętla:** **non-stop.** Maszyna wpuszcza na `main`, czeka na moduły, rozwiązuje
  mechaniczne konflikty i nigdy nie blokuje zespołu pytaniem.
+> **Reguły operacyjne są w [`AGENTS.md`](AGENTS.md) §4.** Ten plik jest uzasadnieniem
+> — *dlaczego* reguła jest taka, a nie inna. Jeśli tu i tam jest rozbieżność,
+> **wygrywa `AGENTS.md`**, bo to on jest w kontekście agenta.
+
 **Nie ma tu:** własnego harnessa, orkiestracji, hooków, konfiguracji, bota merge.
 **OMP jest runtime. Merge jest regułą w pętli agenta, nie osobnym programem.**
 
