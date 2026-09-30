@@ -26,8 +26,7 @@
 ## 2. Dlaczego ta opcja
 
 <!-- Trzy zdania. Dlaczego TA, a nie pozostałe dwie.
-     Nie pełne uzasadnienie — wystarczy, żeby ktoś, kto nie był przy brainstormie,
-     zrozumiał dlaczego nie ma się nad tym zastanawiać. -->
+     Wystarczy, żeby ktoś, kto nie był przy brainstormie, nie zastanawiał się nad tym. -->
 
 **Odrzucone:**
 - <!-- opcja + jedno zdanie czemu nie -->
@@ -38,7 +37,7 @@
 ## 3. Co wiemy
 
 <!-- Fakty istotne dla BUDOWY. Każdy z linkiem. 5–15 punktów.
-     Bez linku nie wchodzi — oznacz [niepotwierdzone] i wiedź, że budujecie na tym. -->
+     Przy godzinowym researchu będzie ich mniej i będą mniej pewne — bądźmy tego świadomi. -->
 
 - <!-- fakt --> — źródło: https://adres
 
@@ -46,8 +45,9 @@
 
 ## 4. Czego nie wiemy
 
-<!-- Ryzyka. Świadomie zostawione otwarte.
-     Ktoś na pewno na to spojrzy w nocy. Lepiej, żeby to był wybór, a nie niespodzianka. -->
+<!-- RYZYKA. Przy jednej godzinie researchu to jest najważniejsza sekcja.
+     System 1 wypełnia ją sam — wy nie macie czasu, a wiecie mniej.
+     Ktoś na pewno na to spojrzy w nocy. Lepiej żeby to był wybór, a nie niespodzianka. -->
 
 - <!-- pytanie bez odpowiedzi -->
 
@@ -55,28 +55,38 @@
 
 ## 5. Pięć kawałków
 
-<!-- TO JEST TO, CO PILNUJE KOLIZJI. Nie „kto czym się zajmuje" — tylko
-     kto pisze w JAKIM katalogu i co z niego wystawia.
-     Jeśli dwa kawałki mają ten sam plik — to nie jest podział, to jest brak podziału.
-     Katalogi fizycznie osobne: git worktree na osobę. -->
+<!-- TO JEST TO, CO PILNUJE KOLIZJI I KOLEJNOŚCI MERGÓW.
 
-| # | Katalog | Wpisuje/wyjście | Robi | Nie rusza |
-|---|---|---|---|---|
-| 1 | `w1-.../` | wejście: <!-- --> / wyjście: <!-- --> | | |
-| 2 | `w2-.../` | wejście: <!-- --> / wyjście: <!-- --> | | |
-| 3 | `w3-.../` | wejście: <!-- --> / wyjście: <!-- --> | | |
-| 4 | `w4-.../` | wejście: <!-- --> / wyjście: <!-- --> | | |
-| 5 | `w5-.../` | wejście: <!-- --> / wyjście: <!-- --> | | |
+     Katalogi fizycznie osobne: git worktree na osobę. Dwa kawałki nie mogą
+     mieć tego samego pliku — jeśli mają, to nie jest podział, to jest jego brak.
 
-<!-- Podpisz to na kartce i powiedz na głos: "jeśli dwa kawałki chcą tego samego pliku,
-     zatrzymujemy się teraz, nie na merge". -->
+     KOLUMNA "CZEKA NA" — to kolejność wjeżdżania na main. Maszyna czyta ją
+     i NIE PYTA. Kawałek 4 czeka na 1 i 2, więc 4 nie wjedzie, dopóki 1 i 2
+     nie będą na main. Jeśli nie wypełnisz tej kolumny, maszyna stanie
+     i będzie czekać na człowieka, a to dokładnie tego nie chcemy.
+
+     Popatrz: czy da się ułożyć te pięć wierzchołków tak, żeby NIE było cyklu?
+     Cykl = deadlock = maszyna czeka w nieskończoność. -->
+
+| # | Katalog | Wejście / wyjście | Robi | Nie rusza | **Czeka na** |
+|---|---|---|---|---|---|
+| 1 | `w1-.../` | we: <!-- --> / wy: <!-- --> | | | — |
+| 2 | `w2-.../` | we: <!-- --> / wy: <!-- --> | | | — |
+| 3 | `w3-.../` | we: <!-- --> / wy: <!-- --> | | | 1, 2 |
+| 4 | `w4-.../` | we: <!-- --> / wy: <!-- --> | | | 1 |
+| 5 | `w5-.../` | we: <!-- --> / wy: <!-- --> | | | 1, 2, 3, 4 |
+
+**Pliki interfejsu** — pliki, których dotyka więcej niż jeden kawałek. Konflikt
+w tych plikach maszyna **nie rozwiązuje**:
+
+- `<!-- np. src/api/types.py -->`
 
 ---
 
 ## 6. Jak sprawdzamy
 
-<!-- JEDNA KOMENDA NA KAWAŁEK. Exit 0 = gotowe.
-     Ta sekcja musi być wypełniona PRZED startem systemu 2. Bez niej system 2 nie startuje. -->
+<!-- JEDNA KOMENDA NA KAWAŁEK. Exit 0 = gotowe = maszyna może wjechać na main.
+     Ta sekcja musi być wypełniona PRZED startem systemu 2. -->
 
 ```bash
 # przykład — właściwe komendy wpisujecie wy
@@ -94,6 +104,11 @@ DO SYSTEMU 2 — nie edytuj powyższego.
   1. Przeczytaj cały ten plik. To wszystko, co musisz wiedzieć.
   2. Zrób ./<swoj>/check.sh zanim napiszesz pierwszą linię kodu.
   3. Pracuj w swoim katalogu. Push co 30 min i zawsze przed snem.
-  4. Nie pytaj systemu 1 o radę — jest tu wszystko, czego potrzebujesz.
-     Jeśli czegoś brakuje: dopisz do sekcji 4 i jedz dalej.
+  4. Zielony test → review → PRÓBUJ WJEŻCHAĆ NA MAIN.
+       - twoje zależności (kolumna "Czeka na") jeszcze nie na main → CZEKAJ, wracaj do pracy
+       - konflikt mechaniczny → rozwiąż sam
+       - konflikt w pliku interfejsu → ZAPISZ, nie ruszaj, wróć do pracy, raport na sync
+       - review zgłasza brak w poprawności → popraw, nie wjeżdżaj
+  5. Nie pytaj systemu 1 o radę — jest tu wszystko. Brakuje czegoś?
+     Dopisz do sekcji 4 i jedź dalej.
 -->

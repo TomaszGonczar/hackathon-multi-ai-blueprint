@@ -1,4 +1,4 @@
-%% diagram-prosty.mmd — dwa systemy, jeden plik między nimi.
+%% diagram-prosty.mmd — dwa systemy, jeden plik między nimi, maszynowy merge.
 %% Render (mermaid-cli 12.0.0 — nie ma już opcji -w, skalowanie przez -s):
 %%   npx -y @mermaid-js/mermaid-cli -i diagram-prosty.mmd -o diagram-prosty.png -b white -p pptr.json -s 3
 %%   npx -y @mermaid-js/mermaid-cli -i diagram-prosty.mmd -o diagram-prosty.svg -b white
@@ -18,32 +18,37 @@ flowchart LR
 
     TEMAT["<b>🎯 TEMAT</b><br/>ogłoszony o godz. 0"]:::start
 
-    subgraph S1["🔬 SYSTEM 1 — research + brainstorm · 1 laptop · ~2 h · OMP"]
+    subgraph S1["🔬 SYSTEM 1 — 60 minut · 1 laptop · OMP"]
         direction TB
-        R["<b>Research</b> — 6–10 sesji równolegle<br/><i>każda = jedno pytanie → swój plik</i>"]:::s1
-        B["<b>Brainstorm</b> — 3 sesje, 3 wejścia<br/><i>pragmatyk · sceptyk · outsider</i>"]:::s1
+        R["<b>Research 35 min</b> — 5 sesji równolegle<br/><i>jedno pytanie → swój plik</i>"]:::s1
+        B["<b>Brainstorm 13 min</b> — 3 sesje<br/><i>pragmatyk · sceptyk · outsider</i>"]:::s1
         V{{"<b>👥 ZESPÓŁ WYBIERA</b><br/>na głos · system 1 nie wybiera"}}:::human
         R --> B --> V
     end
 
-    KAPS{{"<b>📦 KAPSULA.md</b> — jedyny przewód<br/>co budujemy · dlaczego · co wiemy (z linkami)<br/>czego nie wiemy · 5 kawałków · jak sprawdzamy"}}:::capsule
+    KAPS{{"<b>📦 KAPSULA.md</b><br/>co · dlaczego · co wiemy · czego nie wiemy<br/>5 kawałków + kolejność · jedna komenda"}}:::capsule
 
-    subgraph S2["🚧 SYSTEM 2 — budowa · 5 osób × 5 worktree · OMP · do wysłania"]
+    subgraph S2["🤖 SYSTEM 2 — non-stop · 5 osób × 5 worktree · OMP"]
         direction TB
         W["Każdy czyta kapsułę<br/>i robi SWÓJ katalog"]:::s2
-        C["<b>check.sh</b> — jedna komenda<br/><i>exit 0 = gotowe · bez niego nie startujemy</i>"]:::gate
-        RV["<b>Review</b> — świeża sesja<br/>widzi TYLKO diff + kapsułę<br/><i>1–2 agenty · tnijemy pierwsze</i>"]:::opt
-        W --> C --> RV
+        C["<b>check.sh</b> — jedna komenda<br/><i>exit 0 = gotowe</i>"]:::gate
+        RV["<b>Review</b> — świeża sesja<br/>widzi TYLKO diff + kapsułę"]:::opt
+        M{{"<b>⚙️ MERGE — maszyna</b><br/>wpuszcza na main sama<br/>czeka na zależności · rozwiązuje konflikty mechaniczne<br/><i>interfejs → STOP do człowieka</i>"}}:::machine
+        W --> C --> RV --> M
     end
-    KAPS{{"<b>📦 KAPSULA.md</b><br/>co · dlaczego · co wiemy · czego nie wiemy<br/>5 kawałków · jedna komenda"}}:::capsule
-    MERGE{{"<b>✋ MERGE</b><br/>człowiek, imiennie<br/><i>+ wariant awaryjny z piątku</i>"}}:::human
-    MAIN[("<b>main</b> — to idzie na hackathon")]
+
+    WAIT["⏳ czeka na inne moduły<br/><i>nie pyta · nie blokuje · wraca do pracy</i>"]:::wait
+    MAIN[("<b>main</b>")]
+
+    SYNC{{"<b>✋ CZŁOWIEK — 2×</b><br/>sync co 2 h · freeze 4 h przed deadlinem<br/><i>maszyna może wjechać wszystko.<br/>nie może powiedzieć, co wysyłacie.</i>"}}:::human
 
     TEMAT --> R
     V -->|"wpisuje wybór<br/>i milczy"| KAPS
     KAPS -->|"czytają jako pierwsze<br/>i nie wracają po radę"| W
-    RV --> MERGE
-    MERGE --> MAIN
+    M --> MAIN
+    M -.->|"nie wjeżdża, bo zależność<br/>jeszcze nie na main"| WAIT
+    WAIT -.->|"spróbuje ponownie<br/>za 10 minut"| M
+    MAIN --> SYNC
 
     classDef start fill:#fef3c7,stroke:#b45309,stroke-width:2px
     classDef s1 fill:#faf5ff,stroke:#a855f7,stroke-width:1.5px
@@ -51,7 +56,9 @@ flowchart LR
     classDef human fill:#dcfce7,stroke:#15803d,stroke-width:2px
     classDef capsule fill:#e0f2fe,stroke:#0369a1,stroke-width:3px
     classDef gate fill:#dcfce7,stroke:#15803d,stroke-width:2px
-    classDef opt fill:#fff7ed,stroke:#c2410c,stroke-width:2px,stroke-dasharray:5 3
+    classDef machine fill:#ede9fe,stroke:#6d28d9,stroke-width:2.5px
+    classDef wait fill:#fff7ed,stroke:#c2410c,stroke-width:1.5px,stroke-dasharray:5 3
+    classDef opt fill:#f9fafb,stroke:#6b7280,stroke-width:1.5px,stroke-dasharray:4 3
 
     style S1 fill:#fcfaff,stroke:#a855f7,stroke-width:2px
     style S2 fill:#f7f7ff,stroke:#6366f1,stroke-width:2px

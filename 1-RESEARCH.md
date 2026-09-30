@@ -3,64 +3,74 @@
 **Wejście:** temat ogłoszony na kartce.
 **Wyjście:** [`KAPSULA.md`](KAPSULA.md) wypełniony.
 **Kto:** jeden laptop, jeden człowiek, OMP. Reszta zespołu **w tym czasie nie czeka** —
-patrz [`3-PIESC.md`](3-PIESC.md).
-**Stop:** zespół wybrał opcję na głos. Wtedy system 1 milczy na cały czas systemu 2.
+robi swoje `check.sh` ([`2-BUDOWA.md`](2-BUDOWA.md)).
+**Stop:** zespół wybrał opcję na głos. Potem system 1 milczy do końca.
+
+**Budżet: 60 minut.** Nie dwa godziny.
 
 ---
 
-## Układ: trzy przebiegi, ~2 godziny
+## Zegar
 
 ```
-  TEMAT
-    │
-    │  przebieg A — ~50 min
-    ▼
-  ┌──────────────────────────────────────────────┐
-  │  RESEARCH: 6–10 sesji równolegle             │
-  │  każda dostaje jedno pytanie, nie temat      │
-  └──────────────────┬───────────────────────────┘
-                     │  każda zapisuje do PLIKU, nie gada
-                     ▼
-              research/*.md   (5–10 plików)
-                     │
-                     │  przebieg B — ~30 min
-                     ▼
-  ┌──────────────────────────────────────────────┐
-  │  BRAINSTORM: 3 sesje, 3 różne wejścia        │
-  │  (patrz niżej — to jest cały trik)           │
-  └──────────────────┬───────────────────────────┘
-                     ▼
-              3 propozycje rozwiązania
-                     │
-                     │  przebieg C — ~20 min
-                     ▼
-  ┌──────────────────────────────────────────────┐
-  │  LEAD: czyta pliki, składa kapsułę           │
-  │  → 15 min czytanie na głos → ZESPÓŁ WYBIERA   │
-  └──────────────────┬───────────────────────────┘
-                     ▼
-                 KAPSULA.md
+0:00 ──────── 0:35   research: 5 sesji równolegle
+                    każda dostaje jedno pytanie, nie temat
+                    każda zapisuje do PLIKU, nie gada
+                           │
+0:35 ──────── 0:48   brainstorm: 3 sesje, 3 różne wejścia
+                           │  (pragmatyk · sceptyk · outsider)
+                           ▼
+0:48 ──────── 0:58   ZESPÓŁ WYBIERA na głos → system 1 wpisuje do kapsuły
+                           │
+0:58 ──────── 1:00   brief czytany NA GŁOS
+                           ▼
+                      System 2 startuje
 ```
+
+**Ciaśno. I to jest cena decyzji, którą podjęliście:** zamiast rozstrzygać temat
+lepiej, rozstrzygacie go szybciej i wracacie do niego później, przy budowaniu.
+Dlatego sekcja 4 kapsuły („czego nie wiemy") jest wypełniana przez system 1
+automatycznie — **nie macie czasu jej zredagować, a wiecie mniej niż on.**
+Nie usuwajcie jej. To jest miejsce, w które wyląduje wszystko, czego research
+nie zdążył.
 
 ---
 
-## Przebieg A — research: 6–10 sesji
+## Research: 5 sesji w 35 minut
 
-**Dlaczego tyle:** to jedyne miejsce w całym projekcie, gdzie wiele agentów naprawdę
-wygrywa. Anthropic mierzy na swoim eval-u badawczym przewagę **+90,2%** nad pojedynczym
-agentem — przy pytaniach, które rozgałęziają się w wiele niezależnych kierunków.
-Temat hackathonu jest dokładnie takim pytaniem.
+**Dlaczego wiele agentów:** to jedyne miejsce w projekcie, gdzie wiele agentów
+naprawdę wygrywa. Anthropic mierzy na swoim eval-u badawczym przewagę **+90,2%**
+nad pojedynczym agentem przy pytaniach rozgałęziających się w wiele niezależnych
+kierunków. Temat hackathonu jest dokładnie takim pytaniem.
 ([źródło](https://www.anthropic.com/engineering/multi-agent-research-system))
 
-**Dlaczego nie więcej niż 10:** lead musi je wszystkie przeczytać i zsyntetyzować.
-Powyżej 10 synteza się rozsypuje i zostaje wam 20 plików do przeczytania o 3:00.
+**Dlaczego pięć, a nie dziesięć:** bo lead musi je przeczytać w 10 minut.
+Pięć plików to da się przejrzeć. Dziesięciu nie da się, i zostaje wam **dwadzieścia
+plików do przeczytania o 3:00 w nocy** — czyli dokładnie ten tryb awarii, który
+cała ta konstrukcja ma zlikwidować.
+
+Przy 35 minutach na jedną sesję przypada ~7 minut pracy, czyli realnie 3–10
+wywołań narzędzi. Zapis z benchmarku Anthropic: proste pytanie to 1 agent,
+3–10 wywołań. **Jesteśmy dokładnie w tej granicy.**
 
 ### Podział zadań
 
-Temat dzielisz **na pytania, nie na działy tematu.** „Protokoły w obszarze X" to dział.
-„Czy w 2026 używa się jeszcze protokołu Y, bo dokumentacja go wymienia" to pytanie.
+Temat dzielisz **na pytania, nie na działy tematu.** „Protokoły w obszarze X" to
+dział. „Czy w 2026 używa się jeszcze protokołu Y, bo dokumentacja go wymienia" to
+pytanie.
 
-Każda sesja dostaje dokładnie cztery rzeczy. Nie więcej:
+Pięć pytań, które dobrze pokrywają temat hackathonowy:
+
+1. **Mechanizm** — jak to działa, jaka jest technologia pod spodem
+2. **Stan praktyki** — co ludzie realnie robią w 2026, co jest martwe
+3. **Wektor** — jak się to atakuje / jak to chronić, konkretnie
+4. **Narzędzia** — czym się to robi, gotowe biblioteki, kodu, frameworki
+5. **Jak to się ocenia** — co jury / organizator / kryterium będzie patrzeć
+
+Pytania 3 i 5 są najczęściej pomijane, a to one decydują o wyniku. Jeśli musicie
+obciąć — obcinajcie pytanie 2, nie 5.
+
+Każda sesja dostaje dokładnie cztery rzeczy:
 
 ```text
 CEL:        Jedno pytanie. Jedno zdanie. Nie „napisz o temacie".
@@ -71,15 +81,15 @@ ZAPISZ DO:  research/NN-nazwa.md — struktura jak niżej
 GRANICA:    Czego NIE szukam.  ← najważniejsze pole, najczęściej pomijane
 ```
 
-Ostatnie pole chroni przed jednym konkretnym trybem awarii: przy zadaniu „zrób research
-o X" trzy sesje zrobią dokładnie to samo. Zapytania mają się **nie pokrywać w zakresie**,
-nawet jeśli dotyczą tego samego obszaru. Zadanie „jak to działa" i zadanie „co z tym
-zrobić w praktyce" to dwa różne pliki.
+Ostatnie pole chroni przed jednym konkretnym trybem awarii: przy zadaniu „zrób
+research o X" trzy sesje zrobią dokładnie to samo. Zadania mają się **nie pokrywać
+w zakresie**, nawet jeśli dotyczą tego samego obszaru. Zadanie „jak to działa" i
+zadanie „co z tym zrobić w praktyce" to dwa różne pliki.
 
 ### Struktura pliku
 
 ```markdown
-# research/03-protokoly.md
+# research/03-wektor.md
 
 ## Ustalone
 - Rzecz. — źródło: <link>, dostęp 2026-10-03
@@ -94,57 +104,61 @@ zrobić w praktyce" to dwa różne pliki.
 - Czego nie szukałem, bo było poza moim zadaniem.
 ```
 
-**Sekcja „Niespójne" to najcenniejsza.** Sprzeczność między źródłami jest informacją.
-Średnia między X a Y jest informacją **tylko zła**. Jeśli zespół straci 10 minut na
-rozstrzygnięcie, wygrali — bo wie, gdzie ziemia jest miękka.
+**Sekcja „Niespójne"** — sprzeczność między źródłami jest informacją. Średnia
+między X a Y jest informacją **tylko zła**. Przy godzinowym researchie będzie ich
+więcej, bo mniej czasu na pogłębienie. To jest nieuniknione.
 
-**Sekcja „Nie udało się ustalić"** chroni przed budowaniem na fundamencie, którego
-nikt nie sprawdził.
+**Sekcja „Nie udało się ustalić"** przy jednej godzinie to **nie wyjątek, to norma.**
+To jedyna sekcja, która mówi wprost, gdzie ziemia jest miękka.
 
-### Jedna pułapka, o której wiadomo z góry
+### Dwie pułapki, o których wiadomo z góry
 
-Agenci wybierają śmieciowe źródła, dopóki im nie zabronisz — opisane wprost u
-Anthropic: *„our early agents consistently chose SEO-optimized content farms over
-authoritative but less highly-ranked sources like academic PDFs"*. Linia o źródłach w
-każdym zadaniu to nie formalność. Bez niej dostaniecie szybki, płynny, całkowicie
+**Śmieciowe źródła.** Agenci wybierają je, dopóki im nie zabronisz — opisane wprost
+u Anthropic: *„our early agents consistently chose SEO-optimized content farms over
+authoritative but less highly-ranked sources like academic PDFs"*. Linia o źródłach
+w każdym zadaniu to nie formalność. Bez niej dostaniecie szybki, płynny, całkowicie
 nieprawdziwy research.
 
-Drugie: **krótkie i szerokie pytania zwracają wyniki, długie i wąskie nie.**
-Zacznij szeroko, zawężaj w trakcie.
+**Pytania za wąskie.** *„Agents often default to overly long, specific queries that
+return few results"* — krótkie i szerokie zwracają wyniki. Przy 7 minutach na sesję
+nie macie czasu na drugą próbę, więc zacznijcie szeroko.
 
 ---
 
-## Przebieg B — brainstorm: 3 sesje, 3 różne wejścia
+## Brainstorm: 3 sesje, 13 minut, 3 różne wejścia
 
 **To jest cały trik i jest tu, bo zakład mówi, że mamy compute.**
 
 Trzy sesje dostają **ten sam temat i ten sam research, ale każda zaczyna inaczej.**
-Nie trzy warianty promptu do jednej sesji — trzy osobne sesje z osobnymi kontekstami.
+Nie trzy warianty promptu do jednej sesji — trzy osobne sesje, osobne konteksty.
 
 | Sesja | Wejście | Szuka |
 |---|---|---|
-| **A — pragmatyk** | „Jaka jest najprostsza rzecz, która robi to dobrze?" | rozwiązania, które da się zbudować i zdemo w 12 godzin |
-| **B — sceptyk** | „Załóż, że poprzednia próba się udała. Dlaczego to jest złe rozwiązanie?" | rozwiązania, które przetrwają krytykę jury |
+| **A — pragmatyk** | „Jaka jest najprostsza rzecz, która robi to dobrze?" | rozwiązania, które da się zbudować i zdemo w 14 godzin |
+| **B — sceptyk** | „Załóż, że poprzednia próba się udała. Dlaczego to jest złe rozwiązanie?" | rozwiązania, które przetrwają krytykę |
 | **C — outsider** | „Gdybyś robił to w swojej branży, jak byś to zrobił?" | rozwiązania spoza branży, których nikt nie szuka |
 
-Po sesji: **porównajcie na głos, 10 minut, wybierzcie jedną.** Zapisujecie w kapsule
-sekcję 2 — dlaczego ta, a nie pozostałe dwie. Zapisujemy **dlaczego odrzuciliście
-pozostałe**, bo to jest ta część, której system 2 nie odtworzy.
+**13 minut to mało.** Dlatego trzy sesje lecą **równolegle**, nie po kolei, i każda
+dostaje research jako wejście. Po sesjach: **porównajcie na głos, 5 minut, wybierzcie
+jedną.**
 
-Sesja C najczęściej wygrywa. Nikt w zespole nie zna tej dziedziny, więc „jak bym to
+Zapisujecie w kapsule sekcję 2 — dlaczego ta, a nie pozostałe dwie, i **dlaczego
+odrzuciliście pozostałe**. To jest ta część, której system 2 nie odtworzy.
+
+Sesja C wygrywa najczęściej. Nikt w zespole nie zna tej dziedziny, więc „jak bym to
 zrobił u siebie w robocie" to jedyny prompt, który nie jest skażony waszymi
 assumpcjami.
 
 ---
 
-## Przebieg C — kapsuła, potem STOP
+## Kapsuła, potem STOP
 
-Lead czyta **pliki** z researchu, nie podsumowania z sesji. Wypełnia
-[`KAPSULA.md`](KAPSULA.md).
+Lead czyta **pliki**, nie podsumowania z sesji. Wypełnia [`KAPSULA.md`](KAPSULA.md).
 
-**Jedyne miejsce, w którym zespół wchodzi:**
-15 minut, brief czytany **na głos**, pytanie: *„gdybyśmy mieli połowę czasu, co
-odcinamy?"* Odpowiedź idzie prosto do sekcji 5 i 6 kapsuły.
+**Jedyne miejsce, w którym zespół wchodzi:** 10 minut. Krótko, nie czytajcie tego
+na głos w całości — to zrobiliście już przy wyborze. Powiedzcie tylko:
+*„kapsuła mówi, że budujemy X, pięć kawałków wygląda tak, każdy sprawdza czy jego
+jest na liście"*.
 
 **Zespół wybiera opcję. Na głos. To jest brama i nie ma jej obejścia.**
 
@@ -155,9 +169,9 @@ jest sekcja 4 kapsuły, a jeśli jej tam nie ma, to dopisuje tam i jeździ dalej
 
 ## Reguła kciuka
 
-> **Brief, który nie mieści się na kartce A4, nie jest briefem.**
+> **Kapsuła, która nie mieści się na kartce A4, nie jest kapsułą.**
 
-Research jest w `research/`, osobno. Kapsuła jest tym, co pięć osób czyta w 20:00
-przy zmęczeniu. Jeśli kapsuła ma 8 stron, to nie zostanie przeczytana — i wrócicie
-do pięciu różnych modeli problemu, czyli dokładnie do tego trybu awarii, który cała
-ta konstrukcja ma zlikwidować.
+Research jest w `research/`, osobno. Kapsułę czyta pięć osób, w tym jedna trzeźwa.
+Jeśli ma 8 stron, nie zostanie przeczytana — i wrócicie do pięciu różnych modeli
+problemu, czyli dokładnie do tego trybu awarii, który cała ta konstrukcja
+ma zlikwidować.
