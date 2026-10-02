@@ -1,264 +1,264 @@
-# KAPSULA HANDOFF — nowa sesja OMP
+# CAPSULE HANDOFF - new OMP session
 
-> **STATUS: ZAMKNIĘTE (2026-10-02).** Zadania T1–T6 wykonane; wynik jest na
-> `main` (PR #1–#5). Branche robocze `refactor/dwa-systemy` i `refactor/seed`
-> **usunięte po merge'u**. Ten plik jest odtąd **zapisem zlecenia, nie instrukcją** —
-> komendy w §6 są historyczne. Aktualny stan: `README.md` i `seed/`.
+> **STATUS: CLOSED (2026-10-02).** Tasks T1-T6 done; the result is on
+> `main` (PR #1-#5). The working branches `refactor/dwa-systemy` and `refactor/seed`
+> were **deleted after the merge**. From now on this file is **a record of the assignment, not instructions** -
+> the commands in §6 are historical. Current state: `README.md` and `seed/`.
 
-> Ten plik jest pierwszą rzeczą, którą przeczytasz. Zawiera wszystko, czego potrzebujesz,
-> żeby zacząć. Nie pytaj o nic, czego tu nie ma — pytanie o rzecz, której nie opisałem,
-> jest informacją samą w sobie i zapisz ją w §6 raportu.
+> This file is the first thing you read. It contains everything you need
+> to get started. Do not ask about anything that is not here - a question about something I did not
+> describe is information in itself, so write it down in §6 of the report.
 
-**Czas:** piątek wieczór, 30.09→02.10. **Hackathon: jutro, sobota 03.10.**
-To nie jest zadanie na tydzień. To jest zadanie na **dziś wieczorem**, z wynikiem
-na jutro rano.
-
----
-
-## 1. Co robisz
-
-**System 1** tego projektu, zastosowany do samego projektu.
-
-Dostajesz repo z gotowym blueprintem hackathonu. Twoje zadanie:
-
-> **Znajdź dziury, uprość co się da uprościć, i zostaw rzecz najbliższą planowi
-> developmentowemu — tak, żeby twój kumpel jutro rano mógł jednym poleceniem
-> z Claude Code Pro stworzyć repozytoria i zacząć pracować.**
-
-Nie projektujesz architektury. Ona już jest i jest rozstrzygnięta. **Twoje zadanie
-to dziury i drożność**, nie kształt.
-
-### Czego NIE robisz (to jest ważniejsze niż lista zadań)
-
-- **Nie przebudowujesz architektury.** Dwa systemy, kapsuła, maszynowy merge —
-  to jest ustalone. Jeśli uważasz, że to złe, zapisz to w §6 raportu z argumentem
-  i jedź dalej. Nie edytuj tych plików bez powodu.
-- **Nie piszesz nowych reguł procesowych.** Projekt przeszedł trzy rundy
-  upraszczania: 3 391 → 1 246 → 1 188 linii. Każda kolejna reguła jest podejrzana
-  domyślnie. Pytanie brzmi: *czy ta linia zapobiega konkretnej pomyłce?*
-- **Nie dodajesz plików, chyba że wynikają z zadania.** Wszystko, co dodasz,
-  musi mieć w raporcie uzasadnienie jednym zdaniem.
-- **Nie zakładaj, że coś jest zepsute, bo nie rozumiesz.** Jeśli nie potrafiłeś
-  czegoś ogarnąć — napisz to jako pytanie, nie jako werdykt.
+**Time:** Friday evening, 30.09→02.10. **Hackathon: tomorrow, Saturday 03.10.**
+This is not a week-long task. It is a task for **tonight**, with the result
+ready for tomorrow morning.
 
 ---
 
-## 2. Stan rzeczy — nie odkrywaj tego od nowa
+## 1. What you are doing
 
-Wszystko poniżej **jest zweryfikowane** i nie potrzebuje ponownego sprawdzania.
+**System 1** of this project, applied to the project itself.
+
+You get a repo with a finished hackathon blueprint. Your task:
+
+> **Find the holes, simplify whatever can be simplified, and leave the thing closest to the
+> development plan - so that your buddy tomorrow morning can, with a single command
+> from Claude Code Pro, create the repositories and start working.**
+
+You are not designing the architecture. It already exists and is settled. **Your task
+is the holes and the passability**, not the shape.
+
+### What you do NOT do (this matters more than the task list)
+
+- **You do not rebuild the architecture.** Two systems, the capsule, machine merge -
+  these are settled. If you think it is wrong, write it in §6 of the report with an argument
+  and move on. Do not edit those files without a reason.
+- **You do not write new process rules.** The project went through three rounds of
+  simplification: 3 391 → 1 246 → 1 188 lines. Every further rule is suspect
+  by default. The question is: *does this line prevent a specific mistake?*
+- **You do not add files unless they follow from the task.** Everything you add
+  needs a one-sentence justification in the report.
+- **Do not assume something is broken just because you do not understand it.** If you could not
+  make sense of something - write it as a question, not as a verdict.
+
+---
+
+## 2. State of affairs - do not rediscover this
+
+Everything below **is verified** and does not need to be checked again.
 
 **Repo:** `https://github.com/TomaszGonczar/hackathon-multi-ai-blueprint`
-**Branch roboczy:** `refactor/dwa-systemy` — *usunięty po merge'u; cała praca jest na `main`.*
-**`main` był nietknięty w trakcie pracy** — zmienił się dopiero przez zatwierdzony merge.
+**Working branch:** `refactor/dwa-systemy` - *deleted after the merge; all the work is on `main`.*
+**`main` was untouched during the work** - it changed only through the approved merge.
 
-### Co jest zrobione
+### What is done
 
-| Rzecz | Stan | Dowód |
+| Item | State | Evidence |
 |---|---|---|
-| Audit oryginalnego pakietu (10 plików, 3 391 linii) | zrobiony | `archiwum/AUDYT.md` |
-| Refaktor na dwa systemy | zrobiony | commit `9ac2fb4` |
-| Research 60 min + maszynowy merge | zrobiony | commit `e36df9a` |
-| `AGENTS.md` jako kontekst i stan systemu | zrobiony | commit `b57cc84` |
-| Provider `atria` w OMP | działa, przetestowany | `~/.omp/agent/models.yml` |
+| Audit of the original package (10 files, 3 391 lines) | done | `archive/AUDIT.md` |
+| Refactor into two systems | done | commit `9ac2fb4` |
+| 60-min research + machine merge | done | commit `e36df9a` |
+| `AGENTS.md` as the system's context and state | done | commit `b57cc84` |
+| `atria` provider in OMP | works, tested | `~/.omp/agent/models.yml` |
 
-### Znane dziury w oryginale (udokumentowane, **nie naprawiaj ich**)
+### Known holes in the original (documented, **do not fix them**)
 
-1. **Żywa sprzeczność.** `01_DISCOVERY_CLOSURE.md` i `04 §14` mówią „short-event
-   branch is closed", `03 §8.2` i `04 §10` mówią „aktywna gałąź rezerwy".
-   Rejestr przeglądu (`09_REVIEW_RECORD` F-05) deklaruje to jako naprawione.
-   Naprawione w 2 z 4 miejsc. → `archiwum/AUDYT.md` §3.1
-2. **Trzy punkty checklisty łamią format tej checklisty**, a CI zostało rozszerzone
-   wyjątkiem dla nich zamiast naprawy. → `archiwum/AUDYT.md` §3.2
-3. **Nic w oryginale nie zostało wykonane.** 0 `ENFORCED`, 0 prób generalnych.
+1. **A live contradiction.** `01_DISCOVERY_CLOSURE.md` and `04 §14` say "short-event
+   branch is closed", `03 §8.2` and `04 §10` say "active reserve branch".
+   The review register (`09_REVIEW_RECORD` F-05) declares this as fixed.
+   Fixed in 2 of 4 places. → `archive/AUDIT.md` §3.1
+2. **Three checklist items break the format of that checklist**, and CI was extended
+   with an exception for them instead of a fix. → `archive/AUDIT.md` §3.2
+3. **Nothing in the original was executed.** 0 `ENFORCED`, 0 dress rehearsals.
 
-Te trzy są **udokumentowane i świadomie zostawione**, bo dotyczą plików, których
-nie ruszamy. Nie są twoim zadaniem. *(Pliki oryginału przeniesione później do
-`archiwum/old-package/`.)*
+These three are **documented and deliberately left**, because they concern files we
+do not touch. They are not your task. *(The original's files were later moved to
+`archive/old-package/`.)*
 
-### Decyzje już podjęte — nie wracaj do nich
+### Decisions already made - do not go back to them
 
-| # | Decyzja | Stan |
+| # | Decision | State |
 |---|---|---|
-| 1 | Obserwator usunięty, zastąpiony review w świeżym kontekście | zamknięte |
-| 2 | Research 60 min, 5 sesji | zamknięte |
-| 3 | Merge robi maszyna; człowiek wchodzi 2× (sync, freeze) | zamknięte |
-| 4 | Jeden przewód: `KAPSULA.md` | zamknięte |
-| 5 | Brak pamięci — system żyje 2 dni | zamknięte |
-| 6 | OMP jako runtime, bez meta-harnessa | zamknięte |
-| 7 | Reguły w `AGENTS.md §4`, reszta to uzasadnienie | zamknięte |
+| 1 | Observer removed, replaced by review in a fresh context | closed |
+| 2 | 60-min research, 5 sessions | closed |
+| 3 | The machine merges; the human steps in 2× (sync, freeze) | closed |
+| 4 | One wire: `CAPSULE.md` | closed |
+| 5 | No memory - the system lives 2 days | closed |
+| 6 | OMP as the runtime, no meta-harness | closed |
+| 7 | Rules in `AGENTS.md §4`, the rest is justification | closed |
 
 ---
 
-## 3. Twój zakład — to zmienia priorytety
+## 3. Your bet - this changes the priorities
 
-Twój kumpel ma **2× Claude Pro (x20) i 1× ChatGPT (x10)**. Projekt stoi na zakładzie,
-że **mocne modele i dużo tokenów są do zdobycia i mają być wydane**. Większość tego,
-co wygląda na rozsądne oszczędzanie, jest błędem.
+Your buddy has **2× Claude Pro (x20) and 1× ChatGPT (x10)**. The project rests on the bet
+that **strong models and plenty of tokens are obtainable and are meant to be spent**. Most of what
+looks like sensible saving is a mistake.
 
-**Wąskie nie są tokeny. Wąskie są:**
-- uwaga (kto czyta, kto decyduje)
-- kontekst jednej sesji
-- kolizje
-- synteza
+**Tokens are not the narrow resource. The narrow resources are:**
+- attention (who reads, who decides)
+- the context of a single session
+- collisions
+- synthesis
 
-Twój model ma 256K kontekstu. Cały korpus tego repo to ~7 200 słów, czyli
-**~20K tokenów** — masz zapas na trzydzieści razy więcej, niż tu jest. Możesz
-przeczytać wszystko naraz i nie musisz nic pamiętać między sesjami.
+Your model has 256K of context. The whole corpus of this repo is ~7 200 words, i.e.
+**~20K tokens** - you have room for thirty times more than is here. You can
+read everything at once and do not need to remember anything between sessions.
 
 ---
 
-## 4. Zadania — wykonaj po kolei
+## 4. Tasks - do them in order
 
-### T1 · Czytaj z krytykiem, nie z notatkami
+### T1 · Read with a critic, not with notes
 
-Przeczytaj `README.md`, `AGENTS.md`, `KAPSULA.md`, `1-RESEARCH.md`, `2-BUILD.md`,
-`3-CHEATSHEET.md`. Zanotuj każde miejsce, w którym **pliki mówią różne rzeczy albo
-przesłaniają odpowiedzialność.**
+Read `README.md`, `AGENTS.md`, `CAPSULE.md`, `1-RESEARCH.md`, `2-BUILD.md`,
+`3-CHEATSHEET.md`. Note every place where **the files say different things or blur
+responsibility.**
 
-Kryterium przejścia: lista zdań typu *„plik X mówi A, plik Y mówi B"*, z numerami
-linii. Puste znaczy, że korpus jest spójny — i to też jest wynik, zapisz go.
+Pass criterion: a list of sentences of the form *"file X says A, file Y says B"*, with line
+numbers. Empty means the corpus is consistent - and that is also a result, write it down.
 
-### T2 · Dziesięć rzeczy, które nie zadziałają jutro rano
+### T2 · Ten things that will not work tomorrow morning
 
-To jest **główny wynik twojej pracy.** Zespół o 8 rano ma 15 minut i jedno okno
-terminala. Znajdź dziesięć rzeczy, które się w tym oknie zepsują.
+This is the **main result of your work.** At 8 am the team has 15 minutes and one terminal
+window. Find ten things that will break in that window.
 
-Kandydaci do sprawdzenia (ale szukaj też własnych):
-- czy kapsuła da się wypełnić w 10 minut przez 5 osób, które **nie znają** tematu
-- czy `check.sh` da się napisać, nie znając rozwiązania (a rozwiązania jeszcze nie ma)
-- czy katalogi worktree nie kolidują z trybem pracy, w którym ludzie nie znają gita dobrze
-- czy cokolwiek wymaga tokenu, konta albo sieci, których **nie wiadomo** że mają
-- czy kolejność „czeka na" da się ustalić przed poznaniem rozwiązania
-- czy cokolwiek zakłada, że agent zrobi coś sam, a nikt tego nie sprawdza
+Candidates to check (but look for your own too):
+- whether the capsule can be filled in within 10 minutes by 5 people who **do not know** the topic
+- whether `check.sh` can be written without knowing the solution (and there is no solution yet)
+- whether the worktree directories collide with a way of working in which people do not know git well
+- whether anything requires a token, an account or a network that it is **not known** they have
+- whether the "waits for" order can be determined before the solution is known
+- whether anything assumes an agent will do something on its own, and nobody checks it
 
-Kryterium przejścia: dziesięć punktów, każdy z **konkretnym zdaniem co zrobić**,
-nie z diagnozą.
+Pass criterion: ten items, each with **a concrete sentence on what to do**,
+not with a diagnosis.
 
-### T3 · Uprość to, co nie broni pomysłu
+### T3 · Simplify what does not defend the idea
 
-Mandat: **podejrzane domyślnie**. Dla każdego elementu odpowiedz:
-*czy to zapobiega konkretnej pomyłce, którą widziałem, czy tylko wygląda, jakby
-zapobiegała?*
+Mandate: **suspect by default**. For every element, answer:
+*does this prevent a specific mistake I have seen, or does it only look like
+it does?*
 
-Usuń albo wyprość to, co odpowiada „tylko wygląda". **Nie usuwaj:**
-- maszynowej kolejności mergów (bez niej pętla stoi w nocy)
-- reguły o interfejsach (bez niej maszyna rozwiąże konflikt po cichu)
-- `check.sh` (bez niego nie ma pętli)
-- `AGENTS.md` (agent nie wie, w jakiej jest sytuacji)
+Remove or simplify whatever answers "only looks like". **Do not remove:**
+- the machine merge order (without it the loop stalls at night)
+- the rule about interfaces (without it the machine will resolve a conflict silently)
+- `check.sh` (without it there is no loop)
+- `AGENTS.md` (the agent does not know what situation it is in)
 
-Kryterium przejścia: lista usuniętych/uproszczonych rzeczy **z jednym zdaniem
-racjonowania każdej**. Zostawiona lista też jest wynikiem — powiedz, co odwiedziłeś
-i zostawiłeś.
+Pass criterion: a list of removed/simplified things **with one sentence of
+rationale for each**. A list of what was left is also a result - say what you visited
+and left alone.
 
-### T4 · Plan developmentowy — rzecz najbliższa planowi
+### T4 · Development plan - the thing closest to the plan
 
-Napisz `DEVPLAN.md`: co konkretnie zrobić **od jutra 8:00 do wysłania**, w kolejności,
-z rolami. To ma być lista, którą da się odhaczyć, nie dokument do przeczytania.
+Write `DEVPLAN.md`: what exactly to do **from tomorrow 8:00 until submission**, in order,
+with roles. It is meant to be a list that can be ticked off, not a document to read.
 
-Wymagania:
-- zaczyna się od piątku wieczorem, bo to jest ten sam dzień
-- każdy krok ma właściciela i warunek przejścia, który da się zobaczyć
-- **jest plan awaryjny** na wariant „nie zdążyliśmy zasadzić seedów”
-- mówi wprost, co się dzieje, jeśli temat okaże się inny niż zakładano
-- **nie powtarza `3-CHEATSHEET.md`** — to zegar dla człowieka, `DEVPLAN.md` to kolejność
-  pracy z przypisaniami
+Requirements:
+- starts from Friday evening, because that is the same day
+- every step has an owner and a pass condition that can be seen
+- **there is a contingency plan** for the variant "we did not manage to plant the seeds"
+- says outright what happens if the topic turns out different than assumed
+- **does not repeat `3-CHEATSHEET.md`** - that is a clock for a human, `DEVPLAN.md` is the order
+  of work with assignments
 
-Kryterium przejścia: czytelnik, który nie był przy żadnej rozmowie, wykonuje to
-w sobotę rano bez pytania do nikogo.
+Pass criterion: a reader who was not present at any conversation carries this out
+on Saturday morning without asking anyone.
 
-### T5 · Seed — to jest najważniejszy wynik
+### T5 · Seed - this is the most important result
 
-Przygotuj `seed/`, z którego **Claude Code Pro x20 w trybie auto stworzy
-repozytoria jutro rano jednym poleceniem.**
+Prepare `seed/`, from which **Claude Code Pro x20 in auto mode will create the
+repositories tomorrow morning with one command.**
 
-To jest twarde ograniczenie, które decyduje o formie:
+This is a hard constraint that decides the form:
 
-> Bot ma działać **bez pytania do człowieka.** Jeśli seed wymaga pytania,
-> bot zatrzyma się w najgorszym możliwym momencie — pierwszej minucie hackathonu.
-> **Każdy element seeda musi mieć wartość domyślną i działać bez interwencji.**
+> The bot must work **without asking a human.** If the seed requires a question,
+> the bot will stop at the worst possible moment - the first minute of the hackathon.
+> **Every element of the seed must have a default value and work without intervention.**
 
-Seed musi zawierać:
+The seed must contain:
 
 ```text
 seed/
-├── SEED.md              ← co to jest, jak uruchomić, jedno polecenie
-├── bootstrap.sh         ← idempotentny: można go odpalić 2× bez szkód
-├── repo-layout.md       ← struktura katalogów, nazwy branchy, worktree
+├── SEED.md              ← what this is, how to run it, one command
+├── bootstrap.sh         ← idempotent: can be run 2× without harm
+├── repo-layout.md       ← directory structure, branch names, worktrees
 ├── templates/
-│   ├── AGENTS.md        ← z STAN: BUILD, gotowy do wklejenia
-│   ├── KAPSULA.md       ← szablon z nagłówkiem i 6 blokami
-│   ├── check.sh.example ← działający wzorzec, exit 0/1
-│   └── START-HERE.md    ← co czytać, w jakiej kolejności, pierwsze 30 min
-└── VERIFY.md            ← jak sprawdzić, że seed zadziałał, zanim zacznie się hackathon
+│   ├── AGENTS.md        ← with STATE: BUILD, ready to paste
+│   ├── CAPSULE.md       ← template with a header and 6 blocks
+│   ├── check.sh.example ← a working pattern, exit 0/1
+│   └── START-HERE.md    ← what to read, in what order, the first 30 min
+└── VERIFY.md            ← how to check that the seed worked, before the hackathon starts
 ```
 
-Wymagania do `bootstrap.sh`:
-- **idempotentny** — odpalenie drugi raz nie niszczy istniejących katalogów
-- tworzy repo i 5 worktree, każdy z `check.sh`
-- kopiuje `AGENTS.md` i `KAPSULA.md` do katalogu głównego **repo rozwiązania**
-  (tam agent je wczytuje — nie do repozytorium blueprintu)
-- **nie wymaga żadnego sekretu** ani tokenu, którego nie wymagają reszta
-- wypisuje na końcu checklistę weryfikacji
-- kończy się `exit 0` albo `exit 1` — nigdy „pół na pół”
+Requirements for `bootstrap.sh`:
+- **idempotent** - running it a second time does not destroy existing directories
+- creates the repo and 5 worktrees, each with `check.sh`
+- copies `AGENTS.md` and `CAPSULE.md` into the root directory of the **solution repo**
+  (that is where the agent loads them - not into the blueprint repository)
+- **requires no secret** or token that the rest does not require
+- prints a verification checklist at the end
+- ends with `exit 0` or `exit 1` - never "half and half"
 
-**Kryterium przejścia `VERIFY.md`:** ktoś na czystej maszynie, bez Twojej pomocy,
-uruchamia `bash seed/bootstrap.sh`, robi test, i w **10 minut** ma pięć działających
-katalogów z zielonym `check.sh`. Zapisz dokładnie tę komendę i dokładnie ten czas.
+**Pass criterion of `VERIFY.md`:** someone on a clean machine, without your help,
+runs `bash seed/bootstrap.sh`, does the test, and within **10 minutes** has five working
+directories with a green `check.sh`. Write down exactly this command and exactly this time.
 
-### T6 · Raport — `RAPORT.md`
+### T6 · Report - `REPORT.md`
 
-Maksymalnie 150 linii. Pięć sekcji, po jednym akapicie:
-1. **Dziesięć dziur** — z T2, każda z działaniem
-2. **Co uprościłeś** — z T3, z racjonowaniem
-3. **Co zostawiłeś mimo wątpliwości** — i dlaczego
-4. **Seed: jak sprawdzić, że działa** — z T5
-5. **Pytania, na które nie mam odpowiedzi** — jedno do trzech
+At most 150 lines. Five sections, one paragraph each:
+1. **Ten holes** - from T2, each with an action
+2. **What you simplified** - from T3, with rationale
+3. **What you left despite doubts** - and why
+4. **Seed: how to check that it works** - from T5
+5. **Questions I have no answer to** - one to three
 
-**Raport ma być krótki.** Jeśli nie mieści się w 150 liniach, to zadanie nie
-jest zrobione — znaczy, że piszesz o procesie zamiast o wyniku.
-
----
-
-## 5 · Czego nie wolno
-
-- **Nie commituj niczego na `main`.** Cała praca na `refactor/seed` — nowy branch
-  od `refactor/dwa-systemy`. *(Historyczne: po zatwierdzonym merge'u wszystko jest
-  na `main`, branche usunięte.)*
-- **Nie usuwaj `archiwum/` (w tym `archiwum/old-package/`) ani `LICENSE`.**
-  To cudza praca i dowód. `AGENTS.md` mówi, że ich się nie czyta, i to jest w porządku.
-- **Nie wklejaj żadnych sekretów.** W tym repo nie ma kluczy. Klucz do Atria żyje
-  w `~/.omp/agent/models.yml` i w keychainie macOS — **nigdy go nie kopiuj** i nie
-  pokazuj w zadaniu ani w commicie.
-- **Nie zmieniaj `AGENTS.md §4`** (reguły operacyjne) bez powodu opisanego w T3.
-- **Nie pisz po polsku w `seed/bootstrap.sh`** — kod, komentarze techniczne po
-  angielsku, dokumenty po polsku. Bot czyta inaczej niż człowiek.
+**The report must be short.** If it does not fit in 150 lines, the task is not
+done - it means you are writing about the process instead of the result.
 
 ---
 
-## 6 · Jak zacząć, dosłownie
+## 5 · What is not allowed
+
+- **Do not commit anything to `main`.** All the work on `refactor/seed` - a new branch
+  from `refactor/dwa-systemy`. *(Historical: after the approved merge everything is
+  on `main`, the branches deleted.)*
+- **Do not delete `archive/` (including `archive/old-package/`) or `LICENSE`.**
+  That is someone else's work and evidence. `AGENTS.md` says they are not to be read, and that is fine.
+- **Do not paste any secrets.** There are no keys in this repo. The Atria key lives
+  in `~/.omp/agent/models.yml` and in the macOS keychain - **never copy it** and do not
+  show it in the task or in a commit.
+- **Do not change `AGENTS.md §4`** (operating rules) without a reason described in T3.
+- **Do not write Polish in `seed/bootstrap.sh`** - code, technical comments in
+  English, documents in Polish. A bot reads differently than a human.
+
+---
+
+## 6 · How to start, literally
 
 ```bash
 git clone https://github.com/TomaszGonczar/hackathon-multi-ai-blueprint
 cd hackathon-multi-ai-blueprint
 ```
 
-Potem przeczytaj ten plik od nowa i zacznij od **T1**.
+Then read this file again and start with **T1**.
 
-Pytania, na które nie mam odpowiedzi, są w `RAPORT.md` §5. Nie blokuj się na
-żadnym z nich — **T2, T3 i T5 da się zrobić niezależnie.**
+The questions I have no answers to are in `REPORT.md` §5. Do not block yourself on
+any of them - **T2, T3 and T5 can be done independently.**
 
 ---
 
-## 7 · Co dostanę
+## 7 · What I will get
 
-Pisuj do `RAPORT.md` w worktree. Nie czekaj na koniec — po każdym zadaniu dopisz
-sekcję, żeby przerwanie pracy nie kosztowało wyniku.
+Write to `REPORT.md` in the worktree. Do not wait for the end - after each task add
+a section, so that an interruption of the work does not cost the result.
 
-Najważniejsze, w kolejności:
-1. **seed działający i zweryfikowany** (T5)
-2. **lista dziur z działaniami** (T2)
+Most important, in order:
+1. **a working and verified seed** (T5)
+2. **a list of holes with actions** (T2)
 3. **`DEVPLAN.md`** (T4)
-4. uproszczenia (T3), raport (T6)
+4. simplifications (T3), report (T6)
 
-Jeśli zabraknie ci czasu i zrobisz tylko jedno — zrób **T5**. Reszta jest wartościowa,
-ale seed jest tym, bez czego jutro rano nic się nie uruchomi.
+If you run out of time and do only one thing - do **T5**. The rest is valuable,
+but the seed is what nothing runs tomorrow morning without.

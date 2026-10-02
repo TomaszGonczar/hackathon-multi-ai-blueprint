@@ -1,277 +1,277 @@
-# 2 — BUILD
+# 2 - BUILD
 
-**Wejście:** [`KAPSULA.md`](KAPSULA.md) wypełniony. Nic innego.
-**Wyjście:** rozwiązanie na `main`, przetestowane przez kogoś, kto nic nie budował.
-**Kto:** pięć osób, pięć laptopów, OMP na każdym. Opcjonalnie kolejne sesje
-do review.
-**Pętla:** **non-stop.** Maszyna wpuszcza na `main`, czeka na moduły, rozwiązuje
- mechaniczne konflikty i nigdy nie blokuje zespołu pytaniem.
-> **Reguły operacyjne są w [`AGENTS.md`](AGENTS.md) §4.** Ten plik jest uzasadnieniem
-> — *dlaczego* reguła jest taka, a nie inna. Jeśli tu i tam jest rozbieżność,
-> **wygrywa `AGENTS.md`**, bo to on jest w kontekście agenta.
+**Input:** [`CAPSULE.md`](CAPSULE.md) filled in. Nothing else.
+**Output:** the solution on `main`, tested by someone who built nothing.
+**Who:** five people, five laptops, OMP on each. Optionally additional sessions
+for review.
+**Loop:** **non-stop.** The machine lands work on `main`, waits for modules, resolves
+ mechanical conflicts and never blocks the team with a question.
+> **The operating rules are in [`AGENTS.md`](AGENTS.md) §4.** This file is the rationale
+> - *why* a rule is the way it is. If the two disagree,
+> **`AGENTS.md` wins**, because it is the one in the agent's context.
 
-**Nie ma tu:** własnego harnessa, orkiestracji, hooków, konfiguracji, bota merge.
-**OMP jest runtime. Merge jest regułą w pętli agenta, nie osobnym programem.**
+**Not here:** your own harness, orchestration, hooks, configuration, merge bot.
+**OMP is the runtime. Merge is a rule in the agent's loop, not a separate program.**
 
 ---
 
-## Start: 20 sekund na osobę
+## Start: 20 seconds per person
 
 ```bash
-cd ~/w3-kawalek     # swój katalog, swój worktree — to jest też twój kawałek
-omp                 # albo: claude, codex — cokolwiek, w czym pracujesz
+cd ~/w3-piece       # your own directory, your own worktree - this is also your piece
+omp                 # or: claude, codex - whatever you work in
 ```
 
-Pierwsze zdanie do agenta:
+First sentence to the agent:
 
-> **Przeczytaj `KAPSULA.md`. Potem uruchom `./check.sh`. Potem zacznij.**
+> **Read `CAPSULE.md`. Then run `./check.sh`. Then start.**
 
-Kolejność jest ważna: **test przed pierwszą linią kodu.** Agent, który najpierw
-napisze kod i dopiero potem sprawdzi test, zużyje kontekst i pół nocy na
-poprawianie tego, co miał zrobić od razu.
+The order matters: **test before the first line of code.** An agent that writes the
+code first and only then checks the test burns context and half the night
+fixing what it should have got right the first time.
 
-Jeśli `check.sh` nie istnieje — **nie zaczynaj.** Napisz go, albo poproś kogoś,
-kto może. To 15 minut, które oszczędzają dwie godziny.
+If `check.sh` doesn't exist - **don't start.** Write it, or ask someone
+who can. It's 15 minutes that save two hours.
 
 ---
 
-## Katalogi: kolizja jest niemożliwa, bo nie ma powierzchni
+## Directories: collision is impossible, because there is no surface
 
 ```bash
-# raz, przy starcie
+# once, at the start
 git clone <repo> && cd repo
-git worktree add ~/w1-detekcja-anomalii -b w1
+git worktree add ~/w1-anomaly-detection -b w1
 git worktree add ~/w2-api             -b w2
-git worktree add ~/w3-modele          -b w3
+git worktree add ~/w3-models          -b w3
 git worktree add ~/w4-reporting       -b w4
 git worktree add ~/w5-demo            -b w5
 ```
 
-Pięć katalogów, pięć branchy, zero wspólnych plików. Nikt nie może pisać do cudzego
-katalogu — nie dlatego, że zabroniliście, tylko dlatego, że go nie ma.
+Five directories, five branches, zero shared files. Nobody can write into someone else's
+directory - not because you forbade it, but because it isn't there.
 
-**Nazwij katalogi tak, żeby z nazwy było widać zawartość.** Nazwa katalogu to sygnał,
-który agent czyta zanim otworzy plik — foldery i nazwy plików to dla niego informacja,
-nie kosmetyka.
-([źródło](https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents))
+**Name the directories so the name shows what's inside.** A directory name is a signal
+the agent reads before it opens a file - folders and file names are information
+to it, not cosmetics.
+([source](https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents))
 
-`w1/` nie mówi nic. `w1-detekcja-anomalii/` mówi wszystko.
+`w1/` says nothing. `w1-anomaly-detection/` says everything.
 
 ---
 
-## Test: jedyna rzecz, bez której to nie działa
+## Test: the one thing without which this doesn't work
 
 ```bash
 #!/usr/bin/env bash
-# ./check.sh — exit 0 = gotowe. Leży w roocie twojego worktree.
+# ./check.sh - exit 0 = done. Lives in the root of your worktree.
 set -euo pipefail
-cd "$(dirname "$0")"     # check.sh leży w roocie twojego worktree
+cd "$(dirname "$0")"     # check.sh lives in the root of your worktree
 
-echo "== 1. kompiluje się =="
-python -m compileall -q src/modele/ || exit 1
+echo "== 1. compiles =="
+python -m compileall -q src/models/ || exit 1
 
-echo "== 2. testy jednostkowe =="
-pytest tests/test_modele.py -q || exit 1
+echo "== 2. unit tests =="
+pytest tests/test_models.py -q || exit 1
 
-echo "== 3. CZY COŚ ŁAPIE =="
-python -m demo.replay tests/fixtures/atak.log | grep -q "ALERT" || {
-  echo "FAIL: test nie wykrył ataku z fixture — test nic nie sprawdza"
+echo "== 3. DOES IT CATCH ANYTHING =="
+python -m demo.replay tests/fixtures/attack.log | grep -q "ALERT" || {
+  echo "FAIL: test did not detect the attack from the fixture - the test checks nothing"
   exit 1
 }
 
-echo "== 4. brak sekretów =="
+echo "== 4. no secrets =="
 if git diff --cached | grep -nEi '(api[_-]?key|password)[[:space:]]*='; then
-  echo "FAIL: sekret"; exit 1
+  echo "FAIL: secret"; exit 1
 fi
 
 echo OK
 ```
 
-Trzy rzeczy, których prostszy skrypt nie zrobi:
+Three things a simpler script won't do:
 
-1. **Punkt 3 sprawdza, że test coś łapie.** Test zielony i bezwartościowy jest gorszy
-   niż brak testu — daje fałszywy spokój.
-2. **Punkt 4 działa zawsze**, nie wymaga nikogo o pamiętanie.
-3. **`set -euo pipefail` + `exit 1` wszędzie.** Bez tego skrypt, który ma za mało
-   sprawdzeń, wraca z 0.
+1. **Step 3 checks that the test catches something.** A green, worthless test is worse
+   than no test - it gives false calm.
+2. **Step 4 always runs**, nobody has to remember it.
+3. **`set -euo pipefail` + `exit 1` everywhere.** Without that, a script that has too few
+   checks returns 0.
 
-**Przed startem:** zepsujcie jeden kawałek na złoto i upewnijcie się, że `check.sh`
-to zauważa. Jeśli nie — test jest zepsuty.
+**Before the start:** deliberately break one piece and make sure `check.sh`
+notices. If it doesn't - the test is broken.
 
-### Reguła
+### The rule
 
-> **Nie ma zielonego `check.sh` — kawałek nie startuje.**
+> **No green `check.sh` - the piece doesn't start.**
 >
-> **Zielony `check.sh` i zielony review — kawałek wjeżdża na `main`.**
+> **Green `check.sh` and green review - the piece lands on `main`.**
 
-Powiedzcie to agentowi wprost: *„nie kończ, dopóki `./w3/check.sh` nie wyjdzie 0,
-potem review, potem wjeżdżaj na `main` sam"*.
+Tell the agent this outright: *"don't finish until `./w3/check.sh` exits 0,
+then review, then land on `main` yourself"*.
 
-Mechanizm, dla którego to istnieje:
+The mechanism this exists for:
 
-> *„Without a check it can run, 'looks done' is the only signal available, and **you
+> *"Without a check it can run, 'looks done' is the only signal available, and **you
 > become the verification loop: every mistake waits for you to notice.**"*
-> — [Claude Code](https://code.claude.com/docs/en/best-practices)
+> - [Claude Code](https://code.claude.com/docs/en/best-practices)
 
 ---
 
-## Merge: maszyna, non-stop
+## Merge: the machine, non-stop
 
-**To jest sedno tego systemu. Przeczytaj zanim zaczniesz.**
+**This is the core of the system. Read it before you start.**
 
-Reguła jest jedna i agent dostaje ją w instrukcji na starcie. Nie ma bota, nie ma
-skryptu, nie ma crona — **każdy agent robi to sam, w swojej pętli**, zaraz po
-zielonym teście.
+There is one rule and the agent gets it in its instructions at the start. There is no bot, no
+script, no cron - **every agent does it itself, in its own loop**, right after
+a green test.
 
-### Czeka na inne moduły
+### Waits for other modules
 
-Tabela w kapsule ma kolumnę **„Czeka na"**. To kolejność wjeżdżania na `main`
-i jest czytana dosłownie.
+The table in the capsule has a **"Waits for"** column. That is the order of landing on `main`
+and it is read literally.
 
-Kawałek 4 czeka na 1 i 2. Znaczy: `w4` nie wjeżdża na `main`, dopóki `w1` i `w2`
-tam nie będą. **Nie pyta o to.** Sprawdza, nie wjeżdża, wraca do pracy nad swoim
-kawałkiem, sprawdza ponownie za jakiś czas.
+Piece 4 waits for 1 and 2. Meaning: `w4` does not land on `main` until `w1` and `w2`
+are there. **It doesn't ask about it.** It checks, doesn't land, goes back to work on its own
+piece, checks again after a while.
 
 ```bash
-# co agent robi zamiast pytać
+# what the agent does instead of asking
 git fetch origin main
 for dep in 1 2; do
   git merge-base --is-ancestor origin/w$dep origin/main || {
-    echo "czekam na w$dep — wracam do pracy"
+    echo "waiting for w$dep - back to work"
     sleep 600; continue 2
   }
 done
 ```
 
-**Czeka bez końca i nie przeszkadza.** To jest cały sens: kawałek 4 wjeżdża w
-sekundzie, w której wjeżdzie ostatni z jego zależności — nawet jeśli to jest trzecia
-nad ranem, i nawet jeśli wy śpicie.
+**It waits indefinitely and doesn't get in the way.** That is the whole point: piece 4 lands in
+the second the last of its dependencies lands - even if it's three
+in the morning, and even if you're asleep.
 
-**Sprawdźcie na kartce, czy da się ułożyć te pięć kawałków bez cyklu.** Cykl to
-deadlock: maszyna czeka w nieskończoność i nic o tym nie wie. To jedyny błąd,
-który w tej konstrukcji kosztuje całą noc.
+**Check on paper that these five pieces can be arranged without a cycle.** A cycle is a
+deadlock: the machine waits forever and knows nothing about it. It is the only mistake
+that in this design costs the whole night.
 
-### Konflikty
+### Conflicts
 
-| Rodzaj konfliktu | Co robi maszyna |
+| Type of conflict | What the machine does |
 |---|---|
-| **Mechaniczny** — importy, kolejność, inne linie w tym samym pliku | **rozwiązuje sama** i wjeżdża |
-| **W pliku interfejsu** — plik wymieniony w kapsule jako wspólny | **NIE rozwiązuje.** Zapisuje, nie rusza, wraca do pracy, raport na sync |
+| **Mechanical** - imports, ordering, different lines in the same file | **resolves it itself** and lands |
+| **In an interface file** - a file listed in the capsule as shared | **does NOT resolve it.** Records it, doesn't touch it, goes back to work, reports at sync |
 
-Granica jest zapisana w kapsule i agent jej nie zmyśla. Dzięki temu maszyna nigdy
-nie rozwiąże po cichu konfliktu, który zmienia kontrakt między kawałkami.
+The boundary is written in the capsule and the agent doesn't invent it. Thanks to that the machine never
+silently resolves a conflict that changes the contract between pieces.
 
-### Co maszyna **nigdy** nie robi
+### What the machine **never** does
 
-- nie wjeżdża z czerwonym `check.sh`
-- nie wjeżdża, jeśli review zgłosił brak w poprawności
-- nie rusza plików interfejsu
-- nie wjeżdża na `main` przed swoimi zależnościami
-- nie zatrzymuje innych kawałków
+- doesn't land with a red `check.sh`
+- doesn't land if review reported a correctness gap
+- doesn't touch interface files
+- doesn't land on `main` before its dependencies
+- doesn't stop other pieces
 
-**Pętla się nie zatrzymuje.** Jeśli twój kawałek nie może wjechać, robisz dalej
-swoją robotę i wjeżdżasz później.
+**The loop doesn't stop.** If your piece can't land, you keep doing
+your work and land later.
 
 ---
 
-## Review: świeży kontekst
+## Review: fresh context
 
-**To jest miejsce, na które wydajemy zakład.** Mamy compute. Warto.
+**This is where we spend the bet.** We have compute. It's worth it.
 
 ```bash
-git diff main...w3 | claude -p "Review this diff against KAPSULA.md in this repo.
-Report only gaps that affect correctness or the stated kapsula.
+git diff main...w3 | claude -p "Review this diff against CAPSULE.md in this repo.
+Report only gaps that affect correctness or the stated capsule.
 Ignore style, naming, refactoring preferences.
-If it works, say so — do not invent problems."
+If it works, say so - do not invent problems."
 ```
 
-Dlaczego to działa lepiej niż recenzja w tej samej sesji:
+Why this works better than a review in the same session:
 
-> *„**A fresh context improves code review since Claude won't be biased toward code it
+> *"**A fresh context improves code review since Claude won't be biased toward code it
 > just wrote.**"*
-> *„A reviewer running in a fresh subagent context **sees only the diff and the criteria
+> *"A reviewer running in a fresh subagent context **sees only the diff and the criteria
 > you give it, not the reasoning that produced the change**."*
-> — [Claude Code](https://code.claude.com/docs/en/best-practices)
+> - [Claude Code](https://code.claude.com/docs/en/best-practices)
 
-Zdanie po „If it works, say so" **jest obowiązkowe.** Bez niego recenzent zwróci
-uwagi, bo go o to poproszono, i będziecie je śledzić, budując abstrakcje do rzeczy,
-które nie mogą się zdarzyć.
+The sentence after "If it works, say so" **is mandatory.** Without it the reviewer will return
+remarks because it was asked to, and you will chase them, building abstractions for things
+that can't happen.
 
-**Trzeci agent „złośliwy"** — *„co by się zepsuło, gdyby ktoś to zaatakował"* — łapie
-to, czego dwaj inni nie zauważą. W projekcie security ta trzecia sesja jest bardziej
-warta niż gdziekolwiek indziej.
+**A third, "malicious" agent** - *"what would break if someone attacked this"* - catches
+what the other two won't notice. In a security project this third session is worth more
+than anywhere else.
 
-**Kolejność jest sztywna:** merge czeka na review. Nigdy odwrotnie.
+**The order is rigid:** merge waits for review. Never the other way round.
 
 ---
 
-## Dwa momenty, w których wchodzi człowiek
+## Two moments when a human steps in
 
-Nie „człowiek w pętli". Dwa punkty, reszta jest maszynowa.
+Not "human in the loop". Two points, the rest is machine.
 
-### Sync — co 2 godziny, 5 minut na stojąco
+### Sync - every 2 hours, 5 minutes standing
 
-Człowiek wchodzi, żeby zobaczyć stan, nie żeby coś zrobić:
+A human steps in to see the state, not to do anything:
 
 ```bash
-git log --oneline main | head -20     # co wjechało
-ls research/                          # co research wyciągnął
+git log --oneline main | head -20     # what landed
+ls research/                          # what research pulled out
 ```
 
-- kto utknął na czekaniu i **dlaczego** (krytyczne — czekający bez powodu to martwy
-  kawałek, nie śpiący)
-- kto zgłosił konflikt w pliku interfejsu
-- czy coś w kapsule trzeba dopisać
+- who is stuck waiting and **why** (critical - someone waiting for no reason is a dead
+  piece, not a sleeping one)
+- who reported a conflict in an interface file
+- whether anything in the capsule needs to be added
 
-**To jedyne miejsce, w którym zespół może świadomie zmienić kolejność mergów.**
-Trzy minuty, na kartce, i wpis w tabelę kapsuły.
+**This is the only place where the team can deliberately change the merge order.**
+Three minutes, on paper, and an entry in the capsule table.
 
-### Freeze — 4 godziny przed deadlinem
+### Freeze - 4 hours before the deadline
 
-Tu już jest twardo: **każdy kawałek kończy na zielonym teście albo jest oznaczony
-CUT.** Nic pośrodku. Cut = wypadnięcie z `main`, nie „dokończymy rano".
+It gets hard here: **every piece ends on a green test or is marked
+CUT.** Nothing in between. Cut = dropped from `main`, not "we'll finish in the morning".
 
-Po freeze wchodzą **tylko defekty blokujące demo**, każdy z jednozdaniowym
-powodem w PR.
+After freeze, **only demo-blocking defects** go in, each with a one-sentence
+reason in the PR.
 
-### Odpowiedzialność
+### Accountability
 
-Tu jest granica, której nie da się zautomatyzować, i warto powiedzieć ją na głos
-przed startem:
+Here is a boundary that can't be automated, and it's worth saying out loud
+before the start:
 
-> **Maszyna może wjechać wszystko. Nie może powiedzieć, co wysyłacie.**
+> **The machine can land everything. It cannot say what you submit.**
 
-Slajd IBM-a z 1979, który cytuje Simon Willison, nie zmienia się przez to, że merge
-jest automatyczny: *„A computer can never be held accountable. Therefore a computer
-must never make a management decision."* Pytanie brzmi tylko, **gdzie** człowiek
-wchodzi — i odpowiedź brzmi: tam, gdzie decyduje się, co jest ważne, a nie gdzie
-przesuwa się kod. Dlatego dwa momenty, nie bramka przy każdym merge'u.
-
----
-
-## Co kawałek robi, kiedy utknie
-
-Nie ma sytuacji, w której zespół stoi. Każdy agent:
-
-1. **Zapisuje fakty** — co, kiedy, jaka komenda, jaki wynik
-2. **Oznacza w kanale** jedną linią, np. `w3: czekam na w1 i w2, `check.sh` zielony
-3. **Wraca do pracy nad tym, co może** — poprawia, pisze testy, dokańcza
-4. **Pyta tylko wtedy**, gdy jedno z dwóch: konflikt w pliku interfejsu albo
-   kapsuła okazała się zła
-
-Ostatni punkt — kapsuła może źle zrozumieć temat i **żaden mechanizm tego nie
-wykryje.** Jeśli ktoś mówi *„moment, to nie jest to, o co chodzi"* — to jest
-najważniejszy głos w całym systemie i nie wolno go zignorować. Dlatego to jest
-jedyne pytanie, które idzie do człowieka natychmiast, a nie na sync.
+The 1979 IBM slide that Simon Willison quotes doesn't change because merge
+is automatic: *"A computer can never be held accountable. Therefore a computer
+must never make a management decision."* The only question is **where** the human
+steps in - and the answer is: where it's decided what matters, not where
+code is moved around. That's why two moments, not a gate at every merge.
 
 ---
 
-## Czego tu **nie ma**
+## What a piece does when it's stuck
 
-- **Bota merge.** Merge jest regułą w pętli agenta, nie osobnym programem.
-- **Własnego harnessa.** OMP już jest. Żadnej orkiestracji, żadnych hooków,
-  żadnej konfiguracji.
-- **Pamięci i wznawiania sesji.** Dwa dni. Nowa sesja czyta kapsułę i ma wszystko.
-- **Walidacji stanów, rejestrów, premortemów.** Twierdzenie bez komendy nie istnieje —
-  i to jest cała reguła dowodowa.
-- **Dziewięciu ról.** Dwa nazwiska. Reszta to funkcja przy okazji.
+There is no situation in which the team stands still. Every agent:
+
+1. **Records the facts** - what, when, which command, what result
+2. **Flags it in the channel** with one line, e.g. `w3: waiting for w1 and w2, `check.sh` green
+3. **Goes back to work on what it can** - fixes, writes tests, finishes up
+4. **Asks only when** one of two things: a conflict in an interface file or
+   the capsule turned out to be wrong
+
+The last point - the capsule can misunderstand the topic and **no mechanism will
+detect it.** If someone says *"wait, that's not what this is about"* - that is the
+most important voice in the whole system and it must not be ignored. That is why it is the
+only question that goes to a human immediately, not to sync.
+
+---
+
+## What is **not** here
+
+- **A merge bot.** Merge is a rule in the agent's loop, not a separate program.
+- **Your own harness.** OMP is already there. No orchestration, no hooks,
+  no configuration.
+- **Memory and session resumption.** Two days. A new session reads the capsule and has everything.
+- **State validation, registries, premortems.** A claim without a command doesn't exist -
+  and that is the whole rule of evidence.
+- **Nine roles.** Two names. The rest is a function on the side.

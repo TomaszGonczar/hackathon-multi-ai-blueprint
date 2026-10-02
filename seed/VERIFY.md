@@ -1,181 +1,181 @@
-# VERIFY.md — jak sprawdzić, że seed działa
+# VERIFY.md - how to check that the seed works
 
-**Czas:** 10 minut na czystej maszynie. Licznik startuje przy komendzie z
-sekcji 1.
+**Time:** 10 minutes on a clean machine. The timer starts at the command in
+section 1.
 
-**Cel:** pięć worktree, z których każdy ma kontekst agenta i `check.sh`,
-a bramka kolejności mergów faktycznie blokuje zależne kawałki.
+**Goal:** five worktrees, each of which has the agent context and `check.sh`,
+and the merge-order gate actually blocks dependent pieces.
 
 ---
 
-## 1. Jedna komenda (30 s)
+## 1. One command (30 s)
 
 ```bash
 bash seed/bootstrap.sh
 ```
 
-Sekcja na końcu wyjścia to checklista weryfikacji. Wszystko poniżej powtarza ją
-krok po kroku.
+The section at the end of the output is the verification checklist. Everything below repeats it
+step by step.
 
-## 2. Pięć katalogów (30 s)
+## 2. Five directories (30 s)
 
 ```bash
-ls -d ~/w1-kawalek ~/w2-kawalek ~/w3-kawalek ~/w4-kawalek ~/w5-kawalek
+ls -d ~/w1-piece ~/w2-piece ~/w3-piece ~/w4-piece ~/w5-piece
 ```
 
-Oczekiwane: pięć linii. Brak którejkolwiek = FAIL.
+Expected: five lines. Any one missing = FAIL.
 
-## 3. Kontekst agenta JEST W ŚRODKU każdego worktree (1 min)
+## 3. The agent context is INSIDE every worktree (1 min)
 
-To nie jest kosmetyka. Agent pracuje z worktree jako katalogiem roboczym — jeśli
-`AGENTS.md` i `KAPSULA.md` nie są na jego branchu, nie wczyta ani reguł, ani
-kapsuły, i cały mechanizm „kapsuła to jedyny przewód" po cichu nie działa.
+This is not cosmetic. The agent works with the worktree as its working directory - if
+`AGENTS.md` and `CAPSULE.md` are not on its branch, it will load neither the rules nor the
+capsule, and the whole "the capsule is the only wire" mechanism silently does not work.
 
 ```bash
-for n in w1-kawalek w2-kawalek w3-kawalek w4-kawalek w5-kawalek; do
-  printf "%s: " "$n"; ls ~/$n/AGENTS.md ~/$n/KAPSULA.md 2>/dev/null | wc -l
+for n in w1-piece w2-piece w3-piece w4-piece w5-piece; do
+  printf "%s: " "$n"; ls ~/$n/AGENTS.md ~/$n/CAPSULE.md 2>/dev/null | wc -l
 done
 ```
 
-Oczekiwane: pięć razy `2`. Każde `0` albo `1` = FAIL.
+Expected: `2` five times. Any `0` or `1` = FAIL.
 
-## 4. `check.sh` istnieje i jest wykonywalny (30 s)
+## 4. `check.sh` exists and is executable (30 s)
 
 ```bash
-for n in w1-kawalek w2-kawalek w3-kawalek w4-kawalek w5-kawalek; do
+for n in w1-piece w2-piece w3-piece w4-piece w5-piece; do
   [ -x ~/$n/check.sh ] && echo "$n: OK" || echo "$n: FAIL"
 done
 ```
 
-## 5. Faza 0 kończy 1 (1 min)
+## 5. Phase 0 exits 1 (1 min)
 
-`check.sh`, które zawsze kończy 0, nie jest testem.
+A `check.sh` that always exits 0 is not a test.
 
 ```bash
-for n in w1-kawalek w2-kawalek w3-kawalek w4-kawalek w5-kawalek; do
+for n in w1-piece w2-piece w3-piece w4-piece w5-piece; do
   bash ~/$n/check.sh >/dev/null 2>&1; printf "%s -> %s\n" "$n" "$?"
 done
 ```
 
-Oczekiwane: pięć razy `-> 1`, z komunikatem o fazie 0.
+Expected: `-> 1` five times, with a message about phase 0.
 
-## 6. Po wypełnieniu kończy 0 (1 min)
+## 6. After filling in, exits 0 (1 min)
 
 ```bash
-# UWAGA: na macOS `sed -i` bez argumentu pada ("bad flag in substitute
-# command"). Forma z `.bak` działa i na macOS (BSD), i na Linuksie (GNU).
-sed -i.bak 's/PHASE=0/PHASE=1/' ~/w1-kawalek/check.sh && rm -f ~/w1-kawalek/check.sh.bak
-bash ~/w1-kawalek/check.sh; echo "exit=$?"     # oczekiwane: 0
-sed -i.bak 's/PHASE=1/PHASE=0/' ~/w1-kawalek/check.sh && rm -f ~/w1-kawalek/check.sh.bak
+# NOTE: on macOS `sed -i` without an argument fails ("bad flag in substitute
+# command"). The `.bak` form works on both macOS (BSD) and Linux (GNU).
+sed -i.bak 's/PHASE=0/PHASE=1/' ~/w1-piece/check.sh && rm -f ~/w1-piece/check.sh.bak
+bash ~/w1-piece/check.sh; echo "exit=$?"     # expected: 0
+sed -i.bak 's/PHASE=1/PHASE=0/' ~/w1-piece/check.sh && rm -f ~/w1-piece/check.sh.bak
 ```
 
-(Otwarcie pliku edytorem i zmiana `PHASE=0` na `PHASE=1` też jest w porządku —
-to jedno słowo.)
+(Opening the file in an editor and changing `PHASE=0` to `PHASE=1` is also fine -
+it is one word.)
 
-Sekcje 1–3 są jeszcze pustymi `echo`, dlatego przechodzi. Ten krok sprawdza, że
-**bramka fazy działa w obie strony**.
+Sections 1-3 are still empty `echo`s, which is why it passes. This step checks that the
+**phase gate works both ways**.
 
-## 7. Bramka sekretów (1 min)
+## 7. Secrets gate (1 min)
 
 ```bash
-cd ~/w1-kawalek
+cd ~/w1-piece
 echo "API_KEY=supersecret" > test-secret.txt
 git add test-secret.txt
-bash ./check.sh; echo "exit=$?"     # oczekiwane: 1
+bash ./check.sh; echo "exit=$?"     # expected: 1
 git reset -q test-secret.txt && rm test-secret.txt
 ```
 
-Działa **w obu fazach** — sekret w fazie 0 to nadal sekret.
+It works **in both phases** - a secret in phase 0 is still a secret.
 
-## 8. Bramka kolejności mergów NIE jest fałszywie prawdziwa (2 min)
+## 8. The merge-order gate is NOT vacuously true (2 min)
 
-To jest najważniejszy test po numerze 3. Wszystkie branche powstają tuż po
-`main`, więc bez znacznika startowego każdy z nich jest **przodkiem** `main` —
-i `git merge-base --is-ancestor` zgłasza każdy kawałek jako „już zmergowany".
-Kawałek z zależnościami mógłby wtedy wjechać pierwszy.
+This is the most important test after number 3. All branches are created right after
+`main`, so without a start marker every one of them is an **ancestor** of `main` -
+and `git merge-base --is-ancestor` reports every piece as "already merged".
+A piece with dependencies could then land first.
 
 ```bash
-cd ~/hackathon-rozwiazanie
+cd ~/hackathon-solution
 for b in w1 w2 w3 w4 w5; do
-  if git merge-base --is-ancestor $b main; then echo "$b: ZLE (wyglada na zmergowany)"; else echo "$b: OK"; fi
+  if git merge-base --is-ancestor $b main; then echo "$b: WRONG (looks merged)"; else echo "$b: OK"; fi
 done
 ```
 
-Oczekiwane: **pięć razy `OK`**. Jakiekolwiek `ZLE` = FAIL — kolejność mergów nie
-działa.
+Expected: **`OK` five times**. Any `WRONG` = FAIL - the merge order does not
+work.
 
-## 9. Bramka odblokowuje po zmergowaniu zależności (2 min)
+## 9. The gate unlocks after the dependency is merged (2 min)
 
-Symulacja: zmerguj `w1` i sprawdź, że `w3` nadal czeka, ale `w1` już jest.
+Simulation: merge `w1` and check that `w3` is still waiting, but `w1` is already there.
 
 ```bash
-cd ~/w1-kawalek
+cd ~/w1-piece
 git add -A && git -c user.name=t -c user.email=t@t commit -qm "w1" --allow-empty
-cd ~/hackathon-rozwiazanie
+cd ~/hackathon-solution
 git merge --no-ff -q w1 -m "merge w1"
-git merge-base --is-ancestor w1 main && echo "w1: TAK (poprawnie)"
-git merge-base --is-ancestor w2 main || echo "w2: NIE  <- w3/w4 nadal czekaja (poprawnie)"
-git merge-base --is-ancestor w3 main || echo "w3: NIE  <- poprawnie"
+git merge-base --is-ancestor w1 main && echo "w1: YES (correct)"
+git merge-base --is-ancestor w2 main || echo "w2: NO  <- w3/w4 still waiting (correct)"
+git merge-base --is-ancestor w3 main || echo "w3: NO  <- correct"
 ```
 
-Oczekiwane: `w1: TAK`, `w2: NIE`, `w3: NIE`.
+Expected: `w1: YES`, `w2: NO`, `w3: NO`.
 
-## 10. Idempotentność (1 min)
+## 10. Idempotency (1 min)
 
 ```bash
 bash seed/bootstrap.sh
 ```
 
-Oczekiwane: te same pięć katalogów, kapsuła nienaruszona, komunikat
-*„worktree exists (skipping)"*, i **brak podwójnych znaczników**:
+Expected: the same five directories, capsule untouched, the message
+*"worktree exists (skipping)"*, and **no duplicate markers**:
 
 ```bash
-cd ~/hackathon-rozwiazanie
-git log --format=%s w1 | grep -c "seed: w1-kawalek marker"   # oczekiwane: 1
+cd ~/hackathon-solution
+git log --format=%s w1 | grep -c "seed: w1-piece marker"   # expected: 1
 ```
 
 ---
 
-## Wynik
+## Result
 
-| # | Test | Zaliczone, gdy |
+| # | Test | Passes when |
 |---|---|---|
-| 1 | `bootstrap.sh` kończy 0 | brak `FAIL:` w wyjściu |
-| 2 | 5 katalogów | `ls -d` zwraca 5 |
-| 3 | kontekst agenta w worktree | 5x `2` (AGENTS.md + KAPSULA.md) |
-| 4 | `check.sh` wykonywalny | 5x OK |
-| 5 | faza 0 kończy 1 | 5x exit 1 |
-| 6 | faza 1 kończy 0 | exit 0 |
-| 7 | sekret łapany (obie fazy) | exit 1 |
-| 8 | bramka nie fałszywie prawdziwa | 5x OK |
-| 9 | bramka odblokowuje po zależnościach | `w1: TAK`, `w2: NIE` |
-| 10 | idempotentność | brak duplikatów znaczników |
+| 1 | `bootstrap.sh` exits 0 | no `FAIL:` in the output |
+| 2 | 5 directories | `ls -d` returns 5 |
+| 3 | agent context in the worktree | 5x `2` (AGENTS.md + CAPSULE.md) |
+| 4 | `check.sh` executable | 5x OK |
+| 5 | phase 0 exits 1 | 5x exit 1 |
+| 6 | phase 1 exits 0 | exit 0 |
+| 7 | secret caught (both phases) | exit 1 |
+| 8 | gate not vacuously true | 5x OK |
+| 9 | gate unlocks after dependencies | `w1: YES`, `w2: NO` |
+| 10 | idempotency | no duplicate markers |
 
-**Wszystko zielone = seed działa. Czerwone = nie zaczynacie hackathonu.**
+**All green = the seed works. Red = you do not start the hackathon.**
 
-Sprawdzone end-to-end na czystym `$HOME`: bootstrap → budowa prawdziwego kawałka
-w `w1` → `check.sh` zielone → merge `w1` na `main` → `w3`/`w4` nadal czekają na
-`w2` → po merge `w2` odblokowane, `w5` nadal czeka na `w3`,`w4`.
+Checked end-to-end on a clean `$HOME`: bootstrap → build a real piece
+in `w1` → `check.sh` green → merge `w1` to `main` → `w3`/`w4` still wait for
+`w2` → after merging `w2` they unlock, `w5` still waits for `w3`,`w4`.
 
 ---
 
-## Jeśli coś jest czerwone
+## If something is red
 
-| Objaw | Naprawa |
+| Symptom | Fix |
 |---|---|
-| brak `AGENTS.md` w worktree | branch powstał przed commitem kontekstu — usuń katalog i odpal bootstrap ponownie |
-| bramka mówi `ZLE` na starcie | brak znacznika startowego na branchu — usuń katalog i odpal bootstrap ponownie |
-| `fatal: a branch named 'w3' already exists` | stara wersja seeda — zaktualizuj |
-| katalog istnieje, ale nie jest worktree | `git -C ~/hackathon-rozwiazanie worktree prune`, potem bootstrap |
-| `check.sh` w fazie 0 kończy 0 | `grep PHASE ~/w1-kawalek/check.sh` — musi być `PHASE=0` |
+| no `AGENTS.md` in the worktree | the branch was created before the context commit - delete the directory and run bootstrap again |
+| the gate says `WRONG` at the start | no start marker on the branch - delete the directory and run bootstrap again |
+| `fatal: a branch named 'w3' already exists` | old version of the seed - update it |
+| the directory exists but is not a worktree | `git -C ~/hackathon-solution worktree prune`, then bootstrap |
+| `check.sh` in phase 0 exits 0 | `grep PHASE ~/w1-piece/check.sh` - it must be `PHASE=0` |
 
 ---
 
-## Czego ten test NIE sprawdza
+## What this test does NOT check
 
-- **Nie sprawdza, że umiecie napisać dobry test.** To robicie w sobotę.
-- **Nie sprawdza, że kapsuła jest wypełniona.** Ona jest pustym szablonem —
-  system-1 wypełnia ją w sobotę po wyborze.
-- **Nie sprawdza uprawnień do remote'a.** Do tego `git push origin main --dry-run`
-  po dodaniu remote'a.
-- **Nie sprawdza języka ani frameworka.** `check.sh` jest neutralny.
+- **It does not check that you can write a good test.** You do that on Saturday.
+- **It does not check that the capsule is filled in.** It is an empty template -
+  system-1 fills it in on Saturday after the choice.
+- **It does not check permissions for the remote.** For that use `git push origin main --dry-run`
+  after adding the remote.
+- **It does not check the language or framework.** `check.sh` is neutral.

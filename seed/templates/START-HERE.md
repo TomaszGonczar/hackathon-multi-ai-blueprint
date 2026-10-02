@@ -1,96 +1,96 @@
-# START-HERE — pierwsze 30 minut soboty
+# START-HERE - the first 30 minutes of Saturday
 
-**Czas:** 08:50. Temat pada o 09:00. Nie czytaj niczego innego przed 09:00.
+**Time:** 08:50. The topic drops at 09:00. Do not read anything else before 09:00.
 
 ---
 
-## 0. Jeśli bootstrap nie był odpalony wczoraj (5 min)
+## 0. If bootstrap was not run yesterday (5 min)
 
 ```bash
 cd <blueprint-repo>
 bash seed/bootstrap.sh
 ```
 
-Pięć katalogów w `~/`, `AGENTS.md` i `KAPSULA.md` w roocie repo rozwiązania.
-Idempotentny — drugie odpalenie nie niszczy.
+Five directories in `~/`, `AGENTS.md` and `CAPSULE.md` in the root of the solution repo.
+Idempotent - a second run does not destroy anything.
 
-Jeśli nie wiesz, gdzie jest blueprint: sklonuj
-`https://github.com/TomaszGonczar/hackathon-multi-ai-blueprint` (domyślny branch,
-bez żadnych przełączeń) i odpal `bash seed/bootstrap.sh`.
+If you do not know where the blueprint is: clone
+`https://github.com/TomaszGonczar/hackathon-multi-ai-blueprint` (default branch,
+no switching) and run `bash seed/bootstrap.sh`.
 
-## 1. Twój katalog (2 min)
+## 1. Your directory (2 min)
 
 ```bash
-cd ~/w1-kawalek    # zamień na swój numer
+cd ~/w1-piece    # replace with your number
 ls
 cat check.sh
 ```
 
-**Twój katalog to twój worktree. `check.sh` leży w jego roocie.**
-Nie ma podkatalogu `w1/` — to jest cały katalog.
+**Your directory is your worktree. `check.sh` is in its root.**
+There is no `w1/` subdirectory - the directory is the whole thing.
 
-## 2. Zanim temat padnie (10 min)
+## 2. Before the topic drops (10 min)
 
-Wypełnij **fazę 0** swojego `check.sh`:
-
-```bash
-$EDITOR ~/w1-kawalek/check.sh
-```
-
-- zmień `PHASE=0` na `PHASE=1`
-- wypełnij sekcje 1–3 (budowanie, testy, czy test coś łapie)
-- `bash ~/w1-kawalek/check.sh` musi wyjść 0
-
-**To jest twoja praca, dopóki temat nie padnie.** Nie piszesz kodu rozwiązania,
-bo jeszcze nie wiesz, co budujesz. Pusty `check.sh` z `PHASE=0` kończy 1 — to
-jest cel, nie błąd.
-
-Jeśli nie wisz, co wpisać w sekcji 3 — napisz test, który sprawdza najmniejszą
-rzecz, którą twój kawałek musi robić. Zepsuj ją i zobacz, czy test łapie.
-
-## 3. Temat pada (09:00)
-
-System-1 bierze temat i odpala research. **Ty nie czekasz** — kończysz `check.sh`.
-
-## 4. Kapsuła gotowa (~09:58)
+Fill in **phase 0** of your `check.sh`:
 
 ```bash
-cd <repo-rozwiazania>      # tam, gdzie leży KAPSULA.md
-cat KAPSULA.md
+$EDITOR ~/w1-piece/check.sh
 ```
 
-Sprawdź **swoją** linię w sekcji 5: czy wiesz, co robisz i na co czekasz?
-Jeśli nie — to jest jedyny moment, żeby to powiedzieć.
+- change `PHASE=0` to `PHASE=1`
+- fill in sections 1-3 (build, tests, does the test catch anything)
+- `bash ~/w1-piece/check.sh` must exit 0
+
+**This is your job until the topic drops.** You are not writing solution code,
+because you do not know yet what you are building. An empty `check.sh` with `PHASE=0` exits 1 - that
+is the goal, not a bug.
+
+If you do not know what to put in section 3 - write a test that checks the smallest
+thing your piece must do. Break it and see whether the test catches it.
+
+## 3. The topic drops (09:00)
+
+System-1 takes the topic and starts research. **You do not wait** - you finish `check.sh`.
+
+## 4. Capsule ready (~09:58)
+
+```bash
+cd <solution-repo>      # where CAPSULE.md lives
+cat CAPSULE.md
+```
+
+Check **your** line in section 5: do you know what you are doing and what you are waiting for?
+If not - this is the only moment to say so.
 
 ## 5. Start (10:00)
 
 ```bash
-cd ~/w1-kawalek
-omp          # albo claude, codex — cokolwiek, w czym pracujesz
+cd ~/w1-piece
+omp          # or claude, codex - whatever you work in
 ```
 
-Pierwsze zdanie do agenta:
+The first sentence to the agent:
 
-> **Przeczytaj `KAPSULA.md`. Potem uruchom `./check.sh`. Potem zacznij.**
+> **Read `CAPSULE.md`. Then run `./check.sh`. Then start.**
 
-Potem: kod → `./check.sh` → review → merge. Non-stop, aż do freeze.
-
----
-
-## Trzy rzeczy, które musisz wiedzieć
-
-1. **`check.sh` zielony = wjeżdżasz na `main`.** Sam. Czekasz tylko na swoje
-   zależności z kolumny „Czeka na" w kapsule.
-2. **Konflikt w pliku interfejsu → nie ruszaj.** Zapisz, wróć do pracy, raport
-   na sync.
-3. **Kapsuła może być zła.** Jeśli myślisz *„moment, to nie jest to, o co
-   chodzi"* — mówisz natychmiast, nie na sync. To jest najważniejszy głos w
-   systemie i nikt inny go nie wyda.
+Then: code → `./check.sh` → review → merge. Non-stop, until freeze.
 
 ---
 
-## Nie czytasz
+## Three things you must know
 
-Niczego, czego nie wskazuje `AGENTS.md` ani kapsuła. Reguły masz w `AGENTS.md` §4.
-Dokumenty z repo blueprintu (`1-RESEARCH.md`, `2-BUILD.md`, `3-CHEATSHEET.md`) nie są
-częścią twojej pracy.
+1. **`check.sh` green = you land on `main`.** On your own. You wait only for your
+   dependencies from the "Waits for" column in the capsule.
+2. **Conflict in an interface file → do not touch it.** Write it down, go back to work, report
+   at sync.
+3. **The capsule can be wrong.** If you think *"wait, this is not what it is
+   about"* - you say so immediately, not at sync. It is the most important voice in
+   the system and nobody else will give it.
+
+---
+
+## What you do not read
+
+Anything that `AGENTS.md` or the capsule does not point to. You have the rules in `AGENTS.md` §4.
+The documents from the blueprint repo (`1-RESEARCH.md`, `2-BUILD.md`, `3-CHEATSHEET.md`) are not
+part of your work.

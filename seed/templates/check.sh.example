@@ -1,64 +1,64 @@
 #!/usr/bin/env bash
 #
-# check.sh — exit 0 = kawalek gotowy = mozna jechac na main.
+# check.sh - exit 0 = piece ready = OK to go to main.
 #
-# Zasada: test zanim kod. Ten plik istnieje ZANIM napiszesz pierwsza linie kodu.
+# Rule: test before code. This file exists BEFORE you write the first line of code.
 #
-# FAZA 0: dopoki nie wypelnisz sekcji ponizej, skrypt konczy 1.
-#   To chroni przed "zielonym testem, ktory nic nie sprawdza" i jednoczesnie
-#   pozwala istniec testowi, zanim jeszcze wiesz, co budujesz.
+# PHASE 0: until you fill in the sections below, the script exits 1.
+#   This protects against a "green test that checks nothing" and at the same time
+#   lets a test exist before you even know what you are building.
 #
-# Po wypelnieniu: kod -> check.sh -> review -> merge. Zawsze w tej kolejnosci.
+# After filling in: code -> check.sh -> review -> merge. Always in that order.
 
 set -euo pipefail
 
 cd "$(dirname "$0")"
 
-# === 4. BRAK SEKRETOW ==========================================================
-# To dziala ZAWSZE, w obu fazach. Sekret w fazie 0 to nadal sekret.
-# Dziala przy pustym staging area (git diff --cached nie zawodzi na pustym).
+# === 4. NO SECRETS =============================================================
+# This ALWAYS runs, in both phases. A secret in phase 0 is still a secret.
+# Works with an empty staging area (git diff --cached does not fail on an empty one).
 
 if git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
   if git diff --cached | grep -nEi '(api[_-]?key|password|secret|token)[[:space:]]*='; then
-    echo "FAIL: sekret w staged diff"
+    echo "FAIL: secret in staged diff"
     exit 1
   fi
 fi
 
 # === FILL THIS IN ==============================================================
-# Zmien PHASE=0 na PHASE=1, gdy wiesz, co robi ten kawalek i wypelniles
-# sekcje 1-3. Do tego czasu check.sh konczy 1 i nie startujesz kodu.
+# Change PHASE=0 to PHASE=1 once you know what this piece does and have filled in
+# sections 1-3. Until then check.sh exits 1 and you do not start coding.
 
 PHASE=0
 
 if [ "$PHASE" = "0" ]; then
-  echo "FAIL: check.sh jest w fazie 0 — sekcje 1-3 nie wypelnione"
-  echo "      Otworz ~/<twoj-kawalek>/check.sh, zmien PHASE=0 na PHASE=1,"
-  echo "      wypelnij sekcje 1-3, odpal check.sh ponownie."
+  echo "FAIL: check.sh is in phase 0 - sections 1-3 not filled in"
+  echo "      Open ~/<your-piece>/check.sh, change PHASE=0 to PHASE=1,"
+  echo "      fill in sections 1-3, run check.sh again."
   exit 1
 fi
 
-# === 1. CZY SIE BUDUJE ==========================================================
-# Przyklad: python -m compileall -q src/ || exit 1
-# Dostosuj do jezyka, w ktorym pracujesz.
+# === 1. DOES IT BUILD ===========================================================
+# Example: python -m compileall -q src/ || exit 1
+# Adapt to the language you work in.
 
-echo "== 1. buduje sie =="
+echo "== 1. builds =="
 
-# === 2. TESTY ===================================================================
-# Przyklad: pytest tests/ -q || exit 1
+# === 2. TESTS ===================================================================
+# Example: pytest tests/ -q || exit 1
 
-echo "== 2. testy =="
+echo "== 2. tests =="
 
-# === 3. CZY TEST COS LAPPIE =====================================================
-# Najwazniejszy punkt. Test, ktory zawsze przechodzi, nie jest testem.
-# Zepsuj kawalek i sprawdz, ze ten punkt to lapie. Jesli nie — test jest zepsuty.
+# === 3. DOES THE TEST CATCH ANYTHING ============================================
+# The most important point. A test that always passes is not a test.
+# Break the piece and check that this point catches it. If not - the test is broken.
 #
-# Przyklad:
-#   python -m demo.replay tests/fixtures/atak.log | grep -q "ALERT" || {
-#     echo "FAIL: test nie wykryl ataku z fixture"
+# Example:
+#   python -m demo.replay tests/fixtures/attack.log | grep -q "ALERT" || {
+#     echo "FAIL: test did not detect the attack from the fixture"
 #     exit 1
 #   }
 
-echo "== 3. czy test cos lappie =="
+echo "== 3. does the test catch anything =="
 
 echo OK
