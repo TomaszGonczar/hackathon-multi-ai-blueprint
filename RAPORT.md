@@ -62,22 +62,35 @@ kosztem niż usuwa. Pełna lista z racjonowaniem: `T3-UPROSZCZENIA.md`.
 bash seed/bootstrap.sh            # jeden raz, tworzy repo + 5 worktree
 ```
 
-Potem 8 testów z `seed/VERIFY.md`. **Sprawdzone na czystym środowisku** (nowy
-`$HOME`), wszystkie zielone:
+Potem 10 testów z `seed/VERIFY.md`. **Sprawdzone end-to-end na czystym
+środowisku** (nowy `$HOME`, klon z GitHuba), wszystkie zielone:
 
 | # | Test | Wynik |
 |---|---|---|
-| 1 | bootstrap kończy 0 | exit 0, 0.8 s |
+| 1 | bootstrap kończy 0 | exit 0 |
 | 2 | pięć katalogów | 5 |
-| 3 | `check.sh` wykonywalny | 5× OK |
-| 4 | faza 0 kończy 1 | 5× exit 1 |
-| 5 | faza 1 kończy 0 | exit 0 |
-| 6 | sekret łapany (w obu fazach) | exit 1 + `FAIL: sekret` |
-| 7 | idempotentność (2. run) | brak `fatal`/`FAIL`, 5 worktree |
-| 8 | kontekst w roocie repo | `AGENTS.md`, `KAPSULA.md`, `STAN: PRZYGOTOWANIE` |
+| 3 | **kontekst agenta w każdym worktree** | 5× `AGENTS.md` + `KAPSULA.md` |
+| 4 | `check.sh` wykonywalny | 5× OK |
+| 5 | faza 0 kończy 1 | 5× exit 1 |
+| 6 | faza 1 kończy 0 | exit 0 |
+| 7 | sekret łapany (w obu fazach) | exit 1 |
+| 8 | **bramka kolejności nie fałszywie prawdziwa** | 5× OK |
+| 9 | bramka odblokowuje po zależnościach | `w1: TAK`, `w2/w3: NIE` |
+| 10 | idempotentność | brak duplikatów znaczników |
 
-Test 6 wykrył błąd w mojej pierwszej wersji — bramka fazy przerywała przed
-sprawdzeniem sekretów. Naprawione, retest zielony.
+Pełny cykl życia: bootstrap → budowa prawdziwego kawałka w `w1` → `check.sh`
+zielone → merge `w1` na `main` → `w3`/`w4` nadal czekają na `w2` → po merge
+`w2` odblokowane → `w5` nadal czeka na `w3`,`w4`.
+
+**Trzy błędy wykryte testem, nie lekturą:**
+1. Test 7 w pierwszej wersji — bramka fazy przerywała przed sprawdzeniem
+   sekretów. Naprawione.
+2. **Worktree nie miał `AGENTS.md` ani `KAPSULA.md`** — kontekst był commitowany
+   po utworzeniu worktree, więc agent nie wczytałby ani reguł, ani kapsuły.
+   Naprawione: commit kontekstu przed worktree.
+3. **Bramka `CZEKA NA` była zawsze prawdziwa na starcie** — każdy branch był
+   przodkiem `main`, więc kawałek z zależnościami mógł wjechać pierwszy.
+   Naprawione: znacznik startowy na każdym branchu.
 
 **Ręczny czas:** poniżej minuty na całą procedurę. Pięć katalogów z zielonym
 `check.sh` gotowych.

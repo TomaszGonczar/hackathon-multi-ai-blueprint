@@ -17,6 +17,8 @@
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 TPL="$SCRIPT_DIR/templates"
 
+GIT_ID=(-c user.name="hackathon" -c user.email="hackathon@local")
+
 # --- configuration ----------------------------------------------------------
 
 REPO_DIR="${1:-$HOME/hackathon-rozwiazanie}"
@@ -47,33 +49,34 @@ if ! git rev-parse -q --verify HEAD >/dev/null; then
   git checkout -q -b main 2>/dev/null || true
   echo "# repo rozwiązania" > README.md
   git add README.md
-  git -c user.name="hackathon" -c user.email="hackathon@local" commit -qm "init"
+  git "${GIT_ID[@]}" commit -qm "init"
 fi
 
 # Make sure we are on main; every piece merges here.
 git checkout -q main 2>/dev/null || git checkout -q -b main 2>/dev/null || true
 
-# --- copy agent context to repo root ----------------------------------------
-# AGENTS.md and KAPSULA.md are loaded from the repo root by the coding agent,
-# not from the blueprint repo.
-
-
-
+# --- agent context, committed BEFORE the worktrees ---------------------------
+# Each worktree is a separate checkout of its own branch. A file that is
+# committed to main AFTER the worktrees were created is NOT visible inside
+# them. The agent works with the worktree as cwd, so if AGENTS.md and
+# KAPSULA.md are not on the branch, it reads neither its rules nor the capsule
+# — i.e. the whole "capsule is the only wire" design silently fails.
+# Therefore: commit them to main first, then branch the worktrees off it.
 
 echo "== copying agent context to repo root =="
 for f in AGENTS.md KAPSULA.md; do
   [ -f "$TPL/$f" ] || { echo "FAIL: template missing: seed/templates/$f"; exit 1; }
-  if [ -f "$REPO_DIR/$f" ]; then
-    # Never overwrite a capsule that the team has already filled in.
-    if ! git -C "$REPO_DIR" diff --quiet -- "$f" 2>/dev/null; then
-      echo "NOTE: $f already exists and was modified — keeping yours"
-    else
-      cp "$TPL/$f" "$REPO_DIR/$f"
-    fi
+  if [ -f "$REPO_DIR/$f" ] && ! git diff --quiet -- "$f" 2>/dev/null; then
+    # Never overwrite a capsule the team has already filled in.
+    echo "NOTE: $f already exists and was modified — keeping yours"
   else
     cp "$TPL/$f" "$REPO_DIR/$f"
   fi
 done
+
+git add AGENTS.md KAPSULA.md 2>/dev/null
+git "${GIT_ID[@]}" commit -q -m "seed: agent context (AGENTS.md + KAPSULA.md)" 2>/dev/null \
+  || echo "== agent context unchanged =="
 
 # --- worktrees ---------------------------------------------------------------
 # One worktree per person. The worktree root IS the piece directory, so
@@ -96,7 +99,7 @@ for i in "${!PIECES[@]}"; do
     echo "== worktree: ~/$name (existing branch $branch) =="
     git worktree add -q "$target" "$branch"
   else
-    echo "== worktree: ~/$name (new branch $branch) =="
+    echo "== worktree: ~/$name (new branch $branch, from main) =="
     git worktree add -q -b "$branch" "$target"
   fi
 
@@ -108,14 +111,19 @@ for i in "${!PIECES[@]}"; do
     cp "$TPL/check.sh.example" "$target/check.sh"
     chmod +x "$target/check.sh"
   fi
+
+  # Marker commit — REQUIRED for the merge-order gate to mean anything.
+  # Without it every branch tip is an ancestor of main (they all point at the
+  # commit main descends from), so `git merge-base --is-ancestor origin/wN
+  # origin/main` reports every piece as "already merged" and a piece with
+  # dependencies would merge immediately, out of order.
+  # Guarded by the commit message, so re-running (even after a real merge)
+  # never adds a second marker.
+  if ! git -C "$target" log --format=%s 2>/dev/null | grep -qx "seed: $name marker"; then
+    git -C "$target" add -A 2>/dev/null
+    git -C "$target" "${GIT_ID[@]}" commit -q --allow-empty -m "seed: $name marker"
+  fi
 done
-
-# --- commit the scaffolding ---------------------------------------------------
-
-git add -A
-git -c user.name="hackathon" -c user.email="hackathon@local" \
-  commit -q -m "seed: agent context + 5 worktrees" 2>/dev/null \
-  || echo "== nothing new to commit =="
 
 # --- verification checklist ---------------------------------------------------
 
@@ -129,17 +137,23 @@ for name in "${PIECES[@]}"; do
   echo "   ls ~/$name"
 done
 echo
-echo "2. check.sh is present and runnable in each:"
+echo "2. Agent context is INSIDE each worktree (agent reads it there):"
+for name in "${PIECES[@]}"; do
+  echo "   ls ~/$name/AGENTS.md ~/$name/KAPSULA.md"
+done
+echo
+echo "3. check.sh in each worktree exits 1 in phase 0 (that is correct):"
 echo "   for n in ${PIECES[*]}; do bash ~/\$n/check.sh; echo \"\$n -> \$?\"; done"
 echo
-echo "3. Branches (one per person, merge target is main):"
+echo "4. Merge gate is NOT vacuously true — before any merge it must say NIE:"
+echo "   git -C $REPO_DIR merge-base --is-ancestor w2 main && echo 'ZLE: w2 wyglada na zmergowany' \\"
+echo "     || echo 'OK: w2 jeszcze nie na main'"
+echo
+echo "5. Branches (one per person, merge target is main):"
 echo "   git -C $REPO_DIR worktree list"
 echo
-echo "4. AGENTS.md and KAPSULA.md are at the repo root (agent loads them):"
-echo "   ls $REPO_DIR/AGENTS.md $REPO_DIR/KAPSULA.md"
-echo
-echo "5. Push works (you need write access to the remote):"
-echo "   git -C $REPO_DIR push origin main --dry-run"
+echo "6. Push works (you need write access to the remote):"
+echo "   git -C $REPO_DIR remote add origin <url> && git -C $REPO_DIR push origin main --dry-run"
 echo
 echo "Next: read seed/templates/START-HERE.md — first 30 minutes of Saturday."
 echo
