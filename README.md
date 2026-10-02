@@ -1,78 +1,285 @@
-# Hackathon Multi-AI Workflow Blueprint
+# Dwa systemy, jeden plik między nimi
 
-<p align="center">
-  <a href="https://github.com/TomaszGonczar/hackathon-multi-ai-blueprint/actions/workflows/ci.yml"><img src="https://github.com/TomaszGonczar/hackathon-multi-ai-blueprint/actions/workflows/ci.yml/badge.svg?branch=main" alt="CI"></a>
-  <a href="05_IMPLEMENTATION_CHECKLIST.md"><img src="https://img.shields.io/badge/checklist-77%20binary%20checks-blue.svg" alt="77 Checks"></a>
-  <a href="07_FAILURE_AND_REHEARSAL_PLAN.md"><img src="https://img.shields.io/badge/status-design%20complete-green.svg" alt="Design Complete"></a>
-  <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT"></a>
-</p>
+Hackathon w sobotę. Temat nieznany do godziny zero. Pięć osób, ~20 sesji agentów,
+dwa dni. **System 2 leci non-stop.**
 
-**Core design:** Two machine archetypes carry three roles across local laptops. A research machine freezes an approved Mission Package; each developer builds against it in an isolated local repository under single-writer ownership; a read-only observer monitors deviation from the frozen plan. Humans approve the package and own every merge.
+**To jest cały pomysł. Reszta pliku to jak go wykonać.**
 
-**Status:** design complete, unrehearsed. Mechanisms are classified as `DESIGNED` or `DESIGNED+CHECKED`. No mechanism is marked `ENFORCED` because the October event has not occurred and no rehearsal has run. Artifacts define the observable criteria required to upgrade each status.
+Poprzednia wersja tego repo miała 3 391 linii i dwa systemy, które kosztowały więcej
+niż dawały. Ta ma [pięć plików](#pliki) i zero mechanizmów, które trzeba utrzymywać.
 
-## What this is
+---
 
-An operational multi-AI workflow designed for hackathons with unannounced topics. It coordinates three distinct roles across local machines: single-laptop research, multi-laptop development, and read-only GitHub observation, supported by execution checklists and failure rehearsals.
+## Zakład
 
-## Setup (Local Multi-Laptop)
+Twój kumpel ma **2× Claude Pro i 1× ChatGPT**. Projekt jest zakładem, że **moc
+obliczeniowa i tokeny w najlepszych modelach są do zdobycia i mają być wydane.**
+Większość tego, co normalnie wygląda na rozsądne oszczędzanie, tutaj jest błędem.
 
-- **You bring ready:** One laptop with the research AI system pre-installed and tested.
-- **Each team member:** Clones this repo + development fleet repo to their own laptop on event day.
-- **Network:** All laptops on same Wi-Fi / LAN (no cloud infrastructure required).
+**Jedyne, co jest naprawdę wąskie, to nie tokeny:**
 
-## Architecture Diagram
-
-![Architecture diagram](render/06_ARCHITECTURE.png)
-
-Source of truth: [`06_ARCHITECTURE.mmd`](06_ARCHITECTURE.mmd) (Mermaid, ELK layout; legend
-included; normal flow solid blue, observation dashed grey, failure/escalation dashed red,
-capability selection dotted purple). Rendered with `-w 2400`; the committed raster is 2384×2855 px (the render command in `06_ARCHITECTURE.mmd` reproduces it).
-The embed above is reduced for orientation only; read the diagram at full size:
-[PNG](render/06_ARCHITECTURE.png) · [SVG](render/06_ARCHITECTURE.svg).
-
-## Reading order
-
-- **Reviewer, 15 minutes:** [`08_PORTFOLIO_BRIEF.md`](08_PORTFOLIO_BRIEF.md) → the diagram above → [`03_ARCHITECTURE_BLUEPRINT.md`](03_ARCHITECTURE_BLUEPRINT.md) §0/§8/§9 → [`07_FAILURE_AND_REHEARSAL_PLAN.md`](07_FAILURE_AND_REHEARSAL_PLAN.md) validation ledger.
-- **Team member, 10 minutes:** README → [`05_IMPLEMENTATION_CHECKLIST.md`](05_IMPLEMENTATION_CHECKLIST.md) quick card (§11) → your slice in `05`.
-- **Implementer, full pass:** `03` → `04` → `05` → `07`, with `02` for provenance of each mechanism.
-
-## Documents — two registers, one diagram
-
-**Team register** (imperative, scannable, usable under time pressure):
-
-| File | What it is |
+| Wąskie | Nie wąskie |
 |---|---|
-| [`05_IMPLEMENTATION_CHECKLIST.md`](05_IMPLEMENTATION_CHECKLIST.md) | 77 binary, assignable checks across seven time slices (T-7, T-1, event start, per cycle, freeze, submission, teardown) plus an event-day quick card |
+| **Uwaga** — kto czyta, kto decyduje | tokeny |
+| **Kontekst jednej sesji** — im dłużej, tym gorszej myśli | liczba sesji |
+| **Kolizje** — dwóch pisze w jedno miejsce | czas działania |
+| **Synteza** — jeden lead czyta 10 wyników | research |
 
-**Reviewer register** (narrative, trade-offs, judgment):
+---
 
-| File | What it is |
+## System 1 — research i brainstorm. **Jedna godzina.**
+
+**Jeden laptop. OMP. 60 minut. Nikt nie koduje.**
+
+```
+0:00 ─ 0:35  research: 5 sesji równolegle, każda zapisuje do swojego pliku
+0:35 ─ 0:48  brainstorm: 3 sesje, 3 różne wejścia → 3 propozycje
+0:48 ─ 0:58  ZESPÓŁ WYBIERA opcję na głos → system 1 wpisuje do kapsuły
+0:58 ─ 1:00  brief czytany na głos
+              ▼
+          KAPSULA.md
+```
+
+Godzina zamiast dwóch. Pięć sesji zamiast sześciu–dziesięciu. Konsekwencja jest
+prosta i warto ją znać: **zrozumienie tematu jest słabsze.** Jeśli temat okaże się
+trudniejszy niż myśleliście, zobaczycie to przy godzinie 3, nie przy 1,5. Dlatego
+sekcja 4 kapsuły („czego nie wiemy") jest ważniejsza niż była — i wypełnia ją
+system 1, nie wy.
+
+Reszta zespołu w tej godzinie **nie czeka** — robi swoje `check.sh`, o których jest
+mowa w `2-BUDOWA.md`.
+
+## Kapsuła — jedyny przewód
+
+```markdown
+# KAPSULA.md
+
+## 1. Co budujemy            ← zespół wybrał, system 1 tylko podsunął opcje
+## 2. Dlaczego ta opcja      ← 3 zdania + dlaczego odrzucono pozostałe
+## 3. Co wiemy               ← fakty, każdy z linkiem
+## 4. Czego nie wiemy        ← ryzyka, świadomie zostawione
+## 5. Pięć kawałków          ← kto, co, jaki katalog, czeka na kogo   ← KLUCZ
+## 6. Jak sprawdzamy         ← jedna komenda, exit 0 albo nie
+```
+
+Sekcja 5 ma teraz kolumnę **„Czeka na"** i to nie jest kosmetyka — **to kolejność
+mergów, maszynowo czytelna.** Bez niej maszyna nie wie, co może wjechać na `main`
+wcześniej niż inne, i zatrzymuje się na pytaniu do człowieka. Patrz
+[`2-BUDOWA.md`](2-BUDOWA.md).
+
+### Dlaczego kapsuła, a nie rozmowa
+
+System 1 i system 2 dzieli jedno okno czasu i jedną brakującą rzecz: **wiedzę**.
+Agent z systemu 1 nie zapyta agenta z systemu 2, a człowiek nie przekaże researchu
+ustami o 2:00 w nocy.
+
+Dlatego jedyna rzecz, która **musi** przetrwać, to plik. I dlatego — patrz niżej —
+nie potrzebujecie pamięci.
+
+## Dwa dni = brak pamięci
+
+System żyje 48 godzin. **Dlatego nie projektujemy pamięci.**
+
+Wypada: architektura notatek, kompakcji, wznawiania sesji, pamięć agenta,
+checkpointy, „co przeżywa między dniami". Nic z tego nie ma sensu, gdy jutro
+zaczynamy od nowa.
+
+Konsekwencja jest wygodna: **każda sesja startuje z czystym kontekstem i to jest OK.**
+Sesja, która pamięta trzy godziny rozmowy, myśli gorzej niż nowa. Nowa czyta
+kapsułę i ma wszystko.
+
+---
+
+## System 2 — budowa, non-stop
+
+**Pięć osób, pięć laptopów, pięć sesji OMP. Opcjonalnie kolejne do review.**
+
+**Mierzyna merguje sama.** Każdy agent, po zielonym `check.sh`, próbuje wjechać na
+`main`. Jeśli jego zależności jeszcze nie są na `main` — **czeka i wraca do pracy.**
+Nie pyta. Nie blokuje zespołu.
+
+```
+KAPSULA.md → 5 osób × 1–2 sesje → worktree na osobę → zielony test → MACHINA MERGUJE
+                                                                            │
+                                            czeka na inne moduły ◄──────────┤
+                                                                            ▼
+                                                          człowiek: sync co 2 h i freeze
+```
+
+### Jedno zdanie, które trzeba powiedzieć na głos przed startem
+
+> **Maszyna może zmergować wszystko. Nie może powiedzieć, co wysyłacie.**
+
+Dlatego człowiek wchodzi **dwa razy**: na sync (co 2 h) i na freeze. Wszystko
+pomiędzy jest maszynowe. Jeśli to jest ustalone, to jest kompromis — człowiek
+odpowiada za wynik, maszyna wykonuje. Slajd IBM-a z 1979, który cytuje Simon Willison,
+nie zmienia się przez to, że merge jest automatyczny: *„A computer can never be held
+accountable."* Pytanie brzmi tylko, **gdzie** człowiek wchodzi — i odpowiedź brzmi:
+tam, gdzie decyduje się, co jest ważne, a nie gdzie przesuwa się kod.
+
+---
+
+## Handoff do nowej sesji
+
+[`HANDOFF.md`](HANDOFF.md) — kapsuła dla osobnej sesji OMP (model `atria`).
+Zawiera stan rzeczy, sześć zadań i twarde ograniczenia. Czytana jako pierwsza.
+
+Piątek 02.10 wieczorem, hackathon sobota 03.10. Wynik ma być **jutro rano**.
+
+---
+
+## Cztery reguły
+
+### 1. Jedna kapsuła, jeden wybór
+
+System 1 podsunie opcje. **Zespół wybiera na głos.** System 1 wpisuje wybór do
+kapsuły i milczy. System 2 buduje wybrane i **nie wraca po radę**.
+
+### 2. Jeden katalog na osobę, kolejność mergów w kapsule
+
+Pięć `git worktree`, zero wspólnych plików — kolizji nie ma, bo nie ma powierzchni.
+Kolejność wjeżdżania na `main` opisuje tabela w sekcji 5 kapsuły, kolumna „Czeka na".
+
+### 3. Jeden test na kawałek
+
+Jedna komenda. Exit 0 = gotowe. **Bez niej agent nie wie, kiedy skończył.**
+To jedyna rzecz, bez której reszta nie działa — i jest darmowa.
+
+### 4. Maszyna merguje, człowiek wchodzi dwa razy
+
+Zielony test → review w świeżym kontekście → merge. Czeka na zależności, nie pyta.
+Konflikt mechaniczny rozwiązuje sam. **Konflikt w pliku interfejsu → zapisuje,
+nie rusza, wraca do pracy, raport na sync.**
+
+---
+
+## Opcjonalne — i pierwsze do odcięcia
+
+| Mechanizm | Koszt | Co daje | Jeśli zabraknie czasu |
+|---|---|---|---|
+| **Drugi agent na review** | ~2 min | świeży kontekst, nie widzi rozumowania autora | tnij pierwszy |
+| **Trzeci agent „złośliwy"** | ~2 min | łapie to, czego dwaj inni nie zauważą | tnij pierwszy |
+| **Mechaniczne rozwiązywanie konfliktów** | 0 | maszyna sama | zostaw, bo bez tego pętla staje |
+
+Ostatnie jest jedynym z trzech, którego **nie** tnęlibyśmy. Reszta systemu 2
+zakłada, że maszyna wjeżdża bez pytania.
+
+---
+
+## Stan steruje workflow — [`AGENTS.md`](AGENTS.md)
+
+Cały system ma **jeden plik, który agent czyta zawsze**, i w nim jest **jeden blok,
+który się zmienia**:
+
+```text
+STAN:        BUDOWA
+OD KIEDY:    2026-10-03 13:00
+NASTĘPNY:    SYNC o 15:00  ·  FREEZE 2026-10-04 12:00
+UWAGI:       w4 czeka na w1 — w1 nie wjechał od 11:20
+```
+
+Reszta pliku — reguły — jest z tego **wyprowadzona**, nie osobna. Dziewięć stanów
+(`PRZYGOTOWANIE` → `RESEARCH` → `BRAINSTORM` → `WYBOR` → `BUDOWA` → `SYNC` →
+`FREEZE` → `WYSYLKA` → `PO`) i tabela „co z tego wynika". Zmiana jednej linii
+przesuwa cały system do innego zachowania.
+
+To jest odpowiedź na pytanie *„co się dzieje w 3:00 w nocy, kiedy nikt nie
+patrzy"* — odpowiedzią nie jest instrukcja, tylko **odczyt stanu**. Sesja startuje,
+czyta `STAN: BUDOWA`, i wie co robić.
+
+### Dlaczego to musi być jeden plik, a nie osobna instrukcja na każdą fazę
+
+Instrukcji jest w repo dziewięć stanów × pięć kawałków = czterdzieści pięć
+wariantów. **Nikt tego nie przeczyta i nie zaktualizuje.** Jeden wskaźnik stanu
+plus tabela daje dokładnie tę samą moc w 190 liniach.
+
+### Reguła, która utrzymuje ten plik małym
+
+Z dokumentacji Claude Code, dosłownie:
+
+> *„Bloated CLAUDE.md files cause Claude to ignore your actual instructions!"*
+> *„For each line, ask: Would removing this cause Claude to make mistakes? If not,
+> cut it."*
+
+Stąd §8 w `AGENTS.md`: **linia, która nie zapobiega pomyłce, idzie do kosza.**
+I druga, ważniejsza: **linia, którą się ignoruje mimo jej obecności, też idzie do
+kosza** — przenosisz ją tam, gdzie jest egzekwowana mechanicznie.
+
+Jedna linia w całym pliku jest wyróżniona przez `IMPORTANT:`. Reguła z dokumentacji:
+jeśli agent pomija instrukcję, wyróżnij **właśnie tę jedną**, nie wszystkie. U nas
+to *„nie kończ, dopóki `check.sh` nie wyjdzie 0"* — bo to jedyna, na której
+trzyma się cała pętla.
+
+### Kto edytuje stan
+
+Do T+1:00 — **system-1**. Potem — **człowiek, na sync i na freeze**.
+**Agenci budujący nigdy.** Jeden plik, jeden autor w danej chwili — tak samo jak
+pięć katalogów.
+
+### Gdzie ten plik leży w sobotę
+
+W **katalogu głównym repo rozwiązania**, nie tutaj. Kopiujesz `AGENTS.md` i
+`KAPSULA.md` do swojego repo, bo to stamtąd agent je wczytuje.
+
+---
+
+## Pliki — dwie grupy, dwie publiczności
+
+**Dla agentów.** Wczytuje się automatycznie na początku każdej sesji. Agent nie czyta
+niczego innego, dopóki ten plik nie powie, że ma.
+
+| Plik | Co | Linie |
+|---|---|---|
+| [`AGENTS.md`](AGENTS.md) | **kontekst i sytuacja.** Stan systemu + reguły, które wynikają z tego stanu | 196 |
+| [`KAPSULA.md`](KAPSULA.md) | Szablon handoffu. W sobotę nadpisujecie go odpowiedziami. | 114 |
+
+**Dla ludzi.** Czytane własnymi słowy, kiedy trzeba zrozumieć *dlaczego*.
+
+| Plik | Co | Linie |
+|---|---|---|
+| [`1-RESEARCH.md`](1-RESEARCH.md) | System 1: rozbicie tematu, 5 sesji w 60 minut, brainstorm, wybór | 177 |
+| [`2-BUDOWA.md`](2-BUDOWA.md) | System 2: pięć sesji, test, maszynowy merge, czekanie na moduły | 275 |
+| [`3-PIESC.md`](3-PIESC.md) | Zegar. Piątek 30 min, sobota godzina po godzinie. | 150 |
+
+![Dwa systemy](diagram-prosty.png)
+
+**Uwaga o objętości:** 811 → **1 197 linii**. Materiał rośnie, bo doszły dwa
+elementy, których wcześniej nie było: maszynowa kolejność mergów (bez niej pętla
+staje w nocy) i `AGENTS.md` (plik wczytywany na starcie każdej sesji).
+**Żaden z tych dwóch nie jest opcjonalny.** Wyrzucone przy tych zmianach:
+walidacja merge'a przez człowieka, drabinka eskalacji, osobne stany „czeka / pytaj",
+dziewięć ról dla pięciu osób.
+
+Linia, która się nie zmienia przez cały ten refaktor: **osiem reguł z `AGENTS.md`
+§4 to jest cały system operacyjny.** Wszystko inne jest uzasadnieniem, dlaczego są
+takie a nie inne.
+
+Pliki `00_`–`09_`, `render/` i `HISTORY.md` to **poprzedni pakiet** — ten sam, który
+był w `main`. Zostawiam je, bo [`archiwum/AUDYT.md`](archiwum/AUDYT.md) się do nich
+odwołuje i bo są twoją pracą, nie moją. Nie czyta się ich w sobotę.
+
+[`archiwum/`](archiwum/README.md) — wcześniejsze wersje tego materiału i audyt
+oryginalnego pakietu. **Nieoperacyjne.**
+
+---
+
+## Czego tu nie ma i dlaczego
+
+| Nie ma | Dlaczego |
 |---|---|
-| [`03_ARCHITECTURE_BLUEPRINT.md`](03_ARCHITECTURE_BLUEPRINT.md) | Source-of-truth architecture: discovery record, three systems, authority and security boundaries, cut order, decisions D1–D8 with reversal conditions, discarded alternatives |
-| [`04_DEVELOPMENT_PLAN.md`](04_DEVELOPMENT_PLAN.md) | A–Z plan: phases P0–P9, ownership, observable acceptance per task, failure matrix, acceptance matrix |
-| [`02_REUSE_LEDGER.md`](02_REUSE_LEDGER.md) | Every candidate from prior work classified REUSE / ADAPT / REFERENCE ONLY / DROP against a ten-field record, with what was actually proved |
-| [`07_FAILURE_AND_REHEARSAL_PLAN.md`](07_FAILURE_AND_REHEARSAL_PLAN.md) | Validation ledger, three-state control table, premortem, catch ledger, decision log with missing-data entries, rehearsal drills |
-| [`08_PORTFOLIO_BRIEF.md`](08_PORTFOLIO_BRIEF.md) | Fifteen-minute case study: problem → decisions → evidence → limitations |
+| **Harnessa merge** | merge to reguła w pętli agenta, nie osobny program. Żadnej orkiestracji. |
+| checklisty | 5 osób w nocy nie odhacza 77 punktów. Ma trzy komendy i zegar. |
+| rejestru ryzyk, premortemów | na co dzień zapis, na potem opowieść. |
+| statusów walidacji | zastąpiła je jedna zasada: **twierdzenie bez komendy nie istnieje.** |
+| zarządzania pamięcią | 2 dni. Nie ma czego zarządzać. |
+| budowania czegokolwiek obok OMP | coding agent (OMP / Claude Code / Codex) jest runtime. My piszemy pliki i klikamy sync. |
+| osobnych „osób" i „ról" | pięć osób i dwa nazwiska. Reszta to funkcja przy okazji. |
 
-**Shared records** (both readers):
+---
 
-- [`HISTORY.md`](HISTORY.md) — the commit sequence, so the provenance lines in the artifacts resolve in a copy without git history.
-- [`09_REVIEW_RECORD.md`](09_REVIEW_RECORD.md) — every review finding with its location and disposition, and the mechanical census results: the evidence behind the claim that review happened and defects were fixed.
-- [`00_DELIVERABLE_CONTRACT.md`](00_DELIVERABLE_CONTRACT.md) — the frozen interfaces this package was authored against: system invariants, house style, the diagram node and edge IDs every artifact cites, the file-ownership map, and the two recorded diagram fallbacks. Read it to see why the artifacts agree with each other and with the diagram.
-- [`01_DISCOVERY_CLOSURE.md`](01_DISCOVERY_CLOSURE.md) — every question the architecture branches on, its answer or its open status, the answer's source and date, and what each answer changed in the other artifacts.
+## Jedno zdanie
 
-Every artifact cross-references the diagram by node ID (`MP`, `L1`–`L5`, `OB`, `MERGE`, …) and edge
-ID (`E1`–`E30`), and a mechanical census checks the agreement once per revision — after that sweep, further drift has no automatic check, so the identifiers are what make a disagreement findable rather than impossible (`07_FAILURE_AND_REHEARSAL_PLAN.md` §4 CATCH-6).
-
-## Attribution and privacy
-
-I designed the architecture and operational workflow. The five-person engineering team owns the competition application.
-
-No participant names, private repository contents, credentials, sponsor materials, or topic-specific details appear in this repository. All examples are synthetic.
-
-This package documents operational design and failure rehearsals. It makes no claims regarding competition outcomes, solution correctness, or runtime stability under live competition conditions.
-
-## License
-
-[MIT](LICENSE) © 2026 Tomasz Gonczar
+> **System 1 w godzinę bada i podsunie trzy opcje, wybieracie na głos, system 1
+> zapisuje wybór w jednym pliku, pięć maszyn buduje z niego w swoich katalogach
+> i sama wpuszcza na `main` czekając na moduły, a wy wchodzicie dwa razy — na sync
+> i na freeze.**
