@@ -105,8 +105,8 @@ przeczytać wszystko naraz i nie musisz nic pamiętać między sesjami.
 
 ### T1 · Czytaj z krytykiem, nie z notatkami
 
-Przeczytaj `README.md`, `AGENTS.md`, `KAPSULA.md`, `1-RESEARCH.md`, `2-BUDOWA.md`,
-`3-PIESC.md`. Zanotuj każde miejsce, w którym **pliki mówią różne rzeczy albo
+Przeczytaj `README.md`, `AGENTS.md`, `KAPSULA.md`, `1-RESEARCH.md`, `2-BUILD.md`,
+`3-CHEATSHEET.md`. Zanotuj każde miejsce, w którym **pliki mówią różne rzeczy albo
 przesłaniają odpowiedzialność.**
 
 Kryterium przejścia: lista zdań typu *„plik X mówi A, plik Y mówi B"*, z numerami
@@ -154,7 +154,7 @@ Wymagania:
 - każdy krok ma właściciela i warunek przejścia, który da się zobaczyć
 - **jest plan awaryjny** na wariant „nie zdążyliśmy zasadzić seedów”
 - mówi wprost, co się dzieje, jeśli temat okaże się inny niż zakładano
-- **nie powtarza `3-PIESC.md`** — to zegar dla człowieka, `DEVPLAN.md` to kolejność
+- **nie powtarza `3-CHEATSHEET.md`** — to zegar dla człowieka, `DEVPLAN.md` to kolejność
   pracy z przypisaniami
 
 Kryterium przejścia: czytelnik, który nie był przy żadnej rozmowie, wykonuje to
@@ -179,7 +179,7 @@ seed/
 ├── bootstrap.sh         ← idempotentny: można go odpalić 2× bez szkód
 ├── repo-layout.md       ← struktura katalogów, nazwy branchy, worktree
 ├── templates/
-│   ├── AGENTS.md        ← z STAN: BUDOWA, gotowy do wklejenia
+│   ├── AGENTS.md        ← z STAN: BUILD, gotowy do wklejenia
 │   ├── KAPSULA.md       ← szablon z nagłówkiem i 6 blokami
 │   ├── check.sh.example ← działający wzorzec, exit 0/1
 │   └── START-HERE.md    ← co czytać, w jakiej kolejności, pierwsze 30 min

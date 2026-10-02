@@ -72,7 +72,7 @@ zmodyfikowanego `check.sh`.
 2. `KAPSULA.md` — gdy system-1 ją wypełni (~09:58)
 3. `AGENTS.md` §4 — reguły, które obowiązują zawsze
 
-Pliki `1-RESEARCH.md`, `2-BUDOWA.md`, `3-PIESC.md` są w blueprint repo. Pierwsze
+Pliki `1-RESEARCH.md`, `2-BUILD.md`, `3-CHEATSHEET.md` są w blueprint repo. Pierwsze
 dwa czyta się **gdy chce się zrozumieć dlaczego**, trzeci to zegar dla człowieka.
 Nie są potrzebne do startu.
 

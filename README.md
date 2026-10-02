@@ -47,7 +47,7 @@ sekcja 4 kapsuły („czego nie wiemy") jest ważniejsza niż była — i wypeł
 system 1, nie wy.
 
 Reszta zespołu w tej godzinie **nie czeka** — robi swoje `check.sh`, o których jest
-mowa w `2-BUDOWA.md`.
+mowa w `2-BUILD.md`.
 
 ## Kapsuła — jedyny przewód
 
@@ -65,7 +65,7 @@ mowa w `2-BUDOWA.md`.
 Sekcja 5 ma teraz kolumnę **„Czeka na"** i to nie jest kosmetyka — **to kolejność
 mergów, maszynowo czytelna.** Bez niej maszyna nie wie, co może wjechać na `main`
 wcześniej niż inne, i zatrzymuje się na pytaniu do człowieka. Patrz
-[`2-BUDOWA.md`](2-BUDOWA.md).
+[`2-BUILD.md`](2-BUILD.md).
 
 ### Dlaczego kapsuła, a nie rozmowa
 
@@ -172,20 +172,20 @@ Cały system ma **jeden plik, który agent czyta zawsze**, i w nim jest **jeden 
 który się zmienia**:
 
 ```text
-STAN:        BUDOWA
+STAN:        BUILD
 OD KIEDY:    2026-10-03 13:00
 NASTĘPNY:    SYNC o 15:00  ·  FREEZE 2026-10-04 12:00
 UWAGI:       w4 czeka na w1 — w1 nie wjechał od 11:20
 ```
 
 Reszta pliku — reguły — jest z tego **wyprowadzona**, nie osobna. Dziewięć stanów
-(`PRZYGOTOWANIE` → `RESEARCH` → `BRAINSTORM` → `WYBOR` → `BUDOWA` → `SYNC` →
+(`PRZYGOTOWANIE` → `RESEARCH` → `BRAINSTORM` → `WYBOR` → `BUILD` → `SYNC` →
 `FREEZE` → `WYSYLKA` → `PO`) i tabela „co z tego wynika". Zmiana jednej linii
 przesuwa cały system do innego zachowania.
 
 To jest odpowiedź na pytanie *„co się dzieje w 3:00 w nocy, kiedy nikt nie
 patrzy"* — odpowiedzią nie jest instrukcja, tylko **odczyt stanu**. Sesja startuje,
-czyta `STAN: BUDOWA`, i wie co robić.
+czyta `STAN: BUILD`, i wie co robić.
 
 ### Dlaczego to musi być jeden plik, a nie osobna instrukcja na każdą fazę
 
@@ -238,8 +238,8 @@ niczego innego, dopóki ten plik nie powie, że ma.
 | Plik | Co | Linie |
 |---|---|---|
 | [`1-RESEARCH.md`](1-RESEARCH.md) | System 1: rozbicie tematu, 5 sesji w 60 minut, brainstorm, wybór | 177 |
-| [`2-BUDOWA.md`](2-BUDOWA.md) | System 2: pięć sesji, test, maszynowy merge, czekanie na moduły | 275 |
-| [`3-PIESC.md`](3-PIESC.md) | Zegar. Piątek 30 min, sobota godzina po godzinie. | 150 |
+| [`2-BUILD.md`](2-BUILD.md) | System 2: pięć sesji, test, maszynowy merge, czekanie na moduły | 275 |
+| [`3-CHEATSHEET.md`](3-CHEATSHEET.md) | Zegar. Piątek 30 min, sobota godzina po godzinie. | 150 |
 
 ![Dwa systemy](diagram-prosty.png)
 

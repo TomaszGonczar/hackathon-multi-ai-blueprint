@@ -16,7 +16,7 @@ Tabela, do której linkuje, wylicza pięć. Sam link prowadził do sekcji, któr
 kontradyktuje. → **„pięć plików"**.
 
 **README.md:253 — „siedem reguł z AGENTS.md §4"**
-§4 ma osiem (ostatnia to *„kapsuła może być zła"*, którą `3-PIESC.md:128-129`
+§4 ma osiem (ostatnia to *„kapsuła może być zła"*, którą `3-CHEATSHEET.md:128-129`
 wymienia jako jedną z pięciu rzeczy do zapamiętania — więc nie do wyrzucenia).
 → **„osiem reguł"**.
 
@@ -33,14 +33,14 @@ Codex) jest runtime"**. To nie jest kosmetyka — błędne zdanie o runtime spra
 
 ## Naprawione (bo powodowały błąd o 3 w nocy)
 
-**`2-BUDOWA.md:83` — wzorzec sekretu**
+**`2-BUILD.md:83` — wzorzec sekretu**
 `git diff --cached | grep ... && { exit 1; }` pod `set -euo pipefail`. Działa
 (sprawdzone), ale **przy pustym staging area** `grep` zwraca 1 i `set -e`
 zachowuje się nieterminowanie — różnica, której nikt nie zgadnie.
 → `if git diff --cached | grep ...; then echo FAIL; exit 1; fi`.
 
 **`KAPSULA.md:76` — w4 czeka na 1, a reszta korpusu mówi „1 i 2"**
-`KAPSULA.md:65` (komentarz nad tabelą) i `2-BUDOWA.md:129` tłumaczą przykład
+`KAPSULA.md:65` (komentarz nad tabelą) i `2-BUILD.md:129` tłumaczą przykład
 *w4 czeka na 1 i 2*, podczas gdy szablon mówi *czeka na 1*. Kolumna jest
 czytana **maszynowo**. → **1, 2**.
 
@@ -52,7 +52,7 @@ siebie w `&&`. → pięć osobnych komend z `cd` do worktree.
 Worktree root to `~/w3-modele`, więc `./w3/check.sh` to katalog, którego nie ma.
 → **`./check.sh`**.
 
-**`2-BUDOWA.md:22, 27, 66, 68` — to samo}
+**`2-BUILD.md:22, 27, 66, 68` — to samo}
 `cd ~/w3-modele` + `./w3/check.sh` + `cd "$(dirname "$0")/.."` = trzy różnych
 katalogów. → worktree root, `./check.sh`, `cd "$(dirname "$0")"`.
 
@@ -72,7 +72,7 @@ instrukcji ze strony, 8 (zła kapsuła) — jedyny głos, który system nie wyda
 Bez niej pętla stoi w nocy i pyta człowieka. Wprost wymieniona w mandacie jako
 nienaruszalna.
 
-**Reguła o interfejsach (`2-BUDOWA.md:154-160`). Nie ruszona.**
+**Reguła o interfejsach (`2-BUILD.md:154-160`). Nie ruszona.**
 Bez niej maszyna rozwiąże konflikt zmieniający kontrakt — **po cichu**.
 
 **`check.sh`. Nie ruszony.**
@@ -84,9 +84,9 @@ dosłownie, nie znaczy, że jest zła — znaczy, że brakowało jej działania.
 Agent nie wie, w jakiej jest sytuacji. Poza tym HANDOFF §5 zabrania zmian §4
 bez powodu z T3 — powody z T3 dotyczyły **błędów w README**, nie w §4.
 
-**`3-PIESC.md` — piątkowe `gh api` + `jq`. Zostawione.**
+**`3-CHEATSHEET.md` — piątkowe `gh api` + `jq`. Zostawione.**
 `gh` i `jq` to dwie zależności, których nie ma, a `git ls-remote HEAD` sprawdza
-czytelność, nie prawo zapisu. To realna dziura (D08). **Ale `3-PIESC.md` jest
+czytelność, nie prawo zapisu. To realna dziura (D08). **Ale `3-CHEATSHEET.md` jest
 zegarem dla człowieka** i HANDOFF §5 mówi: nie dodawaj zależności, nie ruszaj
 bez powodu z T3. Naprawa tego wymagałaby edycji zegara — a on ma być drukowany
 i nie powinien się zmieniać w piątek wieczorem. **Zamiast tego: alternatywa
@@ -117,8 +117,8 @@ Mówi zespołowi, co ciąć pod presją czasu. Bez niej obetną to, czego nie wo
 - **Nie usuwałem niczego, co zapobiega konkretnej pomyłce.** Mandat wyraźnie
   mówił, czego nie ruszać. Nic z tej listy nie zostało dotknięte.
 - **Nie edytowałem `AGENTS.md §4`.** Wszystkie cztery fakty, które naprawiłem,
-  były w `README.md` — jedyny wyjątek to `2-BUDOWA.md` (wzorzec `check.sh` i
+  były w `README.md` — jedyny wyjątek to `2-BUILD.md` (wzorzec `check.sh` i
   ścieżki), gdzie naprawa była mechaniczna i nie zmienia reguł.
-- **Nie naprawiłem `3-PIESC.md:13-16`** (D08). Patrz wyżej — zagadka między
+- **Nie naprawiłem `3-CHEATSHEET.md:13-16`** (D08). Patrz wyżej — zagadka między
   mandatem a dziurą, rozwiązana przez DUCHANIE dziury do `DEVPLAN.md`/`VERIFY.md`
   zamiast edycji zegara.

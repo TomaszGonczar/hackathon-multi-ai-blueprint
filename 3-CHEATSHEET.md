@@ -1,7 +1,7 @@
-# 3 — Pięść na sobotę
+# 3 — CHEAT SHEET
 
 Do wydrukowania. Reszta jest w [`1-RESEARCH.md`](1-RESEARCH.md) i
-[`2-BUDOWA.md`](2-BUDOWA.md).
+[`2-BUILD.md`](2-BUILD.md).
 
 ---
 
