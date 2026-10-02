@@ -231,19 +231,19 @@ niczego innego, dopóki ten plik nie powie, że ma.
 | Plik | Co | Linie |
 |---|---|---|
 | [`AGENTS.md`](AGENTS.md) | **kontekst i sytuacja.** Stan systemu + reguły, które wynikają z tego stanu | 196 |
-| [`KAPSULA.md`](KAPSULA.md) | Szablon handoffu. W sobotę nadpisujecie go odpowiedziami. | 114 |
+| [`KAPSULA.md`](KAPSULA.md) | Szablon handoffu. W sobotę nadpisujecie go odpowiedziami. | 119 |
 
 **Dla ludzi.** Czytane własnymi słowy, kiedy trzeba zrozumieć *dlaczego*.
 
 | Plik | Co | Linie |
 |---|---|---|
 | [`1-RESEARCH.md`](1-RESEARCH.md) | System 1: rozbicie tematu, 5 sesji w 60 minut, brainstorm, wybór | 177 |
-| [`2-BUILD.md`](2-BUILD.md) | System 2: pięć sesji, test, maszynowy merge, czekanie na moduły | 275 |
+| [`2-BUILD.md`](2-BUILD.md) | System 2: pięć sesji, test, maszynowy merge, czekanie na moduły | 277 |
 | [`3-CHEATSHEET.md`](3-CHEATSHEET.md) | Zegar. Piątek 30 min, sobota godzina po godzinie. | 150 |
 
 ![Dwa systemy](diagram-prosty.png)
 
-**Uwaga o objętości:** 811 → **1 197 linii**. Materiał rośnie, bo doszły dwa
+**Uwaga o objętości:** 811 → **1 204 linii**. Materiał rośnie, bo doszły dwa
 elementy, których wcześniej nie było: maszynowa kolejność mergów (bez niej pętla
 staje w nocy) i `AGENTS.md` (plik wczytywany na starcie każdej sesji).
 **Żaden z tych dwóch nie jest opcjonalny.** Wyrzucone przy tych zmianach:
