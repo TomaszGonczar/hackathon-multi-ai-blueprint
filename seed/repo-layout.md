@@ -71,6 +71,12 @@ w5 ──merge──► main   (dopiero gdy w1, w2, w3 i w4 są na main)
 Merge jest wykonywany **przez agenta, w jego pętli** — nie ma bota, nie ma crona,
 nie ma hooka. Reguła jest w `AGENTS.md` §4.4.
 
+**Każdy branch ma na starcie znacznik** (`seed: wN-kawalek marker`). Bez niego
+wszystkie branche byłyby przodkami `main` (startują z tego samego commita), więc
+bramka `git merge-base --is-ancestor` mówiłaby, że kawałek **już jest**
+zmergowany — i kawałek z zależnościami wjechałby na `main` pierwszy, łamiąc
+kolejność. Znacznik to naprawia: dopóki kawałek nie wjedzie, bramka mówi `NIE`.
+
 ### Jak sprawdzić, czy twoje zależności są już na main
 
 ```bash
