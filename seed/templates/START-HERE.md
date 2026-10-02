@@ -91,5 +91,6 @@ Potem: kod → `./check.sh` → review → merge. Non-stop, aż do freeze.
 
 ## Nie czytasz
 
-`archiwum/`, `00_`–`09_`, `render/` — to poprzedni pakiet. `3-PIESC.md` — to
-zegar dla człowieka. Reguły masz w `AGENTS.md` §4, one wygrywają.
+Niczego, czego nie wskazuje `AGENTS.md` ani kapsuła. Reguły masz w `AGENTS.md` §4.
+Dokumenty z repo blueprintu (`1-RESEARCH.md`, `2-BUDOWA.md`, `3-PIESC.md`) nie są
+częścią twojej pracy.

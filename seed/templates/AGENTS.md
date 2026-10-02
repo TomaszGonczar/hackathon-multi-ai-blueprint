@@ -49,7 +49,7 @@ nie szukaj osobnej instrukcji „co robić w stanie X", jest w tabeli niżej.
 | `WYSYLKA` | 90 min przed deadlinem | wszystko zamrożone, wysyłamy |
 | `PO` | po wysyłce | nic nie ruszasz |
 
-Zanim STAN zmieni się na `BUDOWA`, kapsuła musi być wypełniona — patrz §4 reguła 2.
+Zanim `STAN` zmieni się na `BUDOWA`, kapsuła musi być wypełniona.
 Jeśli STAN mówi inaczej niż kapsuła, **wygrywa to, co jest napisane w kapsule**, i to
 jest moment, żeby powiedzieć o tym na głos (§4 reguła 8).
 
@@ -143,30 +143,52 @@ co uzasadnia przerwanie pracy.
 - **Nie pytasz systemu 1.** Jest w kapsule. Czego brakuje — dopisz do sekcji 4 kapsuły
   i jedź dalej. Jedyne pytanie, które jest warte, to: *„moment, to nie jest to, o co
   chodzi"*.
-- **Nie budujesz niczego poza swoim katalogiem.** Żadnego bota merge, żadnego crona, żadnego
-  harnessa, żadnych hooków, żadnej konfiguracji. Merge jest regułą w twojej pętli.
+- **Nie budujesz własnych mechanizmów.** Żadnego bota merge, żadnego crona, żadnego
+  harnessa, żadnych hooków, żadnej konfiguracji. Merge jest regułą w twojej pętli,
+  a twoim runtime jest ten coding agent, w którym pracujesz.
 - **Nie pamiętasz niczego między dniami.** Dwa dni. Nowa sesja czyta kapsułę.
   Jeśli coś musi przetrwać, to pisze się do pliku.
-- **Nie czytasz `archiwum/`, `00_`–`09_`, `render/`.** To poprzedni pakiet, nie
-  instrukcja.
+- **Nie czytasz niczego, czego nie wskazuje ten plik ani kapsuła.** Jeśli coś
+  wygląda jak dokument z innej wersji tego projektu — nie jest twoje.
 - **Nie zmieniasz kolejności mergów.** Proponujesz na sync. Zmienia człowiek.
 - **Nie dodajesz zależności, których nie ma w kapsule.** Nowa zależność = zmiana
   sekcji 5 = decyzja człowieka.
 
 ---
 
-## 7. Pliki, których nie masz czytać domyślnie
+## 6. Jeśli utknąłeś
+
+Nie blokujesz zespołu. Kolejność jest zawsze taka:
+
+1. **Zapisz fakty** — co, kiedy, jaka komenda, jaki wynik
+2. **Jedna linia w kanale** — `w3: czekam na w1 i w2, check.sh zielony`
+3. **Wróć do pracy nad tym, co możesz** — popraw, przetestuj, dokończ
+4. **Pytasz tylko wtedy**, gdy: konflikt w pliku interfejsu, albo kapsuła jest zła
+
+Czekający kawałek to normalny stan, nie awaria. Kawałek, który czeka i nie robi nic,
+jest awarią — bo wtedy zespół traci ludzkie godziny.
+
+---
+
+## 7. Co czytasz, a czego nie
+
+| Plik | Kiedy czytasz |
+|---|---|
+| `AGENTS.md` (ten) | **zawsze — wczytuje się sam** |
+| `KAPSULA.md` | **zawsze, pierwsza rzecz** |
+| `research/*.md` | gdy kapsuła mówi „nie udało się ustalić" albo pytasz „dlaczego" |
+
+**Poza tym nic.** Dokumenty opisujące, *dlaczego* system wygląda tak, a nie inaczej
+(`1-RESEARCH.md`, `2-BUDOWA.md`, `3-PIESC.md`) żyją w **repo blueprintu**, nie tutaj.
+Są na GitHubie, gdyby ktoś pytał — ale nie są częścią twojej pracy.
 
 | Plik | Kiedy czytasz |
 |---|---|
 | `KAPSULA.md` | **zawsze, pierwsza rzecz** |
 | `research/*.md` | gdy kapsuła mówi „nie udało się ustalić" albo pytasz „dlaczego"
-| `2-BUDOWA.md` | gdy chcesz zobaczyć **dlaczego** reguła z §4 jest taka, a nie inna
-| `1-RESEARCH.md` | gdy temat jest niezrozumiały |
-| `3-PIESC.md` | nigdy — to zegar dla człowieka, nie dla ciebie
 
-Reguły operacyjne są w **§4 tego pliku**. Jeśli `2-BUDOWA.md` mówi coś inaczej,
-**wygrywa §4** — to on jest w twoim kontekście.
+Reguły operacyjne są w **§4 tego pliku**. Kapsuła mówi **co** budujecie, §4 mówi
+**jak** — jeśli się zderzą, kapsuła wygrywa w sprawie wyboru, §4 w sprawie procesu.
 
 ---
 
