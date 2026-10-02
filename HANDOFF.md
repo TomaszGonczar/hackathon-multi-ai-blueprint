@@ -72,7 +72,8 @@ Wszystko poniżej **jest zweryfikowane** i nie potrzebuje ponownego sprawdzania.
 3. **Nic w oryginale nie zostało wykonane.** 0 `ENFORCED`, 0 prób generalnych.
 
 Te trzy są **udokumentowane i świadomie zostawione**, bo dotyczą plików, których
-nie ruszamy. Nie są twoim zadaniem.
+nie ruszamy. Nie są twoim zadaniem. *(Pliki oryginału przeniesione później do
+`archiwum/old-package/`.)*
 
 ### Decyzje już podjęte — nie wracaj do nich
 
@@ -223,7 +224,7 @@ jest zrobione — znaczy, że piszesz o procesie zamiast o wyniku.
 - **Nie commituj niczego na `main`.** Cała praca na `refactor/seed` — nowy branch
   od `refactor/dwa-systemy`. *(Historyczne: po zatwierdzonym merge'u wszystko jest
   na `main`, branche usunięte.)*
-- **Nie usuwaj `archiwum/`, `00_`–`09_`, `render/`, `LICENSE`, `HISTORY.md`.**
+- **Nie usuwaj `archiwum/` (w tym `archiwum/old-package/`) ani `LICENSE`.**
   To cudza praca i dowód. `AGENTS.md` mówi, że ich się nie czyta, i to jest w porządku.
 - **Nie wklejaj żadnych sekretów.** W tym repo nie ma kluczy. Klucz do Atria żyje
   w `~/.omp/agent/models.yml` i w keychainie macOS — **nigdy go nie kopiuj** i nie

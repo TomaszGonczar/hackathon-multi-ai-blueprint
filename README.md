@@ -254,12 +254,13 @@ Linia, która się nie zmienia przez cały ten refaktor: **osiem reguł z `AGENT
 §4 to jest cały system operacyjny.** Wszystko inne jest uzasadnieniem, dlaczego są
 takie a nie inne.
 
-Pliki `00_`–`09_`, `render/` i `HISTORY.md` to **poprzedni pakiet** — ten sam, który
-był w `main`. Zostawiam je, bo [`archiwum/AUDYT.md`](archiwum/AUDYT.md) się do nich
-odwołuje i bo są twoją pracą, nie moją. Nie czyta się ich w sobotę.
+`00_`–`09_`, `06_ARCHITECTURE.mmd`, `render/` i `HISTORY.md` leżą w
+[`archiwum/old-package/`](archiwum/old-package/README.md) — **poprzedni pakiet**, ten
+sam, który był w `main`. Nie usunięte (dowód), ale zdjęte z katalogu głównego, żeby
+nie mieszły się z tym, co operacyjne. Nie czyta się ich w sobotę.
 
-[`archiwum/`](archiwum/README.md) — wcześniejsze wersje tego materiału i audyt
-oryginalnego pakietu. **Nieoperacyjne.**
+[`archiwum/`](archiwum/README.md) — wcześniejsze wersje tego materiału, poprzedni
+pakiet i audyt oryginału. **Nieoperacyjne.**
 
 ---
 

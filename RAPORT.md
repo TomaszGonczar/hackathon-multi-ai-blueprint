@@ -54,7 +54,7 @@ kosztem niż usuwa. Pełna lista z racjonowaniem: `T3-UPROSZCZENIA.md`.
   nie o seedzie. Zobacz §5.
 - **`AGENTS.md §4` nietknięty.** Osiem reguł, każda zapobiega konkretnej
   pomyłce. Usuwasz jedną, tracisz noc.
-- **Sprzeczność udokumentowana w oryginale** (`01_DISCOVERY_CLOSURE.md` vs
+- **Sprzeczność udokumentowana w oryginale** (`archiwum/old-package/01_DISCOVERY_CLOSURE.md` vs
   `03 §8.2`) — HANDOFF §2 mówi wprost: **nie naprawiaj, nie twoje**.
 
 ## 4. Seed: jak sprawdzić, że działa
@@ -113,8 +113,12 @@ zielone → merge `w1` na `main` → `w3`/`w4` nadal czekają na `w2` → po mer
 
 ---
 
-**Pliki dodane:** `seed/` (7 plików), `DEVPLAN.md`, `T1-SPRZECZNOSCI.md`,
-`T2-DZIESIEC-RZECZY.md`, `T3-UPROSZCZENIA.md`, `RAPORT.md`.
-**Pliki zmienione:** `README.md`, `KAPSULA.md`, `2-BUILD.md` (21 insertów,
-14 deletów — same poprawki faktów i ścieżek).
-**`main` nietknięty.** Sekrety nigdzie nie figurują.
+**Pliki dodane:** `seed/` (8 plików), `DEVPLAN.md`, `T1-SPRZECZNOSCI.md`,
+`T2-DZIESIEC-RZECZY.md`, `T3-UPROSZCZENIA.md`, `RAPORT.md`,
+`archiwum/old-package/README.md` — indeks przeniesionego pakietu, żeby po zmianie
+ścieżek zostało jedno miejsce mówiące, czym te pliki są i dlaczego nie są instrukcją.
+**Pliki zmienione:** `README.md`, `KAPSULA.md`, `2-BUILD.md` (poprawki faktów),
+`AGENTS.md`, `HANDOFF.md`, `archiwum/README.md`, `.github/workflows/ci.yml` (ścieżki
+po przeniesieniu pakietu).
+**`main` zmieniony wyłącznie zatwierdzonymi merge'ami** (PR #1–#7). Sekrety nigdzie
+nie figurują.

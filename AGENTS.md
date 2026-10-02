@@ -137,8 +137,7 @@ co uzasadnia przerwanie pracy.
   harnessa, żadnych hooków, żadnej konfiguracji. Merge jest regułą w twojej pętli.
 - **Nie pamiętasz niczego między dniami.** Dwa dni. Nowa sesja czyta kapsułę.
   Jeśli coś musi przetrwać, to pisze się do pliku.
-- **Nie czytasz `archiwum/`, `00_`–`09_`, `render/`.** To poprzedni pakiet, nie
-  instrukcja.
+- **Nie czytasz `archiwum/`.** To poprzedni pakiet i stary materiał, nie instrukcja.
 - **Nie zmieniasz kolejności mergów.** Proponujesz na sync. Zmienia człowiek.
 - **Nie dodajesz zależności, których nie ma w kapsule.** Nowa zależność = zmiana
   sekcji 5 = decyzja człowieka.
