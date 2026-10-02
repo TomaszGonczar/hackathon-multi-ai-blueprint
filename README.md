@@ -119,6 +119,15 @@ tam, gdzie decyduje się, co jest ważne, a nie gdzie przesuwa się kod.
 
 ---
 
+## Handoff do nowej sesji
+
+[`HANDOFF.md`](HANDOFF.md) — kapsuła dla osobnej sesji OMP (model `atria`).
+Zawiera stan rzeczy, sześć zadań i twarde ograniczenia. Czytana jako pierwsza.
+
+Piątek 02.10 wieczorem, hackathon sobota 03.10. Wynik ma być **jutro rano**.
+
+---
+
 ## Cztery reguły
 
 ### 1. Jedna kapsuła, jeden wybór
