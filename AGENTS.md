@@ -28,7 +28,7 @@ modelach. Możesz być wyczerpujący. Nie oszczędzaj.
 ## 2. Gdzie jesteś
 
 ```text
-STAN:        BUDOWA
+STAN:        BUILD
 OD KIEDY:    2026-10-03 13:00
 NASTĘPNY:    SYNC o 15:00  ·  FREEZE 2026-10-04 12:00
 UWAGI:       w4 czeka na w1 — w1 nie wjechał od 11:20, sprawdź czy żyje
@@ -44,7 +44,7 @@ nie szukaj osobnej instrukcji „co robić w stanie X", jest w tabeli niżej.
 | `RESEARCH` | T+0:00 → 0:35 | temat świeży, kapsuły jeszcze nie ma, pytasz system 1 |
 | `BRAINSTORM` | T+0:35 → 0:48 | trzy propozycje, wybór nie zapadł |
 | `WYBOR` | T+0:48 → 0:58 | zespół decyduje, nie zaczynaj |
-| `BUDOWA` | T+1:00 → freeze | pełna pętla: kod → test → review → merge |
+| `BUILD` | T+1:00 → freeze | pełna pętla: kod → test → review → merge |
 | `SYNC` | co 2 h, 5 min | zespół na nogach, kolejność mergów może się zmienić |
 | `FREEZE` | 4 h przed deadlinem | tylko defekty blokujące demo |
 | `WYSYLKA` | 90 min przed deadlinem | wszystko zamrożone, wysyłamy |
@@ -68,7 +68,7 @@ Stan to jeden plik, jeden autor w danej chwili. Tak jak z katalogami.
 | `RESEARCH` | pomagasz, pytasz system 1 | nie piszesz kodu rozwiązania |
 | `BRAINSTORM` | pomagasz, myślisz o implementacji | nie zaczynasz implementacji |
 | `WYBOR` | czekasz | nie zaczynasz, wybór nie zapadł |
-| `BUDOWA` | pełna pętla, non-stop | nie pytasz o nic poza interfejsem |
+| `BUILD` | pełna pętla, non-stop | nie pytasz o nic poza interfejsem |
 | `SYNC` | raportujesz stan, aktualizujesz kolejność | nie tłumaczysz się z wyników |
 | `FREEZE` | zielony test albo `CUT`, nic pośrodku | nie dodajesz funkcji |
 | `WYSYLKA` | weryfikujesz, wysyłasz, zapisujesz potwierdzenie | nie mergujesz niczego nowego |
@@ -165,11 +165,11 @@ jest awarią — bo wtedy zespół traci ludzkie godziny.
 |---|---|
 | `KAPSULA.md` | **zawsze, pierwsza rzecz** |
 | `research/*.md` | gdy kapsuła mówi „nie udało się ustalić" albo pytasz „dlaczego" |
-| `2-BUDOWA.md` | gdy chcesz zobaczyć **dlaczego** reguła z §4 jest taka, a nie inna |
+| `2-BUILD.md` | gdy chcesz zobaczyć **dlaczego** reguła z §4 jest taka, a nie inna |
 | `1-RESEARCH.md` | gdy temat jest niezrozumiały i potrzebujesz głębszego researchu |
-| `3-PIESC.md` | nigdy — to zegar dla człowieka, nie dla ciebie |
+| `3-CHEATSHEET.md` | nigdy — to zegar dla człowieka, nie dla ciebie |
 
-Reguły operacyjne są w **§4 tego pliku**. Jeśli `2-BUDOWA.md` mówi coś inaczej,
+Reguły operacyjne są w **§4 tego pliku**. Jeśli `2-BUILD.md` mówi coś inaczej,
 **wygrywa §4** — to on jest w twoim kontekście.
 
 ---

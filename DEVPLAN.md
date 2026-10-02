@@ -171,7 +171,7 @@ merge na koniec ręcznie. Tracicie noc, ale nie tracicie wyniku.
 **To nie jest awaria. To jest główne ryzyko i ma swoją sekcję w kapsule (§4).**
 
 1. **Ktoś mówi *„moment, to nie jest to, o co chodzi"* → mówisz natychmiast.**
-   Nie na sync, nie po zakończeniu kawałka. `AGENTS.md` §4.8 i `3-PIESC.md:128-129`
+   Nie na sync, nie po zakończeniu kawałka. `AGENTS.md` §4.8 i `3-CHEATSHEET.md:128-129`
    mówią, że to jest najważniejszy głos w systemie i nikt inny go nie wyda.
 
 2. **Kapsuła §4 mówi, czego nie wiemy.** Jeśli brakuje tam tej obawy, dopisz.
@@ -195,7 +195,7 @@ merge na koniec ręcznie. Tracicie noc, ale nie tracicie wyniku.
 
 ## Czego tu nie ma (i dlaczego)
 
-- **Nie powtarza `3-PIESC.md`.** To zegar (kiedy), to kolejność pracy (co, kto,
+- **Nie powtarza `3-CHEATSHEET.md`.** To zegar (kiedy), to kolejność pracy (co, kto,
   warunek przejścia). Nakładają się tylko w FREEZE i wysyłce, bo to są punkty
   styku.
 - **Nie ma roli review-bota.** Review robi agent w świeżym kontekście, na

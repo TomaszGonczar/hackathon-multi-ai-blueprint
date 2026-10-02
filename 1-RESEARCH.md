@@ -3,7 +3,7 @@
 **Wejście:** temat ogłoszony na kartce.
 **Wyjście:** [`KAPSULA.md`](KAPSULA.md) wypełniony.
 **Kto:** jeden laptop, jeden człowiek, OMP. Reszta zespołu **w tym czasie nie czeka** —
-robi swoje `check.sh` ([`2-BUDOWA.md`](2-BUDOWA.md)).
+robi swoje `check.sh` ([`2-BUILD.md`](2-BUILD.md)).
 **Stop:** zespół wybrał opcję na głos. Potem system 1 milczy do końca.
 
 **Budżet: 60 minut.** Nie dwa godziny.

@@ -1,4 +1,4 @@
-# 2 — System budowy
+# 2 — BUILD
 
 **Wejście:** [`KAPSULA.md`](KAPSULA.md) wypełniony. Nic innego.
 **Wyjście:** rozwiązanie na `main`, przetestowane przez kogoś, kto nic nie budował.

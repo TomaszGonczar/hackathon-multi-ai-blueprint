@@ -29,7 +29,7 @@
 
 ## 3. Co wiemy
 
-<!-- Fakty istotne dla BUDOWY. Każdy z linkiem. 5–15 punktów.
+<!-- Fakty istotne dla fazy BUILD. Każdy z linkiem. 5–15 punktów.
      Przy godzinowym researchu będzie ich mniej i będą mniej pewne — bądźmy tego świadomi. -->
 
 - <!-- fakt --> — źródło: https://adres

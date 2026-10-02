@@ -43,13 +43,13 @@ nie szukaj osobnej instrukcji „co robić w stanie X", jest w tabeli niżej.
 | `RESEARCH` | T+0:00 → 0:35 | temat świeży, kapsuły jeszcze nie ma |
 | `BRAINSTORM` | T+0:35 → 0:48 | trzy propozycje, wybór nie zapadł |
 | `WYBOR` | T+0:48 → 0:58 | zespół decyduje, nie zaczynaj |
-| `BUDOWA` | T+1:00 → freeze | pełna pętla: kod → test → review → merge |
+| `BUILD` | T+1:00 → freeze | pełna pętla: kod → test → review → merge |
 | `SYNC` | co 2 h, 5 min | zespół na nogach, kolejność mergów może się zmienić |
 | `FREEZE` | 4 h przed deadlinem | tylko defekty blokujące demo |
 | `WYSYLKA` | 90 min przed deadlinem | wszystko zamrożone, wysyłamy |
 | `PO` | po wysyłce | nic nie ruszasz |
 
-Zanim `STAN` zmieni się na `BUDOWA`, kapsuła musi być wypełniona.
+Zanim `STAN` zmieni się na `BUILD`, kapsuła musi być wypełniona.
 Jeśli STAN mówi inaczej niż kapsuła, **wygrywa to, co jest napisane w kapsule**, i to
 jest moment, żeby powiedzieć o tym na głos (§4 reguła 8).
 
@@ -71,7 +71,7 @@ Stan to jeden plik, jeden autor w danej chwili. Tak jak z katalogami.
 | `RESEARCH` | **kończysz swój `check.sh`**, nie piszesz kodu | nie zgaduj tematu |
 | `BRAINSTORM` | pomagasz, myślisz o implementacji | nie zaczynasz implementacji |
 | `WYBOR` | czekasz | nie zaczynasz, wybór nie zapadł |
-| `BUDOWA` | pełna pętla: kod → test → review → merge | nie pytasz o nic poza interfejsem |
+| `BUILD` | pełna pętla: kod → test → review → merge | nie pytasz o nic poza interfejsem |
 | `SYNC` | raportujesz stan, aktualizujesz kolejność | nie tłumaczysz się z wyników |
 | `FREEZE` | zielony test albo `CUT`, nic pośrodku | nie dodajesz funkcji |
 | `WYSYLKA` | weryfikujesz, wysyłasz, zapisujesz potwierdzenie | nie mergujesz niczego nowego |
@@ -179,7 +179,7 @@ jest awarią — bo wtedy zespół traci ludzkie godziny.
 | `research/*.md` | gdy kapsuła mówi „nie udało się ustalić" albo pytasz „dlaczego" |
 
 **Poza tym nic.** Dokumenty opisujące, *dlaczego* system wygląda tak, a nie inaczej
-(`1-RESEARCH.md`, `2-BUDOWA.md`, `3-PIESC.md`) żyją w **repo blueprintu**, nie tutaj.
+(`1-RESEARCH.md`, `2-BUILD.md`, `3-CHEATSHEET.md`) żyją w **repo blueprintu**, nie tutaj.
 Są na GitHubie, gdyby ktoś pytał — ale nie są częścią twojej pracy.
 
 | Plik | Kiedy czytasz |
