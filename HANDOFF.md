@@ -1,5 +1,10 @@
 # KAPSULA HANDOFF — nowa sesja OMP
 
+> **STATUS: ZAMKNIĘTE (2026-10-02).** Zadania T1–T6 wykonane; wynik jest na
+> `main` (PR #1–#5). Branche robocze `refactor/dwa-systemy` i `refactor/seed`
+> **usunięte po merge'u**. Ten plik jest odtąd **zapisem zlecenia, nie instrukcją** —
+> komendy w §6 są historyczne. Aktualny stan: `README.md` i `seed/`.
+
 > Ten plik jest pierwszą rzeczą, którą przeczytasz. Zawiera wszystko, czego potrzebujesz,
 > żeby zacząć. Nie pytaj o nic, czego tu nie ma — pytanie o rzecz, której nie opisałem,
 > jest informacją samą w sobie i zapisz ją w §6 raportu.
@@ -43,8 +48,8 @@ to dziury i drożność**, nie kształt.
 Wszystko poniżej **jest zweryfikowane** i nie potrzebuje ponownego sprawdzania.
 
 **Repo:** `https://github.com/TomaszGonczar/hackathon-multi-ai-blueprint`
-**Branch roboczy:** `refactor/dwa-systemy` (push permission: masz)
-**`main` jest nietknięty i ma pozostać nietknięty.**
+**Branch roboczy:** `refactor/dwa-systemy` — *usunięty po merge'u; cała praca jest na `main`.*
+**`main` był nietknięty w trakcie pracy** — zmienił się dopiero przez zatwierdzony merge.
 
 ### Co jest zrobione
 
@@ -216,7 +221,8 @@ jest zrobione — znaczy, że piszesz o procesie zamiast o wyniku.
 ## 5 · Czego nie wolno
 
 - **Nie commituj niczego na `main`.** Cała praca na `refactor/seed` — nowy branch
-  od `refactor/dwa-systemy`.
+  od `refactor/dwa-systemy`. *(Historyczne: po zatwierdzonym merge'u wszystko jest
+  na `main`, branche usunięte.)*
 - **Nie usuwaj `archiwum/`, `00_`–`09_`, `render/`, `LICENSE`, `HISTORY.md`.**
   To cudza praca i dowód. `AGENTS.md` mówi, że ich się nie czyta, i to jest w porządku.
 - **Nie wklejaj żadnych sekretów.** W tym repo nie ma kluczy. Klucz do Atria żyje
@@ -233,8 +239,6 @@ jest zrobione — znaczy, że piszesz o procesie zamiast o wyniku.
 ```bash
 git clone https://github.com/TomaszGonczar/hackathon-multi-ai-blueprint
 cd hackathon-multi-ai-blueprint
-git checkout refactor/dwa-systemy
-git checkout -b refactor/seed
 ```
 
 Potem przeczytaj ten plik od nowa i zacznij od **T1**.

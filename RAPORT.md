@@ -1,7 +1,8 @@
 # RAPORT.md
 
-Hackathon sobota 03.10, wynik o piątek wieczór. Branch `refactor/seed` od
-`refactor/dwa-systemy`. Seed zweryfikowany, zielony.
+Hackathon sobota 03.10, wynik o piątek wieczór. Praca prowadzona na `refactor/seed`
+(od `refactor/dwa-systemy`), **zmergowana do `main`** przez PR #1–#5. Branche
+robocze usunięte. Seed zweryfikowany, zielony.
 
 ---
 

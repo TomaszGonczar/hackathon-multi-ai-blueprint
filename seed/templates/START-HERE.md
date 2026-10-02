@@ -15,8 +15,8 @@ Pięć katalogów w `~/`, `AGENTS.md` i `KAPSULA.md` w roocie repo rozwiązania.
 Idempotentny — drugie odpalenie nie niszczy.
 
 Jeśli nie wiesz, gdzie jest blueprint: sklonuj
-`https://github.com/TomaszGonczar/hackathon-multi-ai-blueprint`, przejdź na
-`refactor/seed`, i odpal `bash seed/bootstrap.sh`.
+`https://github.com/TomaszGonczar/hackathon-multi-ai-blueprint` (domyślny branch,
+bez żadnych przełączeń) i odpal `bash seed/bootstrap.sh`.
 
 ## 1. Twój katalog (2 min)
 
