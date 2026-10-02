@@ -1,0 +1,64 @@
+#!/usr/bin/env bash
+#
+# check.sh — exit 0 = kawalek gotowy = mozna jechac na main.
+#
+# Zasada: test zanim kod. Ten plik istnieje ZANIM napiszesz pierwsza linie kodu.
+#
+# FAZA 0: dopoki nie wypelnisz sekcji ponizej, skrypt konczy 1.
+#   To chroni przed "zielonym testem, ktory nic nie sprawdza" i jednoczesnie
+#   pozwala istniec testowi, zanim jeszcze wiesz, co budujesz.
+#
+# Po wypelnieniu: kod -> check.sh -> review -> merge. Zawsze w tej kolejnosci.
+
+set -euo pipefail
+
+cd "$(dirname "$0")"
+
+# === 4. BRAK SEKRETOW ==========================================================
+# To dziala ZAWSZE, w obu fazach. Sekret w fazie 0 to nadal sekret.
+# Dziala przy pustym staging area (git diff --cached nie zawodzi na pustym).
+
+if git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
+  if git diff --cached | grep -nEi '(api[_-]?key|password|secret|token)[[:space:]]*='; then
+    echo "FAIL: sekret w staged diff"
+    exit 1
+  fi
+fi
+
+# === FILL THIS IN ==============================================================
+# Zmien PHASE=0 na PHASE=1, gdy wiesz, co robi ten kawalek i wypelniles
+# sekcje 1-3. Do tego czasu check.sh konczy 1 i nie startujesz kodu.
+
+PHASE=0
+
+if [ "$PHASE" = "0" ]; then
+  echo "FAIL: check.sh jest w fazie 0 — sekcje 1-3 nie wypelnione"
+  echo "      Otworz ~/<twoj-kawalek>/check.sh, zmien PHASE=0 na PHASE=1,"
+  echo "      wypelnij sekcje 1-3, odpal check.sh ponownie."
+  exit 1
+fi
+
+# === 1. CZY SIE BUDUJE ==========================================================
+# Przyklad: python -m compileall -q src/ || exit 1
+# Dostosuj do jezyka, w ktorym pracujesz.
+
+echo "== 1. buduje sie =="
+
+# === 2. TESTY ===================================================================
+# Przyklad: pytest tests/ -q || exit 1
+
+echo "== 2. testy =="
+
+# === 3. CZY TEST COS LAPPIE =====================================================
+# Najwazniejszy punkt. Test, ktory zawsze przechodzi, nie jest testem.
+# Zepsuj kawalek i sprawdz, ze ten punkt to lapie. Jesli nie — test jest zepsuty.
+#
+# Przyklad:
+#   python -m demo.replay tests/fixtures/atak.log | grep -q "ALERT" || {
+#     echo "FAIL: test nie wykryl ataku z fixture"
+#     exit 1
+#   }
+
+echo "== 3. czy test cos lappie =="
+
+echo OK

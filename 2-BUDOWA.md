@@ -18,13 +18,13 @@ do review.
 ## Start: 20 sekund na osobę
 
 ```bash
-cd ~/w3-modele        # swój katalog, swój worktree
-claude
+cd ~/w3-kawalek     # swój katalog, swój worktree — to jest też twój kawałek
+omp                 # albo: claude, codex — cokolwiek, w czym pracujesz
 ```
 
 Pierwsze zdanie do agenta:
 
-> **Przeczytaj `KAPSULA.md`. Potem uruchom `./w3/check.sh`. Potem zacznij.**
+> **Przeczytaj `KAPSULA.md`. Potem uruchom `./check.sh`. Potem zacznij.**
 
 Kolejność jest ważna: **test przed pierwszą linią kodu.** Agent, który najpierw
 napisze kod i dopiero potem sprawdzi test, zużyje kontekst i pół nocy na
@@ -63,9 +63,9 @@ nie kosmetyka.
 
 ```bash
 #!/usr/bin/env bash
-# ./w3/check.sh — exit 0 = gotowe
+# ./check.sh — exit 0 = gotowe. Leży w roocie twojego worktree.
 set -euo pipefail
-cd "$(dirname "$0")/.."
+cd "$(dirname "$0")"     # check.sh leży w roocie twojego worktree
 
 echo "== 1. kompiluje się =="
 python -m compileall -q src/modele/ || exit 1
@@ -80,7 +80,9 @@ python -m demo.replay tests/fixtures/atak.log | grep -q "ALERT" || {
 }
 
 echo "== 4. brak sekretów =="
-git diff --cached | grep -nEi '(api[_-]?key|password)[[:space:]]*=' && { echo "FAIL: sekret"; exit 1; }
+if git diff --cached | grep -nEi '(api[_-]?key|password)[[:space:]]*='; then
+  echo "FAIL: sekret"; exit 1
+fi
 
 echo OK
 ```

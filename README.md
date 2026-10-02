@@ -6,7 +6,7 @@ dwa dni. **System 2 leci non-stop.**
 **To jest cały pomysł. Reszta pliku to jak go wykonać.**
 
 Poprzednia wersja tego repo miała 3 391 linii i dwa systemy, które kosztowały więcej
-niż dawały. Ta ma [cztery pliki](#pliki) i zero mechanizmów, które trzeba utrzymywać.
+niż dawały. Ta ma [pięć plików](#pliki) i zero mechanizmów, które trzeba utrzymywać.
 
 ---
 
@@ -243,14 +243,14 @@ niczego innego, dopóki ten plik nie powie, że ma.
 
 ![Dwa systemy](diagram-prosty.png)
 
-**Uwaga o objętości:** 811 → **1 188 linii**. Materiał rośnie, bo doszły dwa
+**Uwaga o objętości:** 811 → **1 197 linii**. Materiał rośnie, bo doszły dwa
 elementy, których wcześniej nie było: maszynowa kolejność mergów (bez niej pętla
 staje w nocy) i `AGENTS.md` (plik wczytywany na starcie każdej sesji).
 **Żaden z tych dwóch nie jest opcjonalny.** Wyrzucone przy tych zmianach:
 walidacja merge'a przez człowieka, drabinka eskalacji, osobne stany „czeka / pytaj",
 dziewięć ról dla pięciu osób.
 
-Linia, która się nie zmienia przez cały ten refaktor: **siedem reguł z `AGENTS.md`
+Linia, która się nie zmienia przez cały ten refaktor: **osiem reguł z `AGENTS.md`
 §4 to jest cały system operacyjny.** Wszystko inne jest uzasadnieniem, dlaczego są
 takie a nie inne.
 
@@ -272,7 +272,7 @@ oryginalnego pakietu. **Nieoperacyjne.**
 | rejestru ryzyk, premortemów | na co dzień zapis, na potem opowieść. |
 | statusów walidacji | zastąpiła je jedna zasada: **twierdzenie bez komendy nie istnieje.** |
 | zarządzania pamięcią | 2 dni. Nie ma czego zarządzać. |
-| budowania czegokolwiek obok OMP | OMP jest runtime. My piszemy pliki i klikamy sync. |
+| budowania czegokolwiek obok OMP | coding agent (OMP / Claude Code / Codex) jest runtime. My piszemy pliki i klikamy sync. |
 | osobnych „osób" i „ról" | pięć osób i dwa nazwiska. Reszta to funkcja przy okazji. |
 
 ---

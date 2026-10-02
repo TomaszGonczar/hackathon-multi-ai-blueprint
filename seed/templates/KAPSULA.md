@@ -1,10 +1,3 @@
-<!--
-  KAPSULA.md — jedyny plik przekazywany z systemu 1 do systemu 2.
-  W tym repo jest SZABLONEM. W sobotę nadpisujecie go realnymi odpowiedziami.
-  Wypełnia go system 1 po tym, jak zespół wybierze opcję na głos.
-  Komentarze <!-- --> usuń przy wypełnianiu — zostaje sam dokument.
--->
-
 # KAPSULA
 
 **Temat:** <!-- dosłownie, jak ogłoszono -->
