@@ -1,286 +1,286 @@
-# Dwa systemy, jeden plik między nimi
+# Two systems, one file between them
 
-Hackathon w sobotę. Temat nieznany do godziny zero. Pięć osób, ~20 sesji agentów,
-dwa dni. **System 2 leci non-stop.**
+Hackathon on Saturday. Topic unknown until hour zero. Five people, ~20 agent sessions,
+two days. **System 2 runs non-stop.**
 
-**To jest cały pomysł. Reszta pliku to jak go wykonać.**
+**That is the whole idea. The rest of the file is how to carry it out.**
 
-Poprzednia wersja tego repo miała 3 391 linii i dwa systemy, które kosztowały więcej
-niż dawały. Ta ma [pięć plików](#pliki) i zero mechanizmów, które trzeba utrzymywać.
+The previous version of this repo had 3,391 lines and two systems that cost more
+than they gave. This one has [five files](#files---two-groups-two-audiences) and zero mechanisms you have to maintain.
 
 ---
 
-## Zakład
+## The bet
 
-Twój kumpel ma **2× Claude Pro i 1× ChatGPT**. Projekt jest zakładem, że **moc
-obliczeniowa i tokeny w najlepszych modelach są do zdobycia i mają być wydane.**
-Większość tego, co normalnie wygląda na rozsądne oszczędzanie, tutaj jest błędem.
+Your buddy has **2× Claude Pro and 1× ChatGPT**. The project is a bet that **compute
+and tokens in the best models are obtainable and are meant to be spent.**
+Most of what normally looks like sensible saving is a mistake here.
 
-**Jedyne, co jest naprawdę wąskie, to nie tokeny:**
+**The only things that are truly narrow are not tokens:**
 
-| Wąskie | Nie wąskie |
+| Narrow | Not narrow |
 |---|---|
-| **Uwaga** — kto czyta, kto decyduje | tokeny |
-| **Kontekst jednej sesji** — im dłużej, tym gorszej myśli | liczba sesji |
-| **Kolizje** — dwóch pisze w jedno miejsce | czas działania |
-| **Synteza** — jeden lead czyta 10 wyników | research |
+| **Attention** - who reads, who decides | tokens |
+| **One session's context** - the longer, the worse it thinks | number of sessions |
+| **Collisions** - two people writing to one place | running time |
+| **Synthesis** - one lead reads 10 results | research |
 
 ---
 
-## System 1 — research i brainstorm. **Jedna godzina.**
+## System 1 - research and brainstorm. **One hour.**
 
-**Jeden laptop. OMP. 60 minut. Nikt nie koduje.**
+**One laptop. OMP. 60 minutes. Nobody codes.**
 
 ```
-0:00 ─ 0:35  research: 5 sesji równolegle, każda zapisuje do swojego pliku
-0:35 ─ 0:48  brainstorm: 3 sesje, 3 różne wejścia → 3 propozycje
-0:48 ─ 0:58  ZESPÓŁ WYBIERA opcję na głos → system 1 wpisuje do kapsuły
-0:58 ─ 1:00  brief czytany na głos
+0:00 ─ 0:35  research: 5 sessions in parallel, each writes to its own file
+0:35 ─ 0:48  brainstorm: 3 sessions, 3 different entry points → 3 proposals
+0:48 ─ 0:58  TEAM CHOOSES an option out loud → system 1 writes it into the capsule
+0:58 ─ 1:00  brief read out loud
               ▼
-          KAPSULA.md
+          CAPSULE.md
 ```
 
-Godzina zamiast dwóch. Pięć sesji zamiast sześciu–dziesięciu. Konsekwencja jest
-prosta i warto ją znać: **zrozumienie tematu jest słabsze.** Jeśli temat okaże się
-trudniejszy niż myśleliście, zobaczycie to przy godzinie 3, nie przy 1,5. Dlatego
-sekcja 4 kapsuły („czego nie wiemy") jest ważniejsza niż była — i wypełnia ją
-system 1, nie wy.
+One hour instead of two. Five sessions instead of six to ten. The consequence is
+simple and worth knowing: **understanding of the topic is weaker.** If the topic turns
+out harder than you thought, you will see it at hour 3, not at 1.5. That is why
+section 4 of the capsule ("what we don't know") matters more than it used to - and it is filled in
+by system 1, not by you.
 
-Reszta zespołu w tej godzinie **nie czeka** — robi swoje `check.sh`, o których jest
-mowa w `2-BUILD.md`.
+The rest of the team **does not wait** during this hour - they build their `check.sh`
+files, described in `2-BUILD.md`.
 
-## Kapsuła — jedyny przewód
+## The capsule - the only wire
 
 ```markdown
-# KAPSULA.md
+# CAPSULE.md
 
-## 1. Co budujemy            ← zespół wybrał, system 1 tylko podsunął opcje
-## 2. Dlaczego ta opcja      ← 3 zdania + dlaczego odrzucono pozostałe
-## 3. Co wiemy               ← fakty, każdy z linkiem
-## 4. Czego nie wiemy        ← ryzyka, świadomie zostawione
-## 5. Pięć kawałków          ← kto, co, jaki katalog, czeka na kogo   ← KLUCZ
-## 6. Jak sprawdzamy         ← jedna komenda, exit 0 albo nie
+## 1. What we are building       ← the team chose, system 1 only suggested options
+## 2. Why this option            ← 3 sentences + why the others were rejected
+## 3. What we know               ← facts, each with a link
+## 4. What we don't know         ← risks, knowingly left in
+## 5. Five pieces                ← who, what, which directory, waits for whom   ← KEY
+## 6. How we check               ← one command, exit 0 or not
 ```
 
-Sekcja 5 ma teraz kolumnę **„Czeka na"** i to nie jest kosmetyka — **to kolejność
-mergów, maszynowo czytelna.** Bez niej maszyna nie wie, co może wjechać na `main`
-wcześniej niż inne, i zatrzymuje się na pytaniu do człowieka. Patrz
+Section 5 now has a **"Waits for"** column and that is not cosmetic - **it is the
+merge order, machine-readable.** Without it the machine does not know what can land on `main`
+before the others, and it stops at a question to a human. See
 [`2-BUILD.md`](2-BUILD.md).
 
-### Dlaczego kapsuła, a nie rozmowa
+### Why a capsule and not a conversation
 
-System 1 i system 2 dzieli jedno okno czasu i jedną brakującą rzecz: **wiedzę**.
-Agent z systemu 1 nie zapyta agenta z systemu 2, a człowiek nie przekaże researchu
-ustami o 2:00 w nocy.
+System 1 and system 2 share one window of time and one missing thing: **knowledge**.
+An agent from system 1 will not ask an agent from system 2, and a human will not pass on the research
+by mouth at 2:00 at night.
 
-Dlatego jedyna rzecz, która **musi** przetrwać, to plik. I dlatego — patrz niżej —
-nie potrzebujecie pamięci.
+So the only thing that **must** survive is a file. And that is why - see below -
+you do not need memory.
 
-## Dwa dni = brak pamięci
+## Two days = no memory
 
-System żyje 48 godzin. **Dlatego nie projektujemy pamięci.**
+The system lives 48 hours. **So we do not design memory.**
 
-Wypada: architektura notatek, kompakcji, wznawiania sesji, pamięć agenta,
-checkpointy, „co przeżywa między dniami". Nic z tego nie ma sensu, gdy jutro
-zaczynamy od nowa.
+Out: note architecture, compaction, session resumption, agent memory,
+checkpoints, "what survives between days". None of it makes sense when tomorrow
+we start from scratch.
 
-Konsekwencja jest wygodna: **każda sesja startuje z czystym kontekstem i to jest OK.**
-Sesja, która pamięta trzy godziny rozmowy, myśli gorzej niż nowa. Nowa czyta
-kapsułę i ma wszystko.
+The consequence is convenient: **every session starts with a clean context and that is OK.**
+A session that remembers three hours of conversation thinks worse than a new one. A new one reads the
+capsule and has everything.
 
 ---
 
-## System 2 — budowa, non-stop
+## System 2 - build, non-stop
 
-**Pięć osób, pięć laptopów, pięć sesji OMP. Opcjonalnie kolejne do review.**
+**Five people, five laptops, five OMP sessions. Optionally more for review.**
 
-**Mierzyna merguje sama.** Każdy agent, po zielonym `check.sh`, próbuje wjechać na
-`main`. Jeśli jego zależności jeszcze nie są na `main` — **czeka i wraca do pracy.**
-Nie pyta. Nie blokuje zespołu.
+**The machine merges on its own.** Every agent, after a green `check.sh`, tries to land on
+`main`. If its dependencies are not yet on `main` - **it waits and goes back to work.**
+It does not ask. It does not block the team.
 
 ```
-KAPSULA.md → 5 osób × 1–2 sesje → worktree na osobę → zielony test → MACHINA MERGUJE
+CAPSULE.md → 5 people × 1-2 sessions → worktree per person → green test → MACHINE MERGES
                                                                             │
-                                            czeka na inne moduły ◄──────────┤
+                                            waits for other modules ◄───────┤
                                                                             ▼
-                                                          człowiek: sync co 2 h i freeze
+                                                          human: sync every 2 h and freeze
 ```
 
-### Jedno zdanie, które trzeba powiedzieć na głos przed startem
+### One sentence to say out loud before the start
 
-> **Maszyna może zmergować wszystko. Nie może powiedzieć, co wysyłacie.**
+> **The machine can merge everything. It cannot say what you ship.**
 
-Dlatego człowiek wchodzi **dwa razy**: na sync (co 2 h) i na freeze. Wszystko
-pomiędzy jest maszynowe. Jeśli to jest ustalone, to jest kompromis — człowiek
-odpowiada za wynik, maszyna wykonuje. Slajd IBM-a z 1979, który cytuje Simon Willison,
-nie zmienia się przez to, że merge jest automatyczny: *„A computer can never be held
-accountable."* Pytanie brzmi tylko, **gdzie** człowiek wchodzi — i odpowiedź brzmi:
-tam, gdzie decyduje się, co jest ważne, a nie gdzie przesuwa się kod.
-
----
-
-## Handoff do nowej sesji
-
-[`HANDOFF.md`](HANDOFF.md) — kapsuła dla osobnej sesji OMP (model `atria`).
-Zawiera stan rzeczy, sześć zadań i twarde ograniczenia. Czytana jako pierwsza.
-
-Piątek 02.10 wieczorem, hackathon sobota 03.10. Wynik ma być **jutro rano**.
+That is why the human steps in **twice**: at sync (every 2 h) and at freeze. Everything
+in between is machine. If that is settled, it is a compromise - the human
+is responsible for the result, the machine executes. The IBM slide from 1979, quoted by Simon Willison,
+does not change just because the merge is automatic: *"A computer can never be held
+accountable."* The only question is **where** the human steps in - and the answer is:
+where it is decided what matters, not where code gets moved.
 
 ---
 
-## Cztery reguły
+## Handoff to a new session
 
-### 1. Jedna kapsuła, jeden wybór
+[`HANDOFF.md`](HANDOFF.md) - a capsule for a separate OMP session (model `atria`).
+It contains the state of things, six tasks and hard constraints. Read first.
 
-System 1 podsunie opcje. **Zespół wybiera na głos.** System 1 wpisuje wybór do
-kapsuły i milczy. System 2 buduje wybrane i **nie wraca po radę**.
-
-### 2. Jeden katalog na osobę, kolejność mergów w kapsule
-
-Pięć `git worktree`, zero wspólnych plików — kolizji nie ma, bo nie ma powierzchni.
-Kolejność wjeżdżania na `main` opisuje tabela w sekcji 5 kapsuły, kolumna „Czeka na".
-
-### 3. Jeden test na kawałek
-
-Jedna komenda. Exit 0 = gotowe. **Bez niej agent nie wie, kiedy skończył.**
-To jedyna rzecz, bez której reszta nie działa — i jest darmowa.
-
-### 4. Maszyna merguje, człowiek wchodzi dwa razy
-
-Zielony test → review w świeżym kontekście → merge. Czeka na zależności, nie pyta.
-Konflikt mechaniczny rozwiązuje sam. **Konflikt w pliku interfejsu → zapisuje,
-nie rusza, wraca do pracy, raport na sync.**
+Friday 02.10 evening, hackathon Saturday 03.10. The result is due **tomorrow morning**.
 
 ---
 
-## Opcjonalne — i pierwsze do odcięcia
+## Four rules
 
-| Mechanizm | Koszt | Co daje | Jeśli zabraknie czasu |
+### 1. One capsule, one choice
+
+System 1 will suggest options. **The team chooses out loud.** System 1 writes the choice into the
+capsule and goes silent. System 2 builds the chosen one and **does not come back for advice**.
+
+### 2. One directory per person, merge order in the capsule
+
+Five `git worktree`s, zero shared files - there are no collisions because there is no surface.
+The order of landing on `main` is described by the table in section 5 of the capsule, column "Waits for".
+
+### 3. One test per piece
+
+One command. Exit 0 = done. **Without it the agent does not know when it has finished.**
+It is the one thing without which the rest does not work - and it is free.
+
+### 4. The machine merges, the human steps in twice
+
+Green test → review in a fresh context → merge. Waits for dependencies, does not ask.
+Mechanical conflict it resolves itself. **Conflict in an interface file → writes it down,
+does not touch it, goes back to work, reports at sync.**
+
+---
+
+## Optional - and first to cut
+
+| Mechanism | Cost | What it gives | If time runs out |
 |---|---|---|---|
-| **Drugi agent na review** | ~2 min | świeży kontekst, nie widzi rozumowania autora | tnij pierwszy |
-| **Trzeci agent „złośliwy"** | ~2 min | łapie to, czego dwaj inni nie zauważą | tnij pierwszy |
-| **Mechaniczne rozwiązywanie konfliktów** | 0 | maszyna sama | zostaw, bo bez tego pętla staje |
+| **Second agent for review** | ~2 min | fresh context, does not see the author's reasoning | cut first |
+| **Third "malicious" agent** | ~2 min | catches what the other two will not notice | cut first |
+| **Mechanical conflict resolution** | 0 | the machine does it itself | keep, because without it the loop stops |
 
-Ostatnie jest jedynym z trzech, którego **nie** tnęlibyśmy. Reszta systemu 2
-zakłada, że maszyna wjeżdża bez pytania.
+The last one is the only one of the three we would **not** cut. The rest of system 2
+assumes the machine lands without asking.
 
 ---
 
-## Stan steruje workflow — [`AGENTS.md`](AGENTS.md)
+## State drives the workflow - [`AGENTS.md`](AGENTS.md)
 
-Cały system ma **jeden plik, który agent czyta zawsze**, i w nim jest **jeden blok,
-który się zmienia**:
+The whole system has **one file the agent always reads**, and in it there is **one block
+that changes**:
 
 ```text
-STAN:        BUILD
-OD KIEDY:    2026-10-03 13:00
-NASTĘPNY:    SYNC o 15:00  ·  FREEZE 2026-10-04 12:00
-UWAGI:       w4 czeka na w1 — w1 nie wjechał od 11:20
+STATE:       BUILD
+SINCE:       2026-10-03 13:00
+NEXT:        SYNC at 15:00  ·  FREEZE 2026-10-04 12:00
+NOTES:       w4 waits for w1 - w1 has not landed since 11:20
 ```
 
-Reszta pliku — reguły — jest z tego **wyprowadzona**, nie osobna. Dziewięć stanów
-(`PRZYGOTOWANIE` → `RESEARCH` → `BRAINSTORM` → `WYBOR` → `BUILD` → `SYNC` →
-`FREEZE` → `WYSYLKA` → `PO`) i tabela „co z tego wynika". Zmiana jednej linii
-przesuwa cały system do innego zachowania.
+The rest of the file - the rules - is **derived** from this, not separate. Nine states
+(`PREP` → `RESEARCH` → `BRAINSTORM` → `CHOICE` → `BUILD` → `SYNC` →
+`FREEZE` → `SUBMIT` → `DONE`) and a "what follows from it" table. Changing one line
+moves the whole system to a different behavior.
 
-To jest odpowiedź na pytanie *„co się dzieje w 3:00 w nocy, kiedy nikt nie
-patrzy"* — odpowiedzią nie jest instrukcja, tylko **odczyt stanu**. Sesja startuje,
-czyta `STAN: BUILD`, i wie co robić.
+This is the answer to the question *"what happens at 3:00 at night, when nobody
+is watching"* - the answer is not an instruction, but **reading the state**. A session starts,
+reads `STATE: BUILD`, and knows what to do.
 
-### Dlaczego to musi być jeden plik, a nie osobna instrukcja na każdą fazę
+### Why it has to be one file and not a separate instruction per phase
 
-Instrukcji jest w repo dziewięć stanów × pięć kawałków = czterdzieści pięć
-wariantów. **Nikt tego nie przeczyta i nie zaktualizuje.** Jeden wskaźnik stanu
-plus tabela daje dokładnie tę samą moc w 190 liniach.
+There are nine states × five pieces = forty-five variants of instructions in the repo.
+**Nobody will read or update that.** One state pointer
+plus a table gives exactly the same power in 190 lines.
 
-### Reguła, która utrzymuje ten plik małym
+### The rule that keeps this file small
 
-Z dokumentacji Claude Code, dosłownie:
+From the Claude Code documentation, verbatim:
 
-> *„Bloated CLAUDE.md files cause Claude to ignore your actual instructions!"*
-> *„For each line, ask: Would removing this cause Claude to make mistakes? If not,
+> *"Bloated CLAUDE.md files cause Claude to ignore your actual instructions!"*
+> *"For each line, ask: Would removing this cause Claude to make mistakes? If not,
 > cut it."*
 
-Stąd §8 w `AGENTS.md`: **linia, która nie zapobiega pomyłce, idzie do kosza.**
-I druga, ważniejsza: **linia, którą się ignoruje mimo jej obecności, też idzie do
-kosza** — przenosisz ją tam, gdzie jest egzekwowana mechanicznie.
+Hence §8 in `AGENTS.md`: **a line that does not prevent a mistake goes in the bin.**
+And a second, more important one: **a line that is ignored despite being present also goes in
+the bin** - you move it to where it is enforced mechanically.
 
-Jedna linia w całym pliku jest wyróżniona przez `IMPORTANT:`. Reguła z dokumentacji:
-jeśli agent pomija instrukcję, wyróżnij **właśnie tę jedną**, nie wszystkie. U nas
-to *„nie kończ, dopóki `check.sh` nie wyjdzie 0"* — bo to jedyna, na której
-trzyma się cała pętla.
+One line in the whole file is highlighted with `IMPORTANT:`. The rule from the documentation:
+if the agent skips an instruction, highlight **that one**, not all of them. For us
+it is *"do not finish until `check.sh` exits 0"* - because it is the only one the whole loop
+hangs on.
 
-### Kto edytuje stan
+### Who edits the state
 
-Do T+1:00 — **system-1**. Potem — **człowiek, na sync i na freeze**.
-**Agenci budujący nigdy.** Jeden plik, jeden autor w danej chwili — tak samo jak
-pięć katalogów.
+Until T+1:00 - **system-1**. After that - **the human, at sync and at freeze**.
+**Building agents never.** One file, one author at a time - the same as
+five directories.
 
-### Gdzie ten plik leży w sobotę
+### Where this file lives on Saturday
 
-W **katalogu głównym repo rozwiązania**, nie tutaj. Kopiujesz `AGENTS.md` i
-`KAPSULA.md` do swojego repo, bo to stamtąd agent je wczytuje.
-
----
-
-## Pliki — dwie grupy, dwie publiczności
-
-**Dla agentów.** Wczytuje się automatycznie na początku każdej sesji. Agent nie czyta
-niczego innego, dopóki ten plik nie powie, że ma.
-
-| Plik | Co | Linie |
-|---|---|---|
-| [`AGENTS.md`](AGENTS.md) | **kontekst i sytuacja.** Stan systemu + reguły, które wynikają z tego stanu | 196 |
-| [`KAPSULA.md`](KAPSULA.md) | Szablon handoffu. W sobotę nadpisujecie go odpowiedziami. | 119 |
-
-**Dla ludzi.** Czytane własnymi słowy, kiedy trzeba zrozumieć *dlaczego*.
-
-| Plik | Co | Linie |
-|---|---|---|
-| [`1-RESEARCH.md`](1-RESEARCH.md) | System 1: rozbicie tematu, 5 sesji w 60 minut, brainstorm, wybór | 177 |
-| [`2-BUILD.md`](2-BUILD.md) | System 2: pięć sesji, test, maszynowy merge, czekanie na moduły | 277 |
-| [`3-CHEATSHEET.md`](3-CHEATSHEET.md) | Zegar. Piątek 30 min, sobota godzina po godzinie. | 150 |
-
-![Dwa systemy](diagram-prosty.png)
-
-**Uwaga o objętości:** 811 → **1 204 linii**. Materiał rośnie, bo doszły dwa
-elementy, których wcześniej nie było: maszynowa kolejność mergów (bez niej pętla
-staje w nocy) i `AGENTS.md` (plik wczytywany na starcie każdej sesji).
-**Żaden z tych dwóch nie jest opcjonalny.** Wyrzucone przy tych zmianach:
-walidacja merge'a przez człowieka, drabinka eskalacji, osobne stany „czeka / pytaj",
-dziewięć ról dla pięciu osób.
-
-Linia, która się nie zmienia przez cały ten refaktor: **osiem reguł z `AGENTS.md`
-§4 to jest cały system operacyjny.** Wszystko inne jest uzasadnieniem, dlaczego są
-takie a nie inne.
-
-`00_`–`09_`, `06_ARCHITECTURE.mmd`, `render/` i `HISTORY.md` leżą w
-[`archiwum/old-package/`](archiwum/old-package/README.md) — **poprzedni pakiet**, ten
-sam, który był w `main`. Nie usunięte (dowód), ale zdjęte z katalogu głównego, żeby
-nie mieszły się z tym, co operacyjne. Nie czyta się ich w sobotę.
-
-[`archiwum/`](archiwum/README.md) — wcześniejsze wersje tego materiału, poprzedni
-pakiet i audyt oryginału. **Nieoperacyjne.**
+In the **root directory of the solution repo**, not here. You copy `AGENTS.md` and
+`CAPSULE.md` to your repo, because that is where the agent loads them from.
 
 ---
 
-## Czego tu nie ma i dlaczego
+## Files - two groups, two audiences
 
-| Nie ma | Dlaczego |
+**For agents.** Loaded automatically at the start of every session. The agent reads
+nothing else until this file says it should.
+
+| File | What | Lines |
+|---|---|---|
+| [`AGENTS.md`](AGENTS.md) | **context and situation.** System state + rules that follow from that state | 196 |
+| [`CAPSULE.md`](CAPSULE.md) | Handoff template. On Saturday you overwrite it with your answers. | 119 |
+
+**For humans.** Read in your own words, when you need to understand *why*.
+
+| File | What | Lines |
+|---|---|---|
+| [`1-RESEARCH.md`](1-RESEARCH.md) | System 1: topic breakdown, 5 sessions in 60 minutes, brainstorm, choice | 177 |
+| [`2-BUILD.md`](2-BUILD.md) | System 2: five sessions, test, machine merge, waiting for modules | 277 |
+| [`3-CHEATSHEET.md`](3-CHEATSHEET.md) | The clock. Friday 30 min, Saturday hour by hour. | 150 |
+
+![Two systems](diagram-simple.png)
+
+**A note on volume:** 811 → **1,204 lines**. The material grows because two
+elements were added that were not there before: machine merge order (without it the loop
+stops at night) and `AGENTS.md` (a file loaded at the start of every session).
+**Neither of these two is optional.** Thrown out in these changes:
+human validation of the merge, the escalation ladder, separate "waits / ask" states,
+nine roles for five people.
+
+The line that does not change through this whole refactor: **the eight rules from `AGENTS.md`
+§4 are the entire operating system.** Everything else is justification for why they are
+the way they are and not otherwise.
+
+`00_`-`09_`, `06_ARCHITECTURE.mmd`, `render/` and `HISTORY.md` live in
+[`archive/old-package/`](archive/old-package/README.md) - **the previous package**, the
+same one that was in `main`. Not deleted (evidence), but taken off the root directory so that
+they do not get mixed up with what is operational. You do not read them on Saturday.
+
+[`archive/`](archive/README.md) - earlier versions of this material, the previous
+package and the audit of the original. **Non-operational.**
+
+---
+
+## What is not here and why
+
+| Not here | Why |
 |---|---|
-| **Harnessa merge** | merge to reguła w pętli agenta, nie osobny program. Żadnej orkiestracji. |
-| checklisty | 5 osób w nocy nie odhacza 77 punktów. Ma trzy komendy i zegar. |
-| rejestru ryzyk, premortemów | na co dzień zapis, na potem opowieść. |
-| statusów walidacji | zastąpiła je jedna zasada: **twierdzenie bez komendy nie istnieje.** |
-| zarządzania pamięcią | 2 dni. Nie ma czego zarządzać. |
-| budowania czegokolwiek obok OMP | coding agent (OMP / Claude Code / Codex) jest runtime. My piszemy pliki i klikamy sync. |
-| osobnych „osób" i „ról" | pięć osób i dwa nazwiska. Reszta to funkcja przy okazji. |
+| **A merge harness** | merge is a rule in the agent loop, not a separate program. No orchestration. |
+| checklists | 5 people at night do not tick off 77 items. They have three commands and a clock. |
+| risk registers, premortems | day to day a record, later a story. |
+| validation statuses | replaced by one principle: **a claim without a command does not exist.** |
+| memory management | 2 days. There is nothing to manage. |
+| building anything alongside OMP | the coding agent (OMP / Claude Code / Codex) is the runtime. We write files and click sync. |
+| separate "personas" and "roles" | five people and two names. The rest is a function on the side. |
 
 ---
 
-## Jedno zdanie
+## One sentence
 
-> **System 1 w godzinę bada i podsunie trzy opcje, wybieracie na głos, system 1
-> zapisuje wybór w jednym pliku, pięć maszyn buduje z niego w swoich katalogach
-> i sama wpuszcza na `main` czekając na moduły, a wy wchodzicie dwa razy — na sync
-> i na freeze.**
+> **System 1 researches for an hour and suggests three options, you choose out loud, system 1
+> writes the choice in one file, five machines build from it in their directories
+> and let themselves onto `main` while waiting for modules, and you step in twice - at sync
+> and at freeze.**

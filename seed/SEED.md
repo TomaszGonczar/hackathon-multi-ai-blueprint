@@ -1,89 +1,89 @@
-# SEED.md — co to jest i jak uruchomić
+# SEED.md - what it is and how to run it
 
-**Jedno polecenie, które tworzy całe środowisko hackathonu:**
+**One command that creates the whole hackathon environment:**
 
 ```bash
 bash seed/bootstrap.sh
 ```
 
-To tworzy repo rozwiązania i pięć worktree — po jednym na osobę. Każde ma swój
-`check.sh`. Do `main` merguje się z każdego worktree.
+This creates the solution repo and five worktrees - one per person. Each has its
+own `check.sh`. Everything merges to `main` from every worktree.
 
-**Bez pytań do człowieka.** Każdy element ma wartość domyślną:
+**No questions for a human.** Every element has a default value:
 
-| Element | Domyślnie |
+| Element | Default |
 |---|---|
-| Repo | `~/hackathon-rozwiazanie` (argument: `bash seed/bootstrap.sh /path`) |
-| Nazwy katalogów | `~/w1-kawalek` … `~/w5-kawalek` |
-| Branch per katalog | `w1` … `w5` |
-| Branch docelowy merge | `main` |
-| `STAN` w `AGENTS.md` | `PRZYGOTOWANIE` — do zmiany przez człowieka |
-| Sekrety, konta, sieć | **nie wymagane** |
+| Repo | `~/hackathon-solution` (argument: `bash seed/bootstrap.sh /path`) |
+| Directory names | `~/w1-piece` … `~/w5-piece` |
+| Branch per directory | `w1` … `w5` |
+| Target merge branch | `main` |
+| `STATE` in `AGENTS.md` | `PREP` - to be changed by a human |
+| Secrets, accounts, network | **not required** |
 
 ---
 
-## Co dostajesz
+## What you get
 
 ```text
-~/hackathon-rozwiazanie/     ← repo rozwiązania, main
-├── AGENTS.md                ← kontekst agenta (wczytywany na starcie sesji)
-├── KAPSULA.md               ← szablon, wypełnia system-1 w sobotę
+~/hackathon-solution/        ← solution repo, main
+├── AGENTS.md                ← agent context (loaded at session start)
+├── CAPSULE.md               ← template, filled in by system-1 on Saturday
 └── .git
 
-~/w1-kawalek/                ← worktree + branch w1 + check.sh
-~/w2-kawalek/                ← worktree + branch w2 + check.sh
-~/w3-kawalek/                ← worktree + branch w3 + check.sh
-~/w4-kawalek/                ← worktree + branch w4 + check.sh
-~/w5-kawalek/                ← worktree + branch w5 + check.sh
+~/w1-piece/                  ← worktree + branch w1 + check.sh
+~/w2-piece/                  ← worktree + branch w2 + check.sh
+~/w3-piece/                  ← worktree + branch w3 + check.sh
+~/w4-piece/                  ← worktree + branch w4 + check.sh
+~/w5-piece/                  ← worktree + branch w5 + check.sh
 ```
 
-Każdy katalog ma `check.sh` w **roocie**. Wywołujesz `./check.sh` z katalogu
-worktree. Nie ma podkatalogu `w1/` wewnątrz — to jest cały katalog.
+Every directory has `check.sh` in its **root**. You call `./check.sh` from the
+worktree directory. There is no `w1/` subdirectory inside - the directory is the whole thing.
 
 ---
 
-## Kiedy to odpalić
+## When to run it
 
-**Piątek wieczorem**, raz. Sprawdź wynik komendami z
-[`VERIFY.md`](VERIFY.md) — to 5 minut i musi być zielone przed snem.
+**Friday evening**, once. Check the result with the commands from
+[`VERIFY.md`](VERIFY.md) - it takes 5 minutes and must be green before you sleep.
 
-Sobota rano: jeśli coś nie gra, odpal jeszcze raz. **Jest idempotentny** —
-drugi raz nie niszczy katalogów, nie nadpisuje wypełnionej kapsuły ani
-zmodyfikowanego `check.sh`.
-
----
-
-## Czego ten seed nie robi
-
-- **Nie wymyśla tematu.** Kapsuła jest pustym szablonem.
-- **Nie zakłada zdalnego repo.** Jeśli chcecie pushować, dodajcie `git remote add
-  origin <url>` w `~/hackathon-rozwiazanie`. Bez tego praca jest lokalna — a
-  `check.sh` i tak działa.
-- **Nie instaluje narzędzi.** Wymaga `git`. Język i framework wybieracie w
-  sobota, `check.sh` jest językowo neutralny.
-- **Nie tworzy ochrony brancha.** Jeśli `main` ma być chroniony, zróbcie to
-  ręcznie w interfejsie GitHub.
+Saturday morning: if something is off, run it again. **It is idempotent** -
+the second run does not destroy directories, does not overwrite a filled-in capsule or
+a modified `check.sh`.
 
 ---
 
-## Kolejność czytania w sobotę
+## What this seed does not do
 
-1. `seed/templates/START-HERE.md` — pierwsze 30 minut
-2. `KAPSULA.md` — gdy system-1 ją wypełni (~09:58)
-3. `AGENTS.md` §4 — reguły, które obowiązują zawsze
-
-Pliki `1-RESEARCH.md`, `2-BUILD.md`, `3-CHEATSHEET.md` są w blueprint repo. Pierwsze
-dwa czyta się **gdy chce się zrozumieć dlaczego**, trzeci to zegar dla człowieka.
-Nie są potrzebne do startu.
+- **It does not come up with a topic.** The capsule is an empty template.
+- **It does not set up a remote repo.** If you want to push, add `git remote add
+  origin <url>` in `~/hackathon-solution`. Without it the work is local - and
+  `check.sh` works anyway.
+- **It does not install tools.** It requires `git`. You choose the language and framework on
+  Saturday, `check.sh` is language-neutral.
+- **It does not create branch protection.** If `main` is to be protected, do it
+  manually in the GitHub interface.
 
 ---
 
-## Jeśli coś poszło nie tak
+## Reading order on Saturday
 
-| Objaw | Naprawa |
+1. `seed/templates/START-HERE.md` - the first 30 minutes
+2. `CAPSULE.md` - once system-1 has filled it in (~09:58)
+3. `AGENTS.md` §4 - the rules that always apply
+
+The files `1-RESEARCH.md`, `2-BUILD.md`, `3-CHEATSHEET.md` are in the blueprint repo. The first
+two are read **when you want to understand why**, the third is the clock for the human.
+They are not needed to start.
+
+---
+
+## If something went wrong
+
+| Symptom | Fix |
 |---|---|
-| `FAIL: 'git' not found in PATH` | zainstaluj git |
-| `fatal: a branch named 'w1' already exists` | stara wersja. Teraz bootstrap zakłada istniejący branch zamiast failować — zaktualizuj seed |
-| Katalog `~/w1-kawalek` istnieje, ale nie ma `check.sh` | `cp seed/templates/check.sh.example ~/w1-kawalek/check.sh && chmod +x ~/w1-kawalek/check.sh` |
-| Chcę inną nazwę katalogu | zedytuj `PIECES=(...)` na górze `bootstrap.sh` **przed** pierwszym odpaleniem |
-| Chcę usunąć wszystko i zacząć od nowa | `git -C ~/hackathon-rozwiazanie worktree prune` i usuń katalogi ręcznie. **Nie uruchamiaj bootstrapa, żeby wyczyścić** — on nie usuwa |
+| `FAIL: 'git' not found in PATH` | install git |
+| `fatal: a branch named 'w1' already exists` | old version. Bootstrap now attaches an existing branch instead of failing - update the seed |
+| The `~/w1-piece` directory exists but has no `check.sh` | `cp seed/templates/check.sh.example ~/w1-piece/check.sh && chmod +x ~/w1-piece/check.sh` |
+| I want a different directory name | edit `PIECES=(...)` at the top of `bootstrap.sh` **before** the first run |
+| I want to delete everything and start over | `git -C ~/hackathon-solution worktree prune` and delete the directories manually. **Do not run bootstrap to clean up** - it does not delete |

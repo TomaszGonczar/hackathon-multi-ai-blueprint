@@ -48,7 +48,7 @@ jobs:
         run: |
           python3 -c '
           import re, sys
-          with open("archiwum/old-package/05_IMPLEMENTATION_CHECKLIST.md") as f: c5 = f.read()
+          with open("archive/old-package/05_IMPLEMENTATION_CHECKLIST.md") as f: c5 = f.read()
           items = re.findall(r"^- \[ \] \*\*([A-Z0-9\-]+) ·", c5, re.M)
           # Note: T7-01-1, T7-01-2, T7-01-3 are formatted without bullet dot
           extra = re.findall(r"^- \[ \] \*\*(T7-01-\d):\*\*", c5, re.M)
@@ -58,7 +58,7 @@ jobs:
               print(f"ERROR: Expected 77 items, got {total_items}")
               sys.exit(1)
 
-          with open("archiwum/old-package/07_FAILURE_AND_REHEARSAL_PLAN.md") as f: c7 = f.read()
+          with open("archive/old-package/07_FAILURE_AND_REHEARSAL_PLAN.md") as f: c7 = f.read()
           v_rows = re.findall(r"\| (V\d+) \|", c7)
           print(f"Counted {len(v_rows)} validation ledger rows in 07")
           if len(v_rows) != 13:

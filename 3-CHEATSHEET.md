@@ -1,150 +1,150 @@
-# 3 — CHEAT SHEET
+# 3 - CHEAT SHEET
 
-Do wydrukowania. Reszta jest w [`1-RESEARCH.md`](1-RESEARCH.md) i
+For printing. The rest is in [`1-RESEARCH.md`](1-RESEARCH.md) and
 [`2-BUILD.md`](2-BUILD.md).
 
 ---
 
-## Piątek — 30 minut
+## Friday - 30 minutes
 
-Po to, żeby w sobotę nie zmarnować godziny na setup.
+So that on Saturday you don't waste an hour on setup.
 
 ```bash
-gh api repos/<org>/<repo>/collaborators --jq '.[].login'   # kto może pisać
-gh api repos/<org>/<repo>/branches/main/protection        # czy main jest chroniony
-git ls-remote <repo> HEAD                                  # działa push
-claude -p "wymyśl 3 pytania o tej bazie kodu"              # działa agent
+gh api repos/<org>/<repo>/collaborators --jq '.[].login'   # who can write
+gh api repos/<org>/<repo>/branches/main/protection        # is main protected
+git ls-remote <repo> HEAD                                  # push works
+claude -p "come up with 3 questions about this codebase"   # the agent works
 ```
 
-Do zrobienia z zespołem, 15 minut:
+To do with the team, 15 minutes:
 
-- [ ] **System-1** wybrany — jedna osoba, jeden laptop, naładowany
-- [ ] **Kapsuła** wydrukowana pusta — w sobotę wypełniacie na żywo
-- [ ] **Jeden `check.sh`** napisany i przetestowany
-- [ ] **Pięć katalogów** wstępnie nazwanych
-- [ ] **Kolejność mergów** wstępnie na kartce — **bez cyklu**
+- [ ] **System-1** chosen - one person, one laptop, charged
+- [ ] **Capsule** printed empty - on Saturday you fill it in live
+- [ ] **One `check.sh`** written and tested
+- [ ] **Five directories** tentatively named
+- [ ] **Merge order** tentatively on paper - **no cycle**
 
-Ostatni punkt jest nowy i ważny: przy maszynowym merge'ach kolejność musi istnieć
-**zanim** system 2 wystartuje, bo inaczej maszyna stanie w nocy i nie będzie wiedziała
-dlaczego. Patrz kolumna „Czeka na" w [`KAPSULA.md`](KAPSULA.md).
+The last item is new and important: with machine merges the order must exist
+**before** system 2 starts, otherwise the machine will stall in the night and won't know
+why. See the "Waits for" column in [`CAPSULE.md`](CAPSULE.md).
 
-**Czego piątek nie zawiera:** rejestru śmieci, checklisty, planu faz, przeglądu
-architektury, wyboru modeli. To praca na dni. Zrobienie tego = w sobotę budujecie
-proces zamiast rozwiązania.
+**What Friday does not include:** a junk register, a checklist, a phase plan, an architecture
+review, model selection. That is work for the days. Doing it = on Saturday you build
+a process instead of a solution.
 
 ---
 
-## Cztery liczby
+## Four numbers
 
-Wpisane w kapsule, wydrukowane, **wypowiedziane na głos na starcie.**
+Written in the capsule, printed, **said out loud at the start.**
 
-| Co | Ile | Dlaczego |
+| What | How much | Why |
 |---|---|---|
-| **Push co** | 30 min i zawsze przed snem | tyle tracisz, gdy laptop padnie |
-| **Sync zespołu co** | 2 h, 5 min na stojąco | tu wchodzi człowiek — jedyne miejsce |
-| **Freeze ile godzin przed deadlinem** | 4 h | drugi moment wejścia człowieka |
-| **Wysyłka ile minut przed deadlinem** | 90 | bufor na zepsutą formularz |
+| **Push every** | 30 min and always before sleep | that's what you lose when the laptop dies |
+| **Team sync every** | 2 h, 5 min standing | the human steps in here - the only place |
+| **Freeze how many hours before the deadline** | 4 h | the second moment the human steps in |
+| **Submission how many minutes before the deadline** | 90 | buffer for a broken form |
 
 ---
 
-## Sobota
+## Saturday
 
 ```
-GODZ.  CO                                        KTO
+TIME   WHAT                                      WHO
 ───────────────────────────────────────────────────────────────
--1:00  Setup na miejscu: klony, loga, test      wszyscy
-       na pustym projekcie.                      ── STOP: 45 min ──
+-1:00  Setup on site: clones, logs, test        everyone
+       on an empty project.                      ── STOP: 45 min ──
 
- 0:00  TEMAT
-       → system 1 startuje research              system-1
-       → reszta: KOŃCZY check.sh swojego        pozostali 4
-                                                  kawałka
- 0:35  system 1 → brainstorm (3 sesje równolegle) system-1
+ 0:00  TOPIC
+       → system 1 starts research                system-1
+       → rest: FINISH their own check.sh         other 4
+                                                  piece
+ 0:35  system 1 → brainstorm (3 in parallel)     system-1
 
- 0:48  ZESPÓŁ WYBIERA opcję, na głos             wszyscy (5 min)
+ 0:48  TEAM CHOOSES an option, out loud          everyone (5 min)
 
- 0:55  system 1 wpisuje do kapsuły               system-1
-       brief: "budujemy X, kawałki takie"
-                                                  wszyscy (5 min)
+ 0:55  system 1 writes into the capsule          system-1
+       brief: "we are building X, pieces like so"
+                                                  everyone (5 min)
 
- 1:00  >>> SYSTEM 2 STARTUJE <<<
-       każdy: czytaj kapsułę → check.sh → kod    każdy solo
+ 1:00  >>> SYSTEM 2 STARTS <<<
+       each: read capsule → check.sh → code      each solo
 
-       ┌─ pętla, non-stop ──────────────────────
-       │ kod → check.sh → review → MERGE SAM
+       ┌─ loop, non-stop ──────────────────────
+       │ code → check.sh → review → MERGE YOURSELF
        │        │
-       │        ├ zależności nie na main → CZEKAJ, wracaj do pracy
-       │        ├ konflikt mechaniczny → rozwiąż sam, wjeżdżaj
-       │        └ konflikt w interfejsie → ZAPISZ, wracaj, raport
+       │        ├ dependencies not on main → WAIT, go back to work
+       │        ├ mechanical conflict → resolve it yourself, land
+       │        └ interface conflict → RECORD, go back, report
        │
-       └─ co 2 h: SYNC, 5 min — tu wchodzi człowiek
+       └─ every 2 h: SYNC, 5 min - the human steps in here
 
- 4 h    >>> FREEZE <<<                           wszyscy
-       lead ogłasza na głos
-       każdy: zielony test albo CUT — nic pośrodku
-                                                  (tu drugi raz
-                                                   wchodzi człowiek)
+ 4 h    >>> FREEZE <<<                           everyone
+       lead announces out loud
+       each: green test or CUT - nothing in between
+                                                  (the human steps
+                                                   in a second time)
 
- 3 h    pełny test na main                       wszyscy
-       próba demo RAZ, na zegar
+ 3 h    full test on main                        everyone
+       demo rehearsal ONCE, against the clock
 
- 2 h    TEST INSTRUKCJI
-       ktoś, kto NIC NIE BUDOWAŁ, klonuje
-       repo i uruchamia quickstart
+ 2 h    INSTRUCTIONS TEST
+       someone who BUILT NOTHING clones the
+       repo and runs the quickstart
 
- 1.5h  wysyłka + potwierdzenie                   człowiek
+ 1.5h  submission + confirmation                 human
 
  0:00  STOP
 ```
 
-**Uwaga o 0:00–0:55:** system 1 pracuje, pozostali nie czekają — robią `check.sh`
-swoich kawałków. To jedyny czas, w którym coś się marnuje, i dlatego jest zaplanowany.
+**A note on 0:00-0:55:** system 1 works, the others don't wait - they do the `check.sh`
+of their pieces. It's the only time anything is wasted, and that is why it is planned.
 
-**Uwaga o pętli:** maszyna wjeżdża sama przez całą noc. Człowiek wchodzi
-**dwa razy** — na sync i na freeze. Nie przy każdym merge'u. To jest kompromis
-świadomy: automatyzacja przejmuje wykonanie, człowiek zostaje odpowiedzialny za
-to, co wysyłacie.
-
----
-
-## Noc
-
-- **zmianowość, nie kolejność.** Ktoś śpi, ktoś pracuje. Nie „wszyscy do 6".
-- **Przed snem: push.** Bez wyjątków. Nie da się zmechanizować — i przy maszynowym
-  merge'u nie ma człowieka, który zauważy, że tego nie zrobiliście.
-- **Ktoś zostaje na nogach i imiennie.** Nie po to, żeby mergował — merguje maszyna.
-  Po to, żeby ktoś zobaczył, że dwa kawałki czekają od trzech godzin.
-- **Jeśli nikt nie może zostać — powiedzcie to na głos.** Sync nocny pominięty,
-  nie „odwołany". Cisza jest gorsza od pominiętego kroku.
+**A note on the loop:** the machine lands work on its own all night. The human steps in
+**twice** - at sync and at freeze. Not at every merge. That is a
+conscious compromise: automation takes over execution, the human stays accountable for
+what you submit.
 
 ---
 
-## Trzydzieści sekund wiedzy
+## Night
 
-1. **Zielony `check.sh` i zielony review = wjeżdżaj na `main`.** Sam, nie pytając.
-2. **Czekasz na zależności — czekasz.** Nie pytaj, nie blokuj, wracaj do pracy.
-3. **Konflikt w pliku interfejsu — nie ruszaj.** Zapisz i wróć do pracy.
-4. **Push co 30 minut i przed snem.** Nikt tego nie sprawdzi poza wami.
-5. **Kapsuła może być zła i nic tego nie wykryje.** Jeśli ktoś to widzi — to jest
-   najważniejszy głos w systemie. Natychmiast, nie na sync.
-
----
-
-## Czego nie robimy
-
-- **Nie czytamy `archiwum/`.** To audyt starej wersji. Ciekawostka, nie instrukcja.
-- **Nie budujemy rejestru śmieci, checklisty 77 punktów ani 18 stałych.**
-- **Nie ufamy kapsule, która ma 8 stron.** Jeśli nie mieści się na kartce A4,
-  to nie jest kapsuła.
-- **Nie zostawiamy cyklu w kolejności mergów.** Cykl = maszyna czeka w nieskończoność.
-- **Nie zatrzymujemy zespołu.** Jeśli twój kawałek utknął, robisz to, co możesz,
-  i wjeżdżasz później.
+- **shifts, not sequence.** Someone sleeps, someone works. Not "everyone until 6".
+- **Before sleep: push.** No exceptions. It can't be mechanized - and with machine
+  merges there is no human who would notice you didn't do it.
+- **Someone stays on their feet, by name.** Not to merge - the machine merges.
+  So that someone notices that two pieces have been waiting for three hours.
+- **If nobody can stay - say so out loud.** Night sync skipped,
+  not "cancelled". Silence is worse than a skipped step.
 
 ---
 
-## Jedno zdanie
+## Thirty seconds of knowledge
 
-> **System 1 w godzinę bada i podsunie trzy opcje, wybieracie na głos, system 1
-> zapisuje wybór w jednym pliku, pięć maszyn buduje z niego w swoich katalogach
-> i sama wpuszcza na `main` czekając na moduły, a wy wchodzicie dwa razy — na sync
-> i na freeze.**
+1. **Green `check.sh` and green review = land on `main`.** Yourself, without asking.
+2. **You wait for dependencies - you wait.** Don't ask, don't block, go back to work.
+3. **Conflict in an interface file - don't touch it.** Record it and go back to work.
+4. **Push every 30 minutes and before sleep.** Nobody will check except you.
+5. **The capsule may be wrong and nothing will detect it.** If someone sees it - that is
+   the most important voice in the system. Immediately, not at sync.
+
+---
+
+## What we don't do
+
+- **We don't read `archive/`.** It's an audit of the old version. A curiosity, not instructions.
+- **We don't build a junk register, a 77-point checklist or 18 constants.**
+- **We don't trust a capsule that is 8 pages long.** If it doesn't fit on an A4 sheet,
+  it is not a capsule.
+- **We don't leave a cycle in the merge order.** Cycle = the machine waits forever.
+- **We don't stop the team.** If your piece is stuck, you do what you can
+  and land later.
+
+---
+
+## One sentence
+
+> **System 1 researches for an hour and offers three options, you choose out loud, system 1
+> records the choice in one file, five machines build from it in their directories
+> and land on `main` themselves, waiting for modules, and you step in twice - at sync
+> and at freeze.**

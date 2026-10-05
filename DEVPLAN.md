@@ -1,205 +1,205 @@
-# DEVPLAN.md — od piątku wieczorem do wysłania
+# DEVPLAN.md - from Friday evening to submission
 
-**Format:** lista do odhaczenia, nie dokument do czytania. Każdy krok ma
-właściciela i warunek przejścia, który widać w terminalu.
+**Format:** a checklist to tick off, not a document to read. Every step has an
+owner and an exit condition you can see in the terminal.
 
-**T0** = ogłoszenie tematu. **Wszystko przed T0** to setup.
-
----
-
-## Piątek wieczór (30 min, razem)
-
-- [ ] **P1. Odpalić seed.** `bash seed/bootstrap.sh`
-  Właściciel: każdy na swoim laptopie.
-  Warunek: `bash seed/VERIFY.md` zielone (8/8), konczy `OK`.
-
-- [ ] **P2. Remote.** `git -C ~/hackathon-rozwiazanie remote add origin <url>`
-  Właściciel: jeden człowiek.
-  Warunek: `git push origin main --dry-run` przechodzi. **Bez tego push co 30 min
-  nie istnieje, a nocny backup nie istnieje.**
-
-- [ ] **P3. Wybrać system-1.** Jedna osoba, jeden laptop, naładowany.
-  Właściciel: zespół na głos.
-  Warunek: imiennie zapisane, kto.
-
-- [ ] **P4. Sprawdzić kolejność mergów na kartce — bez cyklu.**
-  Właściciel: zespół, 3 minuty.
-  Warunek: domyślna tabela z `KAPSULA.md` sekcja 5 (w3→1,2; w4→1,2; w5→1,2,3,4)
-  jest acykliczna. **Jeśli ją zmieniacie, nie wracacie spać, dopóki nie
-  dorysujecie grafu bez cyklu.**
-
-- [ ] **P5. Imienne osoby na noc.** Kto zostaje na nogach.
-  Właściciel: zespół.
-  Warunek: zapisane, i jeśli nikt nie może — **powiedziane na głos**, a nie
-  pominięte po cichu.
-
-**Piątek NIE zawiera:** pisania prawdziwego `check.sh`, zgadywania tematu,
-checklisty, wyboru języka. `check.sh` ma `PHASE=0` i to jest zielone.
+**T0** = topic announcement. **Everything before T0** is setup.
 
 ---
 
-## Sobota 08:50 — przed T0
+## Friday evening (30 min, together)
 
-- [ ] **S1. Weryfikacja seeda na każdym laptopie.** `bash seed/VERIFY.md`
-  Właściciel: każdy.
-  Warunek: 8/8 zielone. Czerwone = nie zaczynamy.
+- [ ] **P1. Run the seed.** `bash seed/bootstrap.sh`
+  Owner: everyone on their own laptop.
+  Condition: `bash seed/VERIFY.md` green (8/8), ends with `OK`.
+
+- [ ] **P2. Remote.** `git -C ~/hackathon-solution remote add origin <url>`
+  Owner: one person.
+  Condition: `git push origin main --dry-run` passes. **Without this, the push every 30 min
+  doesn't exist, and the overnight backup doesn't exist.**
+
+- [ ] **P3. Choose system-1.** One person, one laptop, charged.
+  Owner: the team, out loud.
+  Condition: who it is is written down by name.
+
+- [ ] **P4. Check the merge order on paper - no cycle.**
+  Owner: the team, 3 minutes.
+  Condition: the default table from `CAPSULE.md` section 5 (w3→1,2; w4→1,2; w5→1,2,3,4)
+  is acyclic. **If you change it, you don't go back to sleep until you
+  have drawn the graph without a cycle.**
+
+- [ ] **P5. Named people for the night.** Who stays on their feet.
+  Owner: the team.
+  Condition: written down, and if nobody can - **said out loud**, not
+  silently skipped.
+
+**Friday does NOT include:** writing a real `check.sh`, guessing the topic,
+a checklist, choosing a language. `check.sh` has `PHASE=0` and that is green.
+
+---
+
+## Saturday 08:50 - before T0
+
+- [ ] **S1. Seed verification on every laptop.** `bash seed/VERIFY.md`
+  Owner: everyone.
+  Condition: 8/8 green. Red = we don't start.
 
 - [ ] **S2. Push smoke test.** `git push origin main --dry-run`
-  Właściciel: każdy.
-  Warunek: przechodzi. Nie przechodzi = P2 nie zrobiony, nie ruszamy dalej.
+  Owner: everyone.
+  Condition: passes. Doesn't pass = P2 not done, we don't go further.
 
-- [ ] **S3. Faza 0 `check.sh`.** `cd ~/wN-kawalek && $EDITOR check.sh`
-  Właściciel: każdy.
-  Warunek: `./check.sh` kończy 1 z komunikatem o fazie 0 (to cel).
-  **Nie wypełniamy sekcji 1–3** — jeszcze nie wiemy, co budujemy.
-
----
-
-## Sobota T0 — T+0:35 (research)
-
-- [ ] **R1. System-1: 5 sesji równolegle, każda do `research/NN-nazwa.md`.**
-  Właściciel: system-1.
-  Warunek: 5 plików w `research/`, każdy ma sekcje *Ustalone / Niespójne /
-  Nie udało się ustalić / Dalej* (wzór w `1-RESEARCH.md:91-105`).
-
-- [ ] **R2. Reszta: nie czekamy.** Każdy kończy fazę 0 `check.sh`.
-  Właściciel: pozostali czterej.
-  Warunek: `./check.sh` na każdym katalogu kończy 1 (faza 0) — **to jedyny
-  moment, w którym 1 jest poprawnym wynikiem.**
+- [ ] **S3. Phase 0 `check.sh`.** `cd ~/wN-piece && $EDITOR check.sh`
+  Owner: everyone.
+  Condition: `./check.sh` exits 1 with a message about phase 0 (that's the goal).
+  **We don't fill in sections 1-3** - we don't know yet what we're building.
 
 ---
 
-## Sobota T+0:35 — T+0:58 (brainstorm i wybór)
+## Saturday T0 - T+0:35 (research)
 
-- [ ] **B1. System-1: 3 sesje (pragmatyk, sceptyk, outsider), równolegle.**
-  Właściciel: system-1.
-  Warunek: 3 propozycje na stole.
+- [ ] **R1. System-1: 5 sessions in parallel, each to `research/NN-name.md`.**
+  Owner: system-1.
+  Condition: 5 files in `research/`, each has the sections *Established / Inconsistent /
+  Could not establish / Further* (template in `1-RESEARCH.md:91-105`).
 
-- [ ] **B2. ZESPÓŁ WYBIERA na głos.** 5 minut.
-  Właściciel: wszyscy.
-  Warunek: **jedna nazwa wybrana**. Brak wyboru = nie startujemy. To jest brama.
-
-- [ ] **B3. System-1 wypełnia kapsułę.** `KAPSULA.md`, 6 sekcji.
-  Właściciel: system-1.
-  Warunek: sekcja 5 wypełniona — **pięć kawałków z kolumną „Czeka na"** i lista
-  plików interfejsu. Bez tej kolumny maszyna stoi w nocy i pyta człowieka.
-
-- [ ] **B4. System-1 commituje `research/` i `KAPSULA.md` na `main`.**
-  Właściciel: system-1.
-  Warunek: `git show origin/main:research/01-x.md` działa z worktree agenta.
-  Patrz D07 — bez tego nikt nie przeczyta researchu.
-
-- [ ] **B5. Każdy zmienia nazwy katalogów, jeśli kapsuła je podaje.**
-  Właściciel: każdy.
-  Warunek: `git worktree move` + `git branch -m` wykonane **zanim ktokolwiek
-  napisze linię kodu**. Komendy w `seed/repo-layout.md`.
-
-- [ ] **B6. Każdy wypełnia sekcje 1–3 w `check.sh`, `PHASE=1`.**
-  Właściciel: każdy.
-  Warunek: `./check.sh` kończy 0 i **test coś łapie** (zepsuj kawałek, sprawdź).
+- [ ] **R2. The rest: we don't wait.** Everyone finishes phase 0 of `check.sh`.
+  Owner: the other four.
+  Condition: `./check.sh` in every directory exits 1 (phase 0) - **this is the only
+  moment when 1 is a correct result.**
 
 ---
 
-## Sobota T+1:00 — FREEZE (budowa non-stop)
+## Saturday T+0:35 - T+0:58 (brainstorm and choice)
 
-Pętla każdego agenta, bez końca:
+- [ ] **B1. System-1: 3 sessions (pragmatist, skeptic, outsider), in parallel.**
+  Owner: system-1.
+  Condition: 3 proposals on the table.
 
-1. `./check.sh` zielone
-2. review w świeżym kontekście (`AGENTS.md` §4.5)
-3. czy moje zależności są na `main`? (`git merge-base --is-ancestor`)
-   - nie → **czekam, wracam do pracy**, sprawdzam za 10 min
-   - tak → merge na `main` sam
-4. push co 30 min, zawsze przed snem
+- [ ] **B2. THE TEAM CHOOSES out loud.** 5 minutes.
+  Owner: everyone.
+  Condition: **one name chosen**. No choice = we don't start. This is the gate.
 
-- [ ] **F1. FREEZE — 4 h przed deadlinem.** Ogłasza lead, na głos.
-  Właściciel: lead.
-  Warunek: **każdy kawałek ma zielony test albo CUT**. Nic pośrodku.
-  CUT = wypadnięcie z `main`, nie *„dokończymy rano"*.
+- [ ] **B3. System-1 fills in the capsule.** `CAPSULE.md`, 6 sections.
+  Owner: system-1.
+  Condition: section 5 filled in - **five pieces with the "Waits for" column** and the list of
+  interface files. Without that column the machine stands still at night and asks a human.
 
-- [ ] **F2. Tylko defekty blokujące demo.** Każdy z jednozdaniowym powodem w PR.
-  Właściciel: lead zatwierdza.
-  Warunek: nowe funkcje odrzucane bez dyskusji.
+- [ ] **B4. System-1 commits `research/` and `CAPSULE.md` to `main`.**
+  Owner: system-1.
+  Condition: `git show origin/main:research/01-x.md` works from the agent's worktree.
+  See D07 - without this nobody will read the research.
 
----
+- [ ] **B5. Everyone renames their directories, if the capsule gives names.**
+  Owner: everyone.
+  Condition: `git worktree move` + `git branch -m` done **before anyone
+  writes a line of code**. Commands in `seed/repo-layout.md`.
 
-## Po FREEZE
-
-- [ ] **W1. Pełny test na `main`.** Próba demo RAZ, na zegar.
-  Właściciel: wszyscy.
-  Warunek: demo przechodzi albo zapisany konkretny brak.
-
-- [ ] **W2. Test instrukcji — 2 h przed deadlinem.**
-  Ktoś, kto **NIC NIE BUDOWAŁ**, klonuje repo i uruchamia quickstart.
-  Właściciel: jedna osoba, nie budująca.
-  Warunek: uruchamia się bez pytania do kogokolwiek.
-
-- [ ] **W3. Wysyłka — 1.5 h przed deadlinem.**
-  Właściciel: człowiek.
-  Warunek: potwierdzenie zapisane (link, ID, timestamp).
+- [ ] **B6. Everyone fills in sections 1-3 in `check.sh`, `PHASE=1`.**
+  Owner: everyone.
+  Condition: `./check.sh` exits 0 and **the test catches something** (break the piece, check).
 
 ---
 
-## Plan awaryjny — „nie zdążyliśmy zasadzić seedów"
+## Saturday T+1:00 - FREEZE (non-stop build)
 
-**Objaw:** sobota 08:50, `bootstrap.sh` nie działa albo VERIFY czerwone.
+Every agent's loop, without end:
 
-**Nie naprawiamy seeda. Seed jest dla nas, nie dla wyniku.**
+1. `./check.sh` green
+2. review in a fresh context (`AGENTS.md` §4.5)
+3. are my dependencies on `main`? (`git merge-base --is-ancestor`)
+   - no → **wait, go back to work**, check again in 10 min
+   - yes → merge to `main` yourself
+4. push every 30 min, always before sleep
 
-1. **Ręczne minimum (10 min):**
+- [ ] **F1. FREEZE - 4 h before the deadline.** Announced by the lead, out loud.
+  Owner: lead.
+  Condition: **every piece has a green test or CUT**. Nothing in between.
+  CUT = dropped from `main`, not *"we'll finish in the morning"*.
+
+- [ ] **F2. Only demo-blocking defects.** Each with a one-sentence reason in the PR.
+  Owner: lead approves.
+  Condition: new features rejected without discussion.
+
+---
+
+## After FREEZE
+
+- [ ] **W1. Full test on `main`.** Demo rehearsal ONCE, against the clock.
+  Owner: everyone.
+  Condition: the demo passes or the specific gap is written down.
+
+- [ ] **W2. Instructions test - 2 h before the deadline.**
+  Someone who **BUILT NOTHING** clones the repo and runs the quickstart.
+  Owner: one person, not a builder.
+  Condition: it runs without asking anyone anything.
+
+- [ ] **W3. Submission - 1.5 h before the deadline.**
+  Owner: a human.
+  Condition: confirmation saved (link, ID, timestamp).
+
+---
+
+## Contingency plan - "we didn't manage to plant the seeds"
+
+**Symptom:** Saturday 08:50, `bootstrap.sh` doesn't work or VERIFY is red.
+
+**We don't fix the seed. The seed is for us, not for the result.**
+
+1. **Manual minimum (10 min):**
    ```bash
-   git clone <repo> ~/hackathon-rozwiazanie && cd ~/hackathon-rozwiazanie
-   git worktree add ~/w1-kawalek -b w1
-   git worktree add ~/w2-kawalek -b w2
-   git worktree add ~/w3-kawalek -b w3
-   git worktree add ~/w4-kawalek -b w4
-   git worktree add ~/w5-kawalek -b w5
+   git clone <repo> ~/hackathon-solution && cd ~/hackathon-solution
+   git worktree add ~/w1-piece -b w1
+   git worktree add ~/w2-piece -b w2
+   git worktree add ~/w3-piece -b w3
+   git worktree add ~/w4-piece -b w4
+   git worktree add ~/w5-piece -b w5
    ```
-2. **Kapsuła ręcznie:** skopiuj `seed/templates/KAPSULA.md` do roota repo,
-   wypełnij sekcję 5 na głos. Reszta może poczekać.
-3. **`check.sh` ręcznie:** jeden plik z `set -euo pipefail` i `exit 1`. Lepszy
-   czerwony test niż jego brak.
-4. **Zasada zostaje:** kolejność mergów musi być acykliczna, zanim ktokolwiek
-   startuje. Nawet z palca.
+2. **Capsule by hand:** copy `seed/templates/CAPSULE.md` to the repo root,
+   fill in section 5 out loud. The rest can wait.
+3. **`check.sh` by hand:** one file with `set -euo pipefail` and `exit 1`. A red
+   test is better than none.
+4. **The rule stays:** the merge order must be acyclic before anyone
+   starts. Even from memory.
 
-**Jeśli nie ma nawet tego:** każdy pracuje w swoim katalogu na swoim branchu,
-merge na koniec ręcznie. Tracicie noc, ale nie tracicie wyniku.
-
----
-
-## Jeśli temat jest inny niż zakładano
-
-**To nie jest awaria. To jest główne ryzyko i ma swoją sekcję w kapsule (§4).**
-
-1. **Ktoś mówi *„moment, to nie jest to, o co chodzi"* → mówisz natychmiast.**
-   Nie na sync, nie po zakończeniu kawałka. `AGENTS.md` §4.8 i `3-CHEATSHEET.md:128-129`
-   mówią, że to jest najważniejszy głos w systemie i nikt inny go nie wyda.
-
-2. **Kapsuła §4 mówi, czego nie wiemy.** Jeśli brakuje tam tej obawy, dopisz.
-   To jest jedyne miejsce, w którym system-1 może was uprzedzić.
-
-3. **Twarda reguła:** **nie zmieniacie wyboru po T+1:00.** System-1 milczy po
-   wyborze (`1-RESEARCH.md:7`). Wątpliwość co do *wyboru* to decyzja zespołu na
-   **sync**, nie indywidualna zmiana kierunku. Zmiana kierunku przez jedną osobę
-   = pięć różnych modeli problemu = dokładnie tryb awarii, który ten system ma
-   zlikwidować.
-
-4. **Technologia się nie zgadza:** kapsuła nie przewidziała — piszecie w
-   sekcji 4 kapsuły i **jedicie dalej z tym, co jest**. Nie zmieniacie języka
-   ani frameworka bez zgody na sync.
-
-5. **Kawałek w kapsule okazuje się niemożliwy:** zgłaszacie na sync, lead
-   zmienia sekcję 5, wy przechodzicie na najbliższy możliwy kawałek.
-   **Nie wymyślacie sobie podziału sami** — to psuje „Czeka na" i powstaje cykl.
+**If there isn't even that:** everyone works in their own directory on their own branch,
+merge by hand at the end. You lose the night, but you don't lose the result.
 
 ---
 
-## Czego tu nie ma (i dlaczego)
+## If the topic is different than expected
 
-- **Nie powtarza `3-CHEATSHEET.md`.** To zegar (kiedy), to kolejność pracy (co, kto,
-  warunek przejścia). Nakładają się tylko w FREEZE i wysyłce, bo to są punkty
-  styku.
-- **Nie ma roli review-bota.** Review robi agent w świeżym kontekście, na
-  komendzie z `AGENTS.md` §4.5.
-- **Nie ma wyboru modelu.** Każdy używa swojego coding agenta — OMP, Claude Code,
-  Codex. Seed tego nie zakłada.
-- **Nie ma języka programowania.** Wybór pada w sobotę, `check.sh` jest neutralny.
+**This is not a failure. This is the main risk and it has its own section in the capsule (§4).**
+
+1. **Someone says *"wait, that's not what this is about"* → you say so immediately.**
+   Not at sync, not after finishing the piece. `AGENTS.md` §4.8 and `3-CHEATSHEET.md:128-129`
+   say that this is the most important voice in the system and nobody else will raise it.
+
+2. **Capsule §4 says what we don't know.** If that concern is missing there, add it.
+   This is the only place where system-1 can warn you in advance.
+
+3. **Hard rule:** **you don't change the choice after T+1:00.** System-1 stays silent after
+   the choice (`1-RESEARCH.md:7`). A doubt about the *choice* is a team decision at
+   **sync**, not an individual change of direction. A change of direction by one person
+   = five different models of the problem = exactly the failure mode this system is meant
+   to eliminate.
+
+4. **The technology doesn't fit:** the capsule didn't foresee it - you write it in
+   section 4 of the capsule and **keep going with what there is**. You don't change the language
+   or framework without agreement at sync.
+
+5. **A piece in the capsule turns out to be impossible:** you report it at sync, the lead
+   changes section 5, you move to the nearest feasible piece.
+   **You don't invent a split yourselves** - that breaks "Waits for" and creates a cycle.
+
+---
+
+## What is not here (and why)
+
+- **It doesn't repeat `3-CHEATSHEET.md`.** That is the clock (when), this is the order of work (what, who,
+  exit condition). They overlap only at FREEZE and submission, because those are the points
+  of contact.
+- **There is no review-bot role.** Review is done by an agent in a fresh context, with the
+  command from `AGENTS.md` §4.5.
+- **There is no model selection.** Everyone uses their own coding agent - OMP, Claude Code,
+  Codex. The seed doesn't assume that.
+- **There is no programming language.** The choice is made on Saturday, `check.sh` is neutral.

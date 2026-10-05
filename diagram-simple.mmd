@@ -1,0 +1,64 @@
+%% diagram-simple.mmd - two systems, one file between them, machine merge.
+%% Render (mermaid-cli 12.0.0 - the -w option is gone, scaling via -s):
+%%   npx -y @mermaid-js/mermaid-cli -i diagram-simple.mmd -o diagram-simple.png -b white -p pptr.json -s 3
+%%   npx -y @mermaid-js/mermaid-cli -i diagram-simple.mmd -o diagram-simple.svg -b white
+%%{init: {
+  "theme": "base",
+  "flowchart": { "htmlLabels": true, "padding": 12, "curve": "basis", "nodeSpacing": 34, "rankSpacing": 60 },
+  "themeVariables": {
+    "fontSize": "15px",
+    "primaryColor": "#eef2ff",
+    "primaryBorderColor": "#4f46e5",
+    "primaryTextColor": "#1e1b4b",
+    "lineColor": "#4b5563",
+    "edgeLabelBackground": "#ffffff"
+  }
+}}%%
+flowchart LR
+
+    TOPIC["<b>🎯 TOPIC</b><br/>announced at hour 0"]:::start
+
+    subgraph S1["🔬 SYSTEM 1 - 60 minutes · 1 laptop · OMP"]
+        direction TB
+        R["<b>Research 35 min</b> - 5 sessions in parallel<br/><i>one question → its own file</i>"]:::s1
+        B["<b>Brainstorm 13 min</b> - 3 sessions<br/><i>pragmatist · skeptic · outsider</i>"]:::s1
+        V{{"<b>👥 TEAM CHOOSES</b><br/>out loud · system 1 does not choose"}}:::human
+        R --> B --> V
+    end
+
+    CAPS{{"<b>📦 CAPSULE.md</b><br/>what · why · what we know · what we don't know<br/>5 pieces + order · one command"}}:::capsule
+
+    subgraph S2["🤖 SYSTEM 2 - non-stop · 5 people × 5 worktrees · OMP"]
+        direction TB
+        W["Everyone reads the capsule<br/>and does THEIR directory"]:::s2
+        C["<b>check.sh</b> - one command<br/><i>exit 0 = done</i>"]:::gate
+        RV["<b>Review</b> - fresh session<br/>sees ONLY the diff + capsule"]:::opt
+        M{{"<b>⚙️ MERGE - machine</b><br/>lands on main by itself<br/>waits for dependencies · resolves mechanical conflicts<br/><i>interface → STOP, hand to a human</i>"}}:::machine
+        W --> C --> RV --> M
+    end
+
+    WAIT["⏳ waits for other modules<br/><i>does not ask · does not block · goes back to work</i>"]:::wait
+    MAIN[("<b>main</b>")]
+
+    SYNC{{"<b>✋ HUMAN - 2×</b><br/>sync every 2 h · freeze 4 h before the deadline<br/><i>the machine can land everything.<br/>it cannot say what you ship.</i>"}}:::human
+
+    TOPIC --> R
+    V -->|"writes the choice<br/>and goes silent"| CAPS
+    CAPS -->|"read first<br/>and do not come back for advice"| W
+    M --> MAIN
+    M -.->|"does not land, because the dependency<br/>is not on main yet"| WAIT
+    WAIT -.->|"will try again<br/>in 10 minutes"| M
+    MAIN --> SYNC
+
+    classDef start fill:#fef3c7,stroke:#b45309,stroke-width:2px
+    classDef s1 fill:#faf5ff,stroke:#a855f7,stroke-width:1.5px
+    classDef s2 fill:#eef2ff,stroke:#4f46e5,stroke-width:1.5px
+    classDef human fill:#dcfce7,stroke:#15803d,stroke-width:2px
+    classDef capsule fill:#e0f2fe,stroke:#0369a1,stroke-width:3px
+    classDef gate fill:#dcfce7,stroke:#15803d,stroke-width:2px
+    classDef machine fill:#ede9fe,stroke:#6d28d9,stroke-width:2.5px
+    classDef wait fill:#fff7ed,stroke:#c2410c,stroke-width:1.5px,stroke-dasharray:5 3
+    classDef opt fill:#f9fafb,stroke:#6b7280,stroke-width:1.5px,stroke-dasharray:4 3
+
+    style S1 fill:#fcfaff,stroke:#a855f7,stroke-width:2px
+    style S2 fill:#f7f7ff,stroke:#6366f1,stroke-width:2px
