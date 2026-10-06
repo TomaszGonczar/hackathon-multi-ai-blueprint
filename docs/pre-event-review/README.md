@@ -41,5 +41,7 @@ The other two deliverables live where they are used: the run sheet,
 
 > **Dated record.** File paths and line numbers inside these documents point at the repository
 > as it was on 2 October 2026 - before the playbook moved into `playbook/` and before the root
-> copies of `AGENTS.md` and `CAPSULE.md` were removed in favour of `seed/templates/`. The
-> [changelog](../../CHANGELOG.md) says where to find that state in the history.
+> copies of `AGENTS.md` and `CAPSULE.md` were removed in favour of `seed/templates/`. To read
+> them against the files they describe, check out commit `592138e`: `main` at the end of that
+> day (`f689ba2`, in Polish), translated line for line. Pull requests merged later that day
+> shifted a few line numbers. See the [changelog](../../CHANGELOG.md).

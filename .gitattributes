@@ -1,0 +1,3 @@
+# Language bar: the frozen archive and the docs are not the product.
+archive/** linguist-documentation
+docs/** linguist-documentation
