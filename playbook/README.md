@@ -1,5 +1,11 @@
 # Two systems, one file between them
 
+> **Context.** This is the team briefing as written on 2 October 2026, the evening before the
+> event; "Saturday" is the first day of the hackathon. *OMP* is the terminal coding agent the
+> playbook was written against - any coding agent (Claude Code, Codex, ...) works the same way.
+> The overview for outside readers is the [root README](../README.md); what changed since the
+> event is in the [changelog](../CHANGELOG.md).
+
 Hackathon on Saturday. Topic unknown until hour zero. Five people, ~20 agent sessions,
 two days. **System 2 runs non-stop.**
 
@@ -12,7 +18,7 @@ than they gave. This one has [five files](#files---two-groups-two-audiences) and
 
 ## The bet
 
-Your buddy has **2× Claude Pro and 1× ChatGPT**. The project is a bet that **compute
+The team had **2× Claude Pro and 1× ChatGPT**. The project is a bet that **compute
 and tokens in the best models are obtainable and are meant to be spent.**
 Most of what normally looks like sensible saving is a mistake here.
 
@@ -119,15 +125,6 @@ where it is decided what matters, not where code gets moved.
 
 ---
 
-## Handoff to a new session
-
-[`HANDOFF.md`](HANDOFF.md) - a capsule for a separate OMP session (model `atria`).
-It contains the state of things, six tasks and hard constraints. Read first.
-
-Friday 02.10 evening, hackathon Saturday 03.10. The result is due **tomorrow morning**.
-
----
-
 ## Four rules
 
 ### 1. One capsule, one choice
@@ -166,7 +163,7 @@ assumes the machine lands without asking.
 
 ---
 
-## State drives the workflow - [`AGENTS.md`](AGENTS.md)
+## State drives the workflow - [`AGENTS.md`](../seed/templates/AGENTS.md)
 
 The whole system has **one file the agent always reads**, and in it there is **one block
 that changes**:
@@ -218,8 +215,9 @@ five directories.
 
 ### Where this file lives on Saturday
 
-In the **root directory of the solution repo**, not here. You copy `AGENTS.md` and
-`CAPSULE.md` to your repo, because that is where the agent loads them from.
+In the **root directory of the solution repo**, not here. [`seed/bootstrap.sh`](../seed/README.md)
+copies `AGENTS.md` and `CAPSULE.md` from `seed/templates/` into your repo, because that is where
+the agent loads them from.
 
 ---
 
@@ -228,38 +226,38 @@ In the **root directory of the solution repo**, not here. You copy `AGENTS.md` a
 **For agents.** Loaded automatically at the start of every session. The agent reads
 nothing else until this file says it should.
 
-| File | What | Lines |
-|---|---|---|
-| [`AGENTS.md`](AGENTS.md) | **context and situation.** System state + rules that follow from that state | 196 |
-| [`CAPSULE.md`](CAPSULE.md) | Handoff template. On Saturday you overwrite it with your answers. | 119 |
+| File | What |
+|---|---|
+| [`AGENTS.md`](../seed/templates/AGENTS.md) | **context and situation.** System state + rules that follow from that state |
+| [`CAPSULE.md`](../seed/templates/CAPSULE.md) | Handoff template. On Saturday you overwrite it with your answers. |
+
+Both are templates in [`seed/templates/`](../seed/README.md); the seed copies them into the
+solution repo.
 
 **For humans.** Read in your own words, when you need to understand *why*.
 
-| File | What | Lines |
-|---|---|---|
-| [`1-RESEARCH.md`](1-RESEARCH.md) | System 1: topic breakdown, 5 sessions in 60 minutes, brainstorm, choice | 177 |
-| [`2-BUILD.md`](2-BUILD.md) | System 2: five sessions, test, machine merge, waiting for modules | 277 |
-| [`3-CHEATSHEET.md`](3-CHEATSHEET.md) | The clock. Friday 30 min, Saturday hour by hour. | 150 |
+| File | What |
+|---|---|
+| [`1-RESEARCH.md`](1-RESEARCH.md) | System 1: topic breakdown, 5 sessions in 60 minutes, brainstorm, choice |
+| [`2-BUILD.md`](2-BUILD.md) | System 2: five sessions, test, machine merge, waiting for modules |
+| [`3-CHEATSHEET.md`](3-CHEATSHEET.md) | The clock. Friday 30 min, Saturday hour by hour. |
 
-![Two systems](diagram-simple.png)
+Added the evening before by the [pre-event review](../docs/pre-event-review/README.md):
+[`DEVPLAN.md`](DEVPLAN.md), the run sheet from Friday evening to submission, every step with an
+owner and a visible pass condition.
 
-**A note on volume:** 811 → **1,204 lines**. The material grows because two
-elements were added that were not there before: machine merge order (without it the loop
-stops at night) and `AGENTS.md` (a file loaded at the start of every session).
-**Neither of these two is optional.** Thrown out in these changes:
-human validation of the merge, the escalation ladder, separate "waits / ask" states,
-nine roles for five people.
+![Two systems](../docs/assets/diagram-simple.png)
 
 The line that does not change through this whole refactor: **the eight rules from `AGENTS.md`
 §4 are the entire operating system.** Everything else is justification for why they are
 the way they are and not otherwise.
 
 `00_`-`09_`, `06_ARCHITECTURE.mmd`, `render/` and `HISTORY.md` live in
-[`archive/old-package/`](archive/old-package/README.md) - **the previous package**, the
+[`archive/old-package/`](../archive/old-package/README.md) - **the previous package**, the
 same one that was in `main`. Not deleted (evidence), but taken off the root directory so that
 they do not get mixed up with what is operational. You do not read them on Saturday.
 
-[`archive/`](archive/README.md) - earlier versions of this material, the previous
+[`archive/`](../archive/README.md) - earlier versions of this material, the previous
 package and the audit of the original. **Non-operational.**
 
 ---

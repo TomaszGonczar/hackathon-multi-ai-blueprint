@@ -1,4 +1,4 @@
-# SEED.md - what it is and how to run it
+# Seed - what it is and how to run it
 
 **One command that creates the whole hackathon environment:**
 
@@ -72,7 +72,7 @@ a modified `check.sh`.
 2. `CAPSULE.md` - once system-1 has filled it in (~09:58)
 3. `AGENTS.md` §4 - the rules that always apply
 
-The files `1-RESEARCH.md`, `2-BUILD.md`, `3-CHEATSHEET.md` are in the blueprint repo. The first
+The files `1-RESEARCH.md`, `2-BUILD.md`, `3-CHEATSHEET.md` are in [`playbook/`](../playbook/README.md). The first
 two are read **when you want to understand why**, the third is the clock for the human.
 They are not needed to start.
 

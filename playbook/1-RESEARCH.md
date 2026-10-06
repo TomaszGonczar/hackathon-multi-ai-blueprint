@@ -1,7 +1,7 @@
 # 1 - Research and brainstorm system
 
 **Input:** the topic announced on a piece of paper.
-**Output:** [`CAPSULE.md`](CAPSULE.md) filled in.
+**Output:** [`CAPSULE.md`](../seed/templates/CAPSULE.md) filled in.
 **Who:** one laptop, one human, OMP. The rest of the team **does not wait during this time** -
 they build their `check.sh` ([`2-BUILD.md`](2-BUILD.md)).
 **Stop:** the team chose an option out loud. After that system 1 stays silent to the end.
@@ -153,7 +153,7 @@ assumptions.
 
 ## Capsule, then STOP
 
-The lead reads the **files**, not the summaries from the sessions. Fills in [`CAPSULE.md`](CAPSULE.md).
+The lead reads the **files**, not the summaries from the sessions. Fills in [`CAPSULE.md`](../seed/templates/CAPSULE.md).
 
 **The only place where the team steps in:** 10 minutes. Briefly, do not read it
 out loud in full - you already did that at the choice. Just say:

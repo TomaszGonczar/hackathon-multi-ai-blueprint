@@ -1,12 +1,12 @@
 # 2 - BUILD
 
-**Input:** [`CAPSULE.md`](CAPSULE.md) filled in. Nothing else.
+**Input:** [`CAPSULE.md`](../seed/templates/CAPSULE.md) filled in. Nothing else.
 **Output:** the solution on `main`, tested by someone who built nothing.
 **Who:** five people, five laptops, OMP on each. Optionally additional sessions
 for review.
 **Loop:** **non-stop.** The machine lands work on `main`, waits for modules, resolves
  mechanical conflicts and never blocks the team with a question.
-> **The operating rules are in [`AGENTS.md`](AGENTS.md) §4.** This file is the rationale
+> **The operating rules are in [`AGENTS.md`](../seed/templates/AGENTS.md) §4.** This file is the rationale
 > - *why* a rule is the way it is. If the two disagree,
 > **`AGENTS.md` wins**, because it is the one in the agent's context.
 

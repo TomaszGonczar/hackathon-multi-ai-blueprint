@@ -26,7 +26,7 @@ To do with the team, 15 minutes:
 
 The last item is new and important: with machine merges the order must exist
 **before** system 2 starts, otherwise the machine will stall in the night and won't know
-why. See the "Waits for" column in [`CAPSULE.md`](CAPSULE.md).
+why. See the "Waits for" column in [`CAPSULE.md`](../seed/templates/CAPSULE.md).
 
 **What Friday does not include:** a junk register, a checklist, a phase plan, an architecture
 review, model selection. That is work for the days. Doing it = on Saturday you build
