@@ -11,7 +11,7 @@ owner and an exit condition you can see in the terminal.
 
 - [ ] **P1. Run the seed.** `bash seed/bootstrap.sh`
   Owner: everyone on their own laptop.
-  Condition: `bash seed/VERIFY.md` green (8/8), ends with `OK`.
+  Condition: `bash seed/verify.sh` green (10/10), ends with `OK`.
 
 - [ ] **P2. Remote.** `git -C ~/hackathon-solution remote add origin <url>`
   Owner: one person.
@@ -40,9 +40,9 @@ a checklist, choosing a language. `check.sh` has `PHASE=0` and that is green.
 
 ## Saturday 08:50 - before T0
 
-- [ ] **S1. Seed verification on every laptop.** `bash seed/VERIFY.md`
+- [ ] **S1. Seed verification on every laptop.** `bash seed/verify.sh`
   Owner: everyone.
-  Condition: 8/8 green. Red = we don't start.
+  Condition: 10/10 green. Red = we don't start.
 
 - [ ] **S2. Push smoke test.** `git push origin main --dry-run`
   Owner: everyone.

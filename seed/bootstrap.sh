@@ -19,6 +19,13 @@ TPL="$SCRIPT_DIR/templates"
 
 GIT_ID=(-c user.name="hackathon" -c user.email="hackathon@local")
 
+# Every step the setup depends on ends in `|| die`, so a failure exits 1 on the
+# spot instead of falling through to "OK". Deliberately NOT `set -euo pipefail`:
+# under pipefail the `git log | grep -qx` marker guard below can see SIGPIPE
+# (exit 141) when grep quits early - read as "no marker", it would add a
+# duplicate one.
+die() { echo "FAIL: $*"; exit 1; }
+
 # --- configuration ----------------------------------------------------------
 
 REPO_DIR="${1:-$HOME/hackathon-solution}"
@@ -36,11 +43,11 @@ if [ -e "$REPO_DIR/.git" ]; then
   echo "== repo already exists: $REPO_DIR (re-using, nothing destroyed) =="
 else
   echo "== creating repo: $REPO_DIR =="
-  mkdir -p "$REPO_DIR"
-  git init -q "$REPO_DIR"
+  mkdir -p "$REPO_DIR" || die "cannot create $REPO_DIR"
+  git init -q "$REPO_DIR" || die "git init failed in $REPO_DIR"
 fi
 
-cd "$REPO_DIR"
+cd "$REPO_DIR" || die "cannot enter $REPO_DIR"
 
 # Initial commit is needed before worktrees can be created. If the repo is
 # brand new and has no commit at all, make a placeholder one.
@@ -49,11 +56,12 @@ if ! git rev-parse -q --verify HEAD >/dev/null; then
   git checkout -q -b main 2>/dev/null || true
   echo "# solution repo" > README.md
   git add README.md
-  git "${GIT_ID[@]}" commit -qm "init"
+  git "${GIT_ID[@]}" commit -qm "init" || die "initial commit failed in $REPO_DIR"
 fi
 
-# Make sure we are on main; every piece merges here.
-git checkout -q main 2>/dev/null || git checkout -q -b main 2>/dev/null || true
+# Make sure we are on main; every piece branches from here and merges here.
+git checkout -q main 2>/dev/null || git checkout -q -b main 2>/dev/null \
+  || die "cannot switch $REPO_DIR to branch main (uncommitted changes?)"
 
 # --- agent context, committed BEFORE the worktrees ---------------------------
 # Each worktree is a separate checkout of its own branch. A file that is
@@ -70,13 +78,17 @@ for f in AGENTS.md CAPSULE.md; do
     # Never overwrite a capsule the team has already filled in.
     echo "NOTE: $f already exists and was modified - keeping yours"
   else
-    cp "$TPL/$f" "$REPO_DIR/$f"
+    cp "$TPL/$f" "$REPO_DIR/$f" || die "cannot copy $f into $REPO_DIR"
   fi
 done
 
-git add AGENTS.md CAPSULE.md 2>/dev/null
-git "${GIT_ID[@]}" commit -q -m "seed: agent context (AGENTS.md + CAPSULE.md)" 2>/dev/null \
-  || echo "== agent context unchanged =="
+git add AGENTS.md CAPSULE.md || die "cannot stage AGENTS.md and CAPSULE.md"
+if git diff --cached --quiet -- AGENTS.md CAPSULE.md; then
+  echo "== agent context unchanged =="
+else
+  git "${GIT_ID[@]}" commit -q -m "seed: agent context (AGENTS.md + CAPSULE.md)" -- AGENTS.md CAPSULE.md \
+    || die "cannot commit the agent context - worktrees would start without it"
+fi
 
 # --- worktrees ---------------------------------------------------------------
 # One worktree per person. The worktree root IS the piece directory, so
@@ -97,10 +109,12 @@ for i in "${!PIECES[@]}"; do
     # Branch already exists (e.g. pushed by a teammate) - attach it instead of
     # failing, which is what a plain `worktree add -b` does.
     echo "== worktree: ~/$name (existing branch $branch) =="
-    git worktree add -q "$target" "$branch"
+    git worktree add -q "$target" "$branch" \
+      || die "cannot attach ~/$name to existing branch $branch"
   else
     echo "== worktree: ~/$name (new branch $branch, from main) =="
-    git worktree add -q -b "$branch" "$target"
+    git worktree add -q -b "$branch" "$target" \
+      || die "cannot create worktree ~/$name - is it a directory that is not a worktree?"
   fi
 
   # check.sh per piece - written every run so a broken one is repaired, but a
@@ -108,8 +122,8 @@ for i in "${!PIECES[@]}"; do
   if [ -f "$target/check.sh" ] && ! git -C "$target" diff --quiet -- check.sh 2>/dev/null; then
     echo "NOTE: ~/$name/check.sh was modified locally - keeping it"
   else
-    cp "$TPL/check.sh.example" "$target/check.sh"
-    chmod +x "$target/check.sh"
+    cp "$TPL/check.sh.example" "$target/check.sh" || die "cannot write ~/$name/check.sh"
+    chmod +x "$target/check.sh" || die "cannot make ~/$name/check.sh executable"
   fi
 
   # Marker commit - REQUIRED for the merge-order gate to mean anything.
@@ -121,7 +135,8 @@ for i in "${!PIECES[@]}"; do
   # never adds a second marker.
   if ! git -C "$target" log --format=%s 2>/dev/null | grep -qx "seed: $name marker"; then
     git -C "$target" add -A 2>/dev/null
-    git -C "$target" "${GIT_ID[@]}" commit -q --allow-empty -m "seed: $name marker"
+    git -C "$target" "${GIT_ID[@]}" commit -q --allow-empty -m "seed: $name marker" \
+      || die "cannot commit the start marker on $branch - the merge-order gate would be vacuous"
   fi
 done
 
@@ -154,6 +169,9 @@ echo "   git -C $REPO_DIR worktree list"
 echo
 echo "6. Push works (you need write access to the remote):"
 echo "   git -C $REPO_DIR remote add origin <url> && git -C $REPO_DIR push origin main --dry-run"
+echo
+echo "All ten checks from seed/VERIFY.md in one go:"
+echo "   bash $SCRIPT_DIR/verify.sh $REPO_DIR"
 echo
 echo "Next: read seed/templates/START-HERE.md - first 30 minutes of Saturday."
 echo

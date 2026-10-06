@@ -182,11 +182,6 @@ is a failure - because then the team loses human hours.
 (`1-RESEARCH.md`, `2-BUILD.md`, `3-CHEATSHEET.md`) live in the **blueprint repo**, not here.
 They are on GitHub, in case anyone asks - but they are not part of your work.
 
-| File | When you read it |
-|---|---|
-| `CAPSULE.md` | **always, first thing** |
-| `research/*.md` | when the capsule says "could not establish" or you ask "why"
-
 Operating rules are in **§4 of this file**. The capsule says **what** you are building, §4 says
 **how** - if they collide, the capsule wins on the choice, §4 on the process.
 

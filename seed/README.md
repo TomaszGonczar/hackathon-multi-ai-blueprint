@@ -44,8 +44,8 @@ worktree directory. There is no `w1/` subdirectory inside - the directory is the
 
 ## When to run it
 
-**Friday evening**, once. Check the result with the commands from
-[`VERIFY.md`](VERIFY.md) - it takes 5 minutes and must be green before you sleep.
+**Friday evening**, once. Check the result with `bash seed/verify.sh` - it runs the ten
+checks from [`VERIFY.md`](VERIFY.md) in about a minute and must be green before you sleep.
 
 Saturday morning: if something is off, run it again. **It is idempotent** -
 the second run does not destroy directories, does not overwrite a filled-in capsule or

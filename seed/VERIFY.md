@@ -6,6 +6,10 @@ section 1.
 **Goal:** five worktrees, each of which has the agent context and `check.sh`,
 and the merge-order gate actually blocks dependent pieces.
 
+**One command for all ten checks:** `bash seed/verify.sh` (after `bootstrap.sh`). It runs
+the checks below, prints PASS/FAIL for each, changes nothing, and exits 0 only if all ten
+pass. CI runs it on every push, plus cases that must fail. The sections below explain each check.
+
 ---
 
 ## 1. One command (30 s)
@@ -81,11 +85,15 @@ Sections 1-3 are still empty `echo`s, which is why it passes. This step checks t
 cd ~/w1-piece
 echo "API_KEY=supersecret" > test-secret.txt
 git add test-secret.txt
-bash ./check.sh; echo "exit=$?"     # expected: 1
+bash ./check.sh; echo "exit=$?"     # expected: 1 AND the line "FAIL: secret in staged diff"
 git reset -q test-secret.txt && rm test-secret.txt
 ```
 
 It works **in both phases** - a secret in phase 0 is still a secret.
+
+**Read the message, not just the exit code.** In phase 0 `check.sh` exits 1 anyway, so
+`exit=1` alone does not show the secret was caught - only `FAIL: secret in staged diff` does.
+`verify.sh` checks the message, in phase 0 and in phase 1.
 
 ## 8. The merge-order gate is NOT vacuously true (2 min)
 
@@ -146,7 +154,7 @@ git log --format=%s w1 | grep -c "seed: w1-piece marker"   # expected: 1
 | 4 | `check.sh` executable | 5x OK |
 | 5 | phase 0 exits 1 | 5x exit 1 |
 | 6 | phase 1 exits 0 | exit 0 |
-| 7 | secret caught (both phases) | exit 1 |
+| 7 | secret caught (both phases) | exit 1 + `FAIL: secret` message |
 | 8 | gate not vacuously true | 5x OK |
 | 9 | gate unlocks after dependencies | `w1: YES`, `w2: NO` |
 | 10 | idempotency | no duplicate markers |
